@@ -505,7 +505,7 @@ cat='led';
 // Nanoleaf Shapes Ultra Black Hexagons (9 Stück), Muster nach Vorlage: je 23 x 20 cm (Spitze zu Spitze x Kante zu Kante), ca. 1 cm tief, an der Wand über den Bildschirmen
 var ledObjs=[],LEDLB=[];
 (function(){
-  var R=0.1135,TH=0.010,SPX=0.1725,SPY=0.20,YC=2.80,ZC=1.90;
+  var R=0.1135,TH=0.010,SPX=0.1725,SPY=0.20,YC=2.80,ZC=1.80;
   var HEX=[[0,0,0x14141a],[1,0,0x5a2a98],[1,1,0x6a2fb0],[0,2,0x14141a],[2,1,0x9a3fd6],[3,0,0x6a5af0],[4,0,0x4a78ee],[5,-1,0x3fb4ea],[6,-1,0x2fe0c4]];
   var y0=YC+6*SPX/2,side=new THREE.MeshLambertMaterial({color:0x0b0b0e});
   HEX.forEach(function(h){
@@ -519,10 +519,10 @@ var ledObjs=[],LEDLB=[];
   function hy(z,ya,yb){s([ya,z],[yb,z]);s([ya,z-0.04],[ya,z+0.04]);s([yb,z-0.04],[yb,z+0.04]);}
   function vz(yy,za,zb){s([yy,za],[yy,zb]);s([yy-0.04,za],[yy+0.04,za]);s([yy-0.04,zb],[yy+0.04,zb]);}
   var yl=y0-6*SPX-0.115,yr=y0+0.115;
-  hy(1.33,yl,yr);vz(yl-0.07,1.40,2.20);hy(2.10,yl,yl+0.23);vz(y0-6*SPX,2.00,2.20);vz(3.27,1.17,1.40);
+  hy(2.16,yl,yr);vz(yl-0.07,1.30,2.10);hy(2.00,yl,yl+0.23);vz(y0-6*SPX,1.90,2.10);vz(3.27,1.17,1.30);
   var gd=new THREE.BufferGeometry();gd.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(gd,new THREE.LineBasicMaterial({color:0xd2691e})));
-  LEDLB.push(['Nanoleaf Hexagons: 9 Stück, je 23 × 20 cm',0.05,y0-3*SPX,2.27],['Breite gesamt 126,5 cm',0.05,YC,1.36],['Höhe gesamt 80 cm (1,40 – 2,20 m über Boden)',0.05,yl-0.07,1.80],['23 cm',0.05,y0-6*SPX,2.135],['20 cm',0.05,y0-6*SPX,2.02],['23 cm bis Monitor',0.05,3.27,1.25]);
+  LEDLB.push(['Nanoleaf Hexagons: 9 Stück, je 23 × 20 cm',0.05,y0-3*SPX,2.28],['Breite gesamt 126,5 cm',0.05,YC,2.21],['Höhe gesamt 80 cm (1,30 – 2,10 m über Boden)',0.05,yl-0.07,1.70],['23 cm',0.05,y0-6*SPX,2.035],['20 cm',0.05,y0-6*SPX,1.92],['13 cm bis Monitor',0.05,3.27,1.235]);
 })();
 cat='raum';
 // Beschriftungen
