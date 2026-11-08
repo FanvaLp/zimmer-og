@@ -74,7 +74,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs; Dicke des Kaufland-Teppichs), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
+<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -352,7 +352,7 @@ var RUGS={
  a:{k:'tp1',r:[1.76,0.84,4.76,2.84],th:0.018,col:0x8e9093,tag:'IKEA 200 × 300 quer',nm:'Teppich IKEA STOENSE 200 × 300 cm (quer gelegt)'},
  al:{k:'tp1l',r:[2.19,0.74,4.19,3.74],th:0.018,col:0x8e9093,tag:'IKEA 200 × 300 längs',nm:'Teppich IKEA STOENSE 200 × 300 cm (längs gelegt)'},
  b:{k:'tp3',r:[1.99,1.14,4.39,2.84],th:0.018,col:0x8e9093,tag:'IKEA 170 × 240 quer',nm:'Teppich IKEA STOENSE 170 × 240 cm (quer gelegt)'},
- c:{k:'tp2',r:[1.74,1.24,4.74,3.74],th:0.02,col:0x9a9c9f,tag:'Kaufland 250 × 300',nm:'Alternative: Teppich Kaufland ETON 250 × 300 cm'}};
+ c:{k:'tp2',r:[1.74,1.24,4.74,3.74],th:0.011,col:0x9a9c9f,tag:'Kaufland 250 × 300',nm:'Alternative: Teppich Kaufland ETON 250 × 300 cm'}};
 var rugOn=true,rugV='a',rugOr='q',rugGroups={},RUGLC={},RUGLB=[];
 function rugKey(){return rugV==='a'?(rugOr==='q'?'tp1':'tp1l'):(rugV==='b'?'tp3':'tp2');}
 Object.keys(RUGS).forEach(function(n){var R=RUGS[n],r=R.r,s=room.children.length,w=Math.round((r[2]-r[0])*100),d=Math.round((r[3]-r[1])*100),g=Math.round((r[1]-SBD)*100);
