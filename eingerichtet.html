@@ -62,6 +62,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am linken Ende">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, in der Mitte">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am rechten Ende">L-Stück</button></div></div>
 <div class="grp"><span class="lab">Dachschräge</span><div class="seg"><button id="slopeOn" class="on" title="Dachschräge anzeigen">Anzeigen</button><button id="slopeOff" title="Dachschräge ausblenden, z. B. für den freien Blick auf die Schreibtischwand">Ausblenden</button></div></div>
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
+<div class="grp"><span class="lab">Couchtisch</span><div class="seg"><button id="ctOnB" class="on" title="Couchtisch LACK anzeigen (auch der Tisch vor dem ausgeklappten Bett)">An</button><button id="ctOffB" title="Couchtisch ausblenden">Aus</button></div></div>
 <div class="grp"><span class="lab">Nanoleaf (Wand)</span><div class="seg"><button id="ledOn" class="on" title="Neun Nanoleaf-Hexagons an der Wand über den Bildschirmen anzeigen">An</button><button id="ledOff" title="Nanoleaf-Hexagons ausblenden">Aus</button></div></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
 <div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
@@ -326,6 +327,7 @@ var bedOn=false;
 // Couchtisch IKEA LACK, Eicheneff wlas, 90 x 55 x 45 cm (Maße laut IKEA). Plattendicke 5 cm, Beine 5 x 5 cm, Ablage bei ca. 20 cm = geschätzt.
 // Normal: vor dem Sofa (Abstand 40 cm zu den Sitzkissen). Sofa ausgeklappt: vor dem ausgeklappten Sofa (20 cm Abstand zur Bettkante, 64 cm bis zum Sideboard).
 var CTN=[2.18,1.27,3.08,1.82],CTB=[2.60,0.56,3.50,1.11];
+var ctOn=true;
 function lackTable(r){var x0=r[0],y0=r[1],x1=r[2],y1=r[3],C=0xe6d3b0;
   box(x0,y0,0.40,x1,y1,0.45,C);
   box(x0+0.005,y0+0.005,0.19,x1-0.005,y1-0.005,0.21,C);
@@ -627,7 +629,7 @@ var hBtn={Ein:document.getElementById('hvOn'),Aus:document.getElementById('hvOff
 hBtn.Ein.onclick=function(){hoverOn=true;hBtn.Ein.classList.add('on');hBtn.Aus.classList.remove('on');};
 hBtn.Aus.onclick=function(){hoverOn=false;hoverCat=null;canvas.style.cursor='grab';hBtn.Ein.classList.remove('on');hBtn.Aus.classList.add('on');};
 var bedBtn=document.getElementById('bed'),bedOff=document.getElementById('bedoff');
-function setBed(on){bedOn=on;if(/^v[678]$/.test(lastView))setView(lastView);bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
+function setBed(on){bedOn=on;if(/^v[678]$/.test(lastView))setView(lastView);bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on&&ctOn;});ctB.forEach(function(o){o.visible=on&&ctOn;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
 bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
 var ledOn=true,ledB1=document.getElementById('ledOn'),ledB0=document.getElementById('ledOff');
 function setLed(on){ledOn=on;applyLights();ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
@@ -674,7 +676,7 @@ shBtn.onclick=function(){var u=shareURL();
 document.querySelector('.panel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(views[b.id])lastView=b.id;saveUI();});
 
 
-function isVis(k){if(k==='led'&&!ledOn)return false;if(k==='tvled'&&!tvLedOn)return false;if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
+function isVis(k){if(k==='led'&&!ledOn)return false;if((k==='ctn'||k==='ctb')&&!ctOn)return false;if(k==='tvled'&&!tvLedOn)return false;if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
 var ray=new THREE.Raycaster(),mv=new THREE.Vector2(),downXY=null;
 function pick(e){var r=canvas.getBoundingClientRect();mv.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mv,cam);
   var hits=ray.intersectObjects(room.children,true);
@@ -701,6 +703,9 @@ function setTvLed(on){tvLedOn=on;tvLedObjs.forEach(function(o){o.visible=on;});t
 nightB.onclick=function(){setNight(!nightOn);};
 ceilB.onclick=function(){setNight(ceilB.classList.contains('on'));};
 tvledB.onclick=function(){setTvLed(!tvLedOn);};
+var ctOnB=document.getElementById('ctOnB'),ctOffB=document.getElementById('ctOffB');
+function setCt(on){ctOn=on;ctN.forEach(function(o){o.visible=!bedOn&&on;});ctB.forEach(function(o){o.visible=bedOn&&on;});ctOnB.classList.toggle('on',on);ctOffB.classList.toggle('on',!on);}
+ctOnB.onclick=function(){setCt(true);};ctOffB.onclick=function(){setCt(false);};
 function setPcLed(on){pcLedOn=on;pcLedMats.forEach(function(m){m.color.setHex(on?0xffffff:0x2a2a2a);});pcledB.classList.toggle('on',on);setSpkLed(on);applyLights();}
 function setSpkLed(on){spkLedOn=on;spkLedObjs.forEach(function(o){o.visible=on;});}
 pcledB.onclick=function(){setPcLed(!pcLedOn);};
