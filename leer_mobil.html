@@ -108,19 +108,22 @@ function rect(u0,v0,u1,v1){return [[u0,v0],[u1,v0],[u1,v1],[u0,v1]];}
 // Wände
 var CW=0xf3f0e8,CS=0xe2dfd6;
 var doorTop=2.01;
-addTris(shapeTris([[0,0],[0.125,0],[0.125,doorTop],[1.075,doorTop],[1.075,0],[W,0],[W,H],[0,H]],null,function(u,v){return [u,0,v];}),CW);               // Türwand
+var NY=0.375;   // Nische: Rückwand hinter Schrank/TV liegt 0,84 m hinter der Vorderkante des Mauervorsprungs (0,465 m davor) = 0,375 m hinter der Tür-Wand-Linie
+addTris(shapeTris([[0,0],[0.125,0],[0.125,doorTop],[1.075,doorTop],[1.075,0],[1.20,0],[1.20,H],[0,H]],null,function(u,v){return [u,0,v];}),CW);   // Türwand links vom Vorsprung
+addTris(shapeTris([[1.733,0],[W,0],[W,H],[1.733,H]],null,function(u,v){return [u,-NY,v];}),CW);   // Rückwand der Nische
+addTris(shapeTris([[-NY,0],[0.465,0],[0.465,H],[-NY,H]],null,function(u,v){return [1.733,u,v];}),CW);   // Seitenfläche des Vorsprungs zur Nische
 var sWin={u0:0.20,u1:1.08,v0:0.90,v1:1.90};
 addTris(shapeTris([[0,0],[W,0],[W,K],[SX,K],[BX,H],[0,H]],[rect(sWin.u0,sWin.v0,sWin.u1,sWin.v1)],function(u,v){return [u,D,v];}),CW);  // Schrägenwand
 addTris(shapeTris([[0,0],[D,0],[D,H],[0,H]],null,function(u,v){return [0,u,v];}),CW);                                                       // linke Wand
 var eWin={u0:YS-1.48,u1:YS,v0:0.855,v1:2.05};
-addTris(shapeTris([[0,0],[D,0],[D,K],[YS,H],[0,H]],[rect(eWin.u0,eWin.v0,eWin.u1,eWin.v1)],function(u,v){return [W,u,v];}),CW);           // Fensterwand
+addTris(shapeTris([[-NY,0],[D,0],[D,K],[YS,H],[-NY,H]],[rect(eWin.u0,eWin.v0,eWin.u1,eWin.v1)],function(u,v){return [W,u,v];}),CW);           // Fensterwand
 // Schräge
 var A=[SX,D,K],Dp=[W,D,K],E=[W,YS,H],B=[BX,YS,H],C=[BX,D,H];
 addTris([[A,Dp,E],[A,E,B]],CS);   // Hauptschräge
 addTris([[A,B,C]],CS);            // Übergang (Diagonale)
 // Decke (L-Form) und Boden
-addTris(shapeTris([[0,0],[W,0],[W,YS],[BX,YS],[BX,D],[0,D]],null,function(u,v){return [u,v,H];}),0xfbfbf8);
-var floor=addTris(shapeTris([[0,0],[W,0],[W,D],[0,D]],null,function(u,v){return [u,v,0];}),0xb08455);
+addTris(shapeTris([[0,0],[1.733,0],[1.733,-NY],[W,-NY],[W,YS],[BX,YS],[BX,D],[0,D]],null,function(u,v){return [u,v,H];}),0xfbfbf8);
+var floor=addTris(shapeTris([[0,0],[1.733,0],[1.733,-NY],[W,-NY],[W,D],[0,D]],null,function(u,v){return [u,v,0];}),0xb08455);
 // Zonen
 var zones=new THREE.Group();zones.visible=false;scene.add(zones);
 function dAt(h){return (h-K)*SD/(H-K);}
@@ -159,16 +162,16 @@ box(W-0.15,YS-1.48+0.24,0.10,W,YS-0.24,0.70,0xffffff); // Heizkörper
 [1.87,1.92].forEach(function(py){var pm=new THREE.Mesh(new THREE.CylinderGeometry(0.009,0.009,0.10,10),new THREE.MeshLambertMaterial({color:0xc9ccd0}));pm.position.copy(P(W-0.08,py,0.05));room.add(pm);var rs=new THREE.Mesh(new THREE.CylinderGeometry(0.022,0.022,0.004,16),new THREE.MeshLambertMaterial({color:0xf2f2f2}));rs.position.copy(P(W-0.08,py,0.002));room.add(rs);});
 // Beschriftungen
 var labels=[
- ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
+ ['4,76 m',W/2,-NY-0.25,0],['4,465 m (Fensterwand)',W+0.25,(D-NY)/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
  ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
- ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 × 0,465 m',1.47,-0.2,H+0.08]
+ ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 m breit, 0,465 m vor der Tür-Wand-Linie',1.47,-0.2,H+0.08],['Nische: Rückwand 0,84 m hinter der Vorsprung-Kante',3.5,-NY-0.02,H+0.08]
 ].map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3])};});
 // Maßlinien (eingezeichnet)
 (function(){
   var v=[];
   function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
-  [-0.25,W+0.25].forEach(function(x){s([x,0,0.01],[x,D,0.01]);s([x-0.08,0,0.01],[x+0.08,0,0.01]);s([x-0.08,D,0.01],[x+0.08,D,0.01]);});
-  s([0,-0.25,0.01],[W,-0.25,0.01]);s([0,-0.33,0.01],[0,-0.17,0.01]);s([W,-0.33,0.01],[W,-0.17,0.01]);
+  [-0.25,W+0.25].forEach(function(x){var y0=x>0?-NY:0;s([x,y0,0.01],[x,D,0.01]);s([x-0.08,y0,0.01],[x+0.08,y0,0.01]);s([x-0.08,D,0.01],[x+0.08,D,0.01]);});
+  s([0,-NY-0.25,0.01],[W,-NY-0.25,0.01]);s([0,-NY-0.33,0.01],[0,-NY-0.17,0.01]);s([W,-NY-0.33,0.01],[W,-NY-0.17,0.01]);
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x1f6fd0})));
 })();

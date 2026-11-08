@@ -158,12 +158,15 @@ function rect(u0,v0,u1,v1){return [[u0,v0],[u1,v0],[u1,v1],[u0,v1]];}
 // Wände
 var CW=0xf3f0e8,CS=0xe2dfd6;
 var doorTop=2.01;
-addTris(shapeTris([[0,0],[0.125,0],[0.125,doorTop],[1.075,doorTop],[1.075,0],[W,0],[W,H],[0,H]],null,function(u,v){return [u,0,v];}),CW);               // Türwand
+var NY=0.375;   // Nische: Rückwand hinter Schrank/TV liegt 0,84 m hinter der Vorderkante des Mauervorsprungs (0,465 m davor) = 0,375 m hinter der Tür-Wand-Linie
+addTris(shapeTris([[0,0],[0.125,0],[0.125,doorTop],[1.075,doorTop],[1.075,0],[1.20,0],[1.20,H],[0,H]],null,function(u,v){return [u,0,v];}),CW);   // Türwand links vom Vorsprung
+addTris(shapeTris([[1.733,0],[W,0],[W,H],[1.733,H]],null,function(u,v){return [u,-NY,v];}),CW);   // Rückwand der Nische
+addTris(shapeTris([[-NY,0],[0.465,0],[0.465,H],[-NY,H]],null,function(u,v){return [1.733,u,v];}),CW);   // Seitenfläche des Vorsprungs zur Nische
 var sWin={u0:0.20,u1:1.08,v0:0.90,v1:1.90};
 addTris(shapeTris([[0,0],[W,0],[W,K],[SX,K],[BX,H],[0,H]],[rect(sWin.u0,sWin.v0,sWin.u1,sWin.v1)],function(u,v){return [u,D,v];}),CW);  // Schrägenwand
 addTris(shapeTris([[0,0],[D,0],[D,H],[0,H]],null,function(u,v){return [0,u,v];}),CW);                                                       // linke Wand
 var eWin={u0:YS-1.48,u1:YS,v0:0.855,v1:2.05};
-addTris(shapeTris([[0,0],[D,0],[D,K],[YS,H],[0,H]],[rect(eWin.u0,eWin.v0,eWin.u1,eWin.v1)],function(u,v){return [W,u,v];}),CW);           // Fensterwand
+addTris(shapeTris([[-NY,0],[D,0],[D,K],[YS,H],[-NY,H]],[rect(eWin.u0,eWin.v0,eWin.u1,eWin.v1)],function(u,v){return [W,u,v];}),CW);           // Fensterwand
 // Schräge
 var A=[SX,D,K],Dp=[W,D,K],E=[W,YS,H],B=[BX,YS,H],C=[BX,D,H];
 var slopeS=room.children.length;
@@ -171,8 +174,8 @@ addTris([[A,Dp,E],[A,E,B]],CS);   // Hauptschräge
 addTris([[A,B,C]],CS);            // Übergang (Diagonale)
 var slopeObjs=room.children.slice(slopeS);
 // Decke (L-Form) und Boden
-addTris(shapeTris([[0,0],[W,0],[W,YS],[BX,YS],[BX,D],[0,D]],null,function(u,v){return [u,v,H];}),0xfbfbf8);
-var floor=addTris(shapeTris([[0,0],[W,0],[W,D],[0,D]],null,function(u,v){return [u,v,0];}),0xb08455);
+addTris(shapeTris([[0,0],[1.733,0],[1.733,-NY],[W,-NY],[W,YS],[BX,YS],[BX,D],[0,D]],null,function(u,v){return [u,v,H];}),0xfbfbf8);
+var floor=addTris(shapeTris([[0,0],[1.733,0],[1.733,-NY],[W,-NY],[W,D],[0,D]],null,function(u,v){return [u,v,0];}),0xb08455);
 // Zonen
 var zones=new THREE.Group();zones.visible=false;scene.add(zones);
 function dAt(h){return (h-K)*SD/(H-K);}
@@ -650,9 +653,9 @@ var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch
  'Unterlage 120 cm':'stuhl','38 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
  'Tisch bis Sofa 82 cm':'abstand','Stuhl–Sofa 27 cm':'abstand'};Object.assign(LC,RUGLC);LEDLB.forEach(function(l){LC[l[0]]='led';});TVLB.forEach(function(l){LC[l[0]]='tvled';});TVLB65.forEach(function(l){LC[l[0]]='tvled65';});TVLBL65.forEach(function(l){LC[l[0]]='tv65';});SFLB.forEach(function(l){LC[l[0]]='sofaled';});
 var labels=[
- ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
+ ['4,76 m',W/2,-NY-0.25,0],['4,465 m (Fensterwand)',W+0.25,(D-NY)/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
  ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
- ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 × 0,465 m',1.47,-0.2,H+0.08],
+ ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 m breit, 0,465 m vor der Tür-Wand-Linie',1.47,-0.2,H+0.08],['Nische: Rückwand 0,84 m hinter der Vorsprung-Kante',3.5,-NY-0.02,H+0.08],
  ['Schreibtisch 2,40 m',0.4,(Y0+Y2)/2,0.98],['Höhe 72 cm',0.82,Y2-0.4,0.36],['Tiefe 80 cm',0.82,Y0+0.4,0.84],
  ['Wand bis Tisch 49 cm',1.05,D-0.245,0.02],['Tisch 2,40 m',1.05,(Y0+Y2)/2,0.02],['Tisch bis Türwand 1,20 m',1.05,Y0/2,0.02],
  ['Schrank 99,8 × 60,4 × 201,2 cm',PX0+PW/2,PD/2,PH+0.1],['Sideboard 180 × 42 × 38 cm',SB0+SBW/2,SBD/2,SBH+0.12],
@@ -666,13 +669,16 @@ var labels=[
  
  ['Tisch bis Sofa 82 cm',(0.80+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['38 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
  ['Stuhl–Sofa 27 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,23 m',SB0+SBW+0.115,0.75,0.02]
-].concat(RUGLB).concat(LEDLB).concat(TVLB).concat(TVLB65).concat(TVLBL65).concat(SFLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3]),cat:LC[l[0]]||'raum'};});
+].concat(RUGLB).concat(LEDLB).concat(TVLB).concat(TVLB65).concat(TVLBL65).concat(SFLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2]-(({schrank:1,sideboard:1,tv:1,tv65:1,tvled:1,tvled65:1})[LC[l[0]]]?NY:0),l[3]),cat:LC[l[0]]||'raum'};});
+// Nische: Schrank, Sideboard, Fernseher und TV-LED stehen an der neuen Rückwand (NY weiter hinten)
+room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='schrank'||c==='sideboard'||c==='tv'||c==='tv65'||c==='tvled'||c==='tvled65')o.position.z-=NY;});
+['schrank','sideboard','tv','tv65'].forEach(function(k){if(dimG[k])dimG[k].position.z-=NY;});
 // Maßlinien (eingezeichnet)
 (function(){
   var v=[];
   function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
-  [-0.25,W+0.25].forEach(function(x){s([x,0,0.01],[x,D,0.01]);s([x-0.08,0,0.01],[x+0.08,0,0.01]);s([x-0.08,D,0.01],[x+0.08,D,0.01]);});
-  s([0,-0.25,0.01],[W,-0.25,0.01]);s([0,-0.33,0.01],[0,-0.17,0.01]);s([W,-0.33,0.01],[W,-0.17,0.01]);
+  [-0.25,W+0.25].forEach(function(x){var y0=x>0?-NY:0;s([x,y0,0.01],[x,D,0.01]);s([x-0.08,y0,0.01],[x+0.08,y0,0.01]);s([x-0.08,D,0.01],[x+0.08,D,0.01]);});
+  s([0,-NY-0.25,0.01],[W,-NY-0.25,0.01]);s([0,-NY-0.33,0.01],[0,-NY-0.17,0.01]);s([W,-NY-0.33,0.01],[W,-NY-0.17,0.01]);
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x1f6fd0})));
 })();
@@ -780,7 +786,7 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){
 /* Werkzeuge: Nacht, Vorher/Nachher, Messen, TV-LED */
 var sofaLedOn=true,tvLedOn=true,pcLedOn=true,spkLedOn=true,nightOn=false,cmpOn=false,cmpX=0.5,measureOn=false;
 var nlLight=new THREE.PointLight(0x7a6af0,0,3.6,1.3);nlLight.position.copy(P(0.45,2.65,1.75));scene.add(nlLight);
-var tvLight=new THREE.PointLight(0xff4fa8,0,3.8,1.2);tvLight.position.copy(P(TVCX,0.12,TVZ0+TVH/2));scene.add(tvLight);
+var tvLight=new THREE.PointLight(0xff4fa8,0,3.8,1.2);tvLight.position.copy(P(TVCX,0.12-NY,TVZ0+TVH/2));scene.add(tvLight);
 var slLight=new THREE.PointLight(0xffa24d,0,3.2,1.3);slLight.position.copy(P(SX0+SWD/2,D-SGAP+0.05,1.0));scene.add(slLight);
 var pcLight=new THREE.PointLight(0xff2a2a,0,2.4,1.5);pcLight.position.copy(P(0.55,1.75,0.55));scene.add(pcLight);
 var nightB=document.getElementById('nightB'),cmpB=document.getElementById('cmpB'),measB=document.getElementById('measB'),measClr=document.getElementById('measClr'),tvledB=document.getElementById('tvledB'),tv75B=document.getElementById('tv75B'),tv65B=document.getElementById('tv65B'),sofaledB=document.getElementById('sofaledB'),ceilB=document.getElementById('ceilB'),pcledB=document.getElementById('pcledB'),cmpBar=document.getElementById('cmpBar');
@@ -791,7 +797,7 @@ function setNight(on){nightOn=on;hemi.intensity=on?0.10:0.95;dl.intensity=on?0:0
 function setSofaLed(on){sofaLedOn=on;sofaLedObjs.forEach(function(o){o.visible=on&&!hideCats.sofaled;});sofaledB.classList.toggle('on',on);applyLights();}
 function setTvSize(s){tvSize=s;altHide.tv=(s!=='75');altHide.tvled=(s!=='75');altHide.tv65=(s!=='65');altHide.tvled65=(s!=='65');
   room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='tv'||c==='tv65'||c==='tvled'||c==='tvled65'){o.visible=!altHide[c]&&!hideCats[c]&&((c==='tvled'||c==='tvled65')?tvLedOn:true);}});
-  var zz=(s==='65')?(TV65.Z0+TV65.H/2):(TVZ0+TVH/2);tvLight.position.copy(P(TVCX,0.12,zz));
+  var zz=(s==='65')?(TV65.Z0+TV65.H/2):(TVZ0+TVH/2);tvLight.position.copy(P(TVCX,0.12-NY,zz));
   tv75B.classList.toggle('on',s==='75');tv65B.classList.toggle('on',s==='65');}
 tv75B.onclick=function(){setTvSize('75');};tv65B.onclick=function(){setTvSize('65');};
 function setTvLed(on){tvLedOn=on;tvLedObjs.forEach(function(o){o.visible=on;});tvledB.classList.toggle('on',on);applyLights();}
