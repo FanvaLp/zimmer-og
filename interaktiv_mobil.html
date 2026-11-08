@@ -64,6 +64,18 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 #cmpBar .cl.l{right:30px}#cmpBar .cl.r{left:30px}
 #measClr{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(20,20,24,.82);color:#fff;font:600 13px system-ui,sans-serif;cursor:pointer}
 #measLbl{z-index:6;background:#d2691e;color:#fff;border-color:#d2691e;font-size:13px;padding:2px 8px}
+/* ---- Handy: 3D oben gross, Bedienknoepfe unten scrollbar ---- */
+header p{display:none}
+#stage{flex:0 0 54dvh;margin:2px 8px 0}
+#ctl{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;margin:6px 0 0;border-top:1px solid var(--line);padding-bottom:6px}
+#ctl .panel{padding:6px 12px}
+@media (orientation:landscape) and (max-height:520px){
+body{display:grid;grid-template-columns:minmax(0,1fr) 44%;grid-template-rows:1fr auto;column-gap:6px}
+header{display:none}
+#stage{grid-column:1;grid-row:1;flex:none;height:auto;margin:6px 0 0 8px}
+#ctl{grid-column:2;grid-row:1;margin:6px 8px 0 0;border-top:0}
+footer{grid-column:1/-1;grid-row:2}
+}
 </style>
 </head>
 <body>
@@ -72,7 +84,9 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <h1>Zimmer OG – interaktiv</h1>
 <p>Ziehen = drehen · zwei Finger = zoomen · Objekt antippen = Maße</p>
 </header>
-<div class="panel">
+<div id="stage"><canvas id="c"></canvas><div id="cmpBar" style="display:none"><span class="cl l">Leer</span><span class="cl r">Eingerichtet</span><div class="hd">⇆</div></div><button id="measClr" style="display:none" title="Messpunkte und Linie löschen">Messung löschen</button>
+<div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
+<div id="ctl"><div class="panel">
 <div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt oder angeklickt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen">Nichts zeigen</button></div></div>
 <div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="ceilB" class="on" title="Deckenlicht An/Aus (Aus = Raum dunkel, wie bei Nacht)">Deckenlicht</button><button id="nightB" title="Raum dunkel: nur Nanoleaf, TV-LED, Schreibtischlicht (PC und Lautsprecher-LEDs) leuchten, alles einzeln schaltbar">Nacht</button><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Sofa-Licht</button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher">Schreibtischlicht</button></div></div>
 <div class="grp"><span class="lab">Möbel ein / aus</span><div class="seg"><button id="hSofa" class="on" title="Sofa (auch ausgeklappt) ein- oder ausblenden">Sofa</button><button id="hTisch" class="on" title="Schreibtisch mit PC, Bildschirmen, Lautsprechern usw. ein- oder ausblenden">Schreibtisch</button><button id="hSchrank" class="on" title="PAX-Schrank ein- oder ausblenden">Schrank</button><button id="hSide" class="on" title="BESTÅ-Sideboard ein- oder ausblenden">Sideboard</button><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Fernseher</button><button id="hStuhl" class="on" title="Bürostuhl und Unterlage ein- oder ausblenden">Stuhl</button><button id="hAll" title="Alle diese Möbel auf einmal ein- oder ausblenden">Alle</button></div></div>
@@ -87,8 +101,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="grp"><span class="lab">Teilen</span><div class="seg"><button id="shareBtn" title="Kopiert einen Link, der genau diese Auswahl (Teppich, Sofa, Ansicht) wieder einstellt">Link zu dieser Ansicht kopieren</button></div><input id="shareIn" readonly aria-label="Link zum Kopieren"></div>
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
-<div id="stage"><canvas id="c"></canvas><div id="cmpBar" style="display:none"><span class="cl l">Leer</span><span class="cl r">Eingerichtet</span><div class="hd">⇆</div></div><button id="measClr" style="display:none" title="Messpunkte und Linie löschen">Messung löschen</button>
-<div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
+</div>
 <footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Hersteller-Datenblatt: je 12,3 × 12,3 × 11,8 cm; Position), LED-Streifen hinter dem Fernseher (Philips Hue Flux 5 m: Umfang ≈ 4,97 m bei 3,5 cm Abstand zum Rand; Farbe und Lichtschein beispielhaft), Heizkörper-Anschlussrohre (Lage nach Foto geschätzt), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>

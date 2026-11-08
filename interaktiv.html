@@ -48,15 +48,20 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 #measClr{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(20,20,24,.82);color:#fff;font:600 13px system-ui,sans-serif;cursor:pointer}
 #measLbl{z-index:6;background:#d2691e;color:#fff;border-color:#d2691e;font-size:13px;padding:2px 8px}
 @media (min-width:1000px){
-#main{display:flex;gap:14px;padding:0 16px;align-items:flex-start}
-#stagewrap{flex:1;min-width:0;position:sticky;top:8px}
-#stage{margin:0;min-height:0;flex:none;height:calc(100vh - 118px)}
-#side{flex:0 0 400px;max-height:calc(100vh - 118px);overflow-y:auto;position:sticky;top:8px;padding-right:4px}
-#side .panel{padding:0}
-#side .grp{flex-direction:column;align-items:flex-start;gap:4px}
-#side .grp>.lab{flex:none;align-self:flex-start;text-align:left}
-#side .bar{padding:8px 0}
 html,body{height:auto;min-height:100%}
+body{display:grid;grid-template-columns:minmax(0,1fr) 400px;column-gap:14px;grid-template-rows:auto 1fr auto;align-items:start}
+header{grid-column:1;grid-row:1}
+#main{display:contents}
+#stagewrap{grid-column:1;grid-row:2;position:sticky;top:8px;margin:0 0 0 16px;min-width:0}
+#stage{margin:0;min-height:0;flex:none;height:calc(100vh - 118px)}
+#side{grid-column:2;grid-row:1/span 2;position:sticky;top:8px;max-height:calc(100vh - 16px);overflow-y:auto;margin-right:12px;padding-right:4px}
+footer{grid-column:1/-1;grid-row:3}
+#side .panel{padding:0;gap:3px}
+#side .grp{flex-direction:column;align-items:flex-start;gap:2px}
+#side .grp>.lab{flex:none;align-self:flex-start;text-align:left;font-size:12px}
+#side .seg button,#side .bar button{padding:4px 8px;font-size:12px}
+#side .bar{padding:6px 0;gap:4px}
+#side .hvg{padding:4px 6px}
 }
 </style>
 </head>
