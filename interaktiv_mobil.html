@@ -74,7 +74,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 </header>
 <div class="panel">
 <div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt oder angeklickt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen">Nichts zeigen</button></div></div>
-<div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="ceilB" class="on" title="Deckenlicht An/Aus (Aus = Raum dunkel, wie bei Nacht)">Deckenlicht</button><button id="nightB" title="Raum dunkel: nur Nanoleaf, TV-LED, Schreibtischlicht (PC und Lautsprecher-LEDs) leuchten, alles einzeln schaltbar">Nacht</button><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="sofaledB" class="on" title="LED-Streifen Philips Hue Flux (3 m, auf 2,84 m gekürzt) hinter dem Sofa, leuchtet an die Schräge">Sofa-LED</button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher">Schreibtischlicht</button></div></div>
+<div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="ceilB" class="on" title="Deckenlicht An/Aus (Aus = Raum dunkel, wie bei Nacht)">Deckenlicht</button><button id="nightB" title="Raum dunkel: nur Nanoleaf, TV-LED, Schreibtischlicht (PC und Lautsprecher-LEDs) leuchten, alles einzeln schaltbar">Nacht</button><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Sofa-Licht</button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher">Schreibtischlicht</button></div></div>
 <div class="grp"><span class="lab">Möbel ein / aus</span><div class="seg"><button id="hSofa" class="on" title="Sofa (auch ausgeklappt) ein- oder ausblenden">Sofa</button><button id="hTisch" class="on" title="Schreibtisch mit PC, Bildschirmen, Lautsprechern usw. ein- oder ausblenden">Schreibtisch</button><button id="hSchrank" class="on" title="PAX-Schrank ein- oder ausblenden">Schrank</button><button id="hSide" class="on" title="BESTÅ-Sideboard ein- oder ausblenden">Sideboard</button><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Fernseher</button><button id="hStuhl" class="on" title="Bürostuhl und Unterlage ein- oder ausblenden">Stuhl</button><button id="hAll" title="Alle diese Möbel auf einmal ein- oder ausblenden">Alle</button></div></div>
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="v5" title="Blick gerade auf die Schreibtischwand, Dachschräge wird ausgeblendet">Schreibtischwand</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
 <div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am linken Ende">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, in der Mitte">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am rechten Ende">L-Stück</button></div></div>
@@ -573,20 +573,24 @@ var tvLedObjs=[],tvHalo=null,TVLB=[];
   TVLB.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,97 m (3,5 cm vom Rand)',TVCX,TVF-0.02,TVZ0+TVH+0.30]);
 })();
 cat='sofaled';
-// LED-Streifen Philips Hue Flux 3 m (auf 2,84 m gekuerzt) hinter dem Sofa, auf der Schraege, strahlt nach oben an die Schraege
-var sofaLedObjs=[],sofaHalo=null,SFLB=[];
+// Philips Hue Play Lightbar 2er Pack (Amazon B07FYDGD7R) auf dem Boden hinter dem Sofa, leuchtet an Kniestock und Schraege (Laenge ca. 25 cm, Querschnitt 44 x 36 mm)
+var sofaLedObjs=[],sofaHalos=[],SFLB=[];
 (function(){
-  var yc=D-0.50,zc=0.62+(H-0.62)*0.50/SD,len=SWD,mat=new THREE.MeshBasicMaterial({color:0xffb86b});
-  var m=new THREE.Mesh(new THREE.BoxGeometry(len,0.012,0.012),mat);
-  m.position.copy(P(SX0+SWD/2,yc-0.004,zc-0.006));m.rotation.x=0;room.add(m);sofaLedObjs.push(m);
-  var cvw=document.createElement('canvas');cvw.width=256;cvw.height=128;var g=cvw.getContext('2d');
-  var gr=g.createLinearGradient(0,128,0,0);gr.addColorStop(0,'rgba(255,184,107,1)');gr.addColorStop(0.5,'rgba(255,150,70,0.45)');gr.addColorStop(1,'rgba(255,120,40,0)');
-  g.fillStyle='#000';g.fillRect(0,0,256,128);g.fillStyle=gr;g.fillRect(14,0,228,128);
-  var hm=new THREE.Mesh(new THREE.PlaneGeometry(SWD+0.2,0.62),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cvw),transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));
-  hm.userData.noPick=true;hm.rotation.x=-0.8467;
-  var up=0.31,yh=yc-0.749*up-0.004,zh=zc+0.662*up-0.005;
-  hm.position.copy(P(SX0+SWD/2,yh,zh));room.add(hm);sofaLedObjs.push(hm);sofaHalo=hm;
-  SFLB.push(['LED-Streifen Philips Hue Flux 3 m, auf 284 cm gekürzt',SX0+SWD/2,yc-0.05,zc-0.16]);
+  var mat=new THREE.MeshBasicMaterial({color:0xffb86b}),dark=new THREE.MeshBasicMaterial({color:0x2a2a2e});
+  var cvw=document.createElement('canvas');cvw.width=128;cvw.height=128;var g=cvw.getContext('2d');
+  var gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(255,184,107,1)');gr.addColorStop(0.5,'rgba(255,150,70,0.4)');gr.addColorStop(1,'rgba(255,120,40,0)');
+  g.fillStyle='#000';g.fillRect(0,0,128,128);g.fillStyle=gr;g.fillRect(0,0,128,128);
+  var tex=new THREE.CanvasTexture(cvw);
+  function halo(w,h){return new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));}
+  var yb=D-0.22,L=0.25,xs=[SX0+0.70,SX0+SWD-0.70];
+  xs.forEach(function(x){
+    var b=new THREE.Mesh(new THREE.BoxGeometry(L,0.044,0.036),dark);b.position.copy(P(x,yb,0.018));room.add(b);sofaLedObjs.push(b);
+    var f=new THREE.Mesh(new THREE.BoxGeometry(L-0.02,0.004,0.016),mat);f.position.copy(P(x,yb+0.024,0.020));room.add(f);sofaLedObjs.push(f);
+    var kh=halo(1.0,0.7);kh.userData.noPick=true;kh.position.copy(P(x,D-0.006,0.30));room.add(kh);sofaLedObjs.push(kh);sofaHalos.push(kh);
+    var ys=D-0.28,zs=0.62+(H-0.62)*0.28/SD,sh=halo(1.0,0.9);sh.userData.noPick=true;sh.rotation.x=-0.8467;
+    sh.position.copy(P(x,ys-0.004,zs-0.005));room.add(sh);sofaLedObjs.push(sh);sofaHalos.push(sh);
+  });
+  SFLB.push(['Philips Hue Play Lightbar, 2 Stück, je ca. 25 cm (Boden hinter dem Sofa)',SX0+SWD/2,yb,0.20]);
 })();
 cat='raum';
 // Beschriftungen
@@ -655,7 +659,7 @@ canvas.addEventListener('pointermove',function(e){
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
 ['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['sofaled','Sofa-LED (Hue Flux)'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['sofaled','Sofa-Licht (Hue Play)'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
@@ -729,13 +733,13 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){
 var sofaLedOn=true,tvLedOn=true,pcLedOn=true,spkLedOn=true,nightOn=false,cmpOn=false,cmpX=0.5,measureOn=false;
 var nlLight=new THREE.PointLight(0x7a6af0,0,3.6,1.3);nlLight.position.copy(P(0.45,2.65,1.75));scene.add(nlLight);
 var tvLight=new THREE.PointLight(0xff4fa8,0,3.8,1.2);tvLight.position.copy(P(TVCX,0.12,TVZ0+TVH/2));scene.add(tvLight);
-var slLight=new THREE.PointLight(0xffa24d,0,3.2,1.3);slLight.position.copy(P(SX0+SWD/2,D-0.62,1.10));scene.add(slLight);
+var slLight=new THREE.PointLight(0xffa24d,0,3.2,1.3);slLight.position.copy(P(SX0+SWD/2,D-0.35,0.30));scene.add(slLight);
 var pcLight=new THREE.PointLight(0xff2a2a,0,2.4,1.5);pcLight.position.copy(P(0.55,1.75,0.55));scene.add(pcLight);
 var nightB=document.getElementById('nightB'),cmpB=document.getElementById('cmpB'),measB=document.getElementById('measB'),measClr=document.getElementById('measClr'),tvledB=document.getElementById('tvledB'),sofaledB=document.getElementById('sofaledB'),ceilB=document.getElementById('ceilB'),pcledB=document.getElementById('pcledB'),cmpBar=document.getElementById('cmpBar');
 function applyLights(){if(!nlLight||!tvLight)return;nlLight.intensity=(nightOn&&ledOn)?0.9:0;tvLight.intensity=(nightOn&&tvLedOn&&!hideCats.tvled)?1.0:0;pcLight.intensity=(nightOn&&pcLedOn)?0.8:0;slLight.intensity=(nightOn&&sofaLedOn&&!hideCats.sofaled)?0.9:0;}
 function setNight(on){nightOn=on;hemi.intensity=on?0.10:0.95;dl.intensity=on?0:0.45;stage.style.background=on?'#07070b':'';
   edgeMats.forEach(function(m){m.color.setHex(edgeColor());});
-  if(tvHalo)tvHalo.material.opacity=on?1:0.5;if(sofaHalo)sofaHalo.material.opacity=on?1:0.55;nightB.classList.toggle('on',on);ceilB.classList.toggle('on',!on);applyLights();}
+  if(tvHalo)tvHalo.material.opacity=on?1:0.5;sofaHalos.forEach(function(h){h.material.opacity=on?1:0.55;});nightB.classList.toggle('on',on);ceilB.classList.toggle('on',!on);applyLights();}
 function setSofaLed(on){sofaLedOn=on;sofaLedObjs.forEach(function(o){o.visible=on&&!hideCats.sofaled;});sofaledB.classList.toggle('on',on);applyLights();}
 function setTvLed(on){tvLedOn=on;tvLedObjs.forEach(function(o){o.visible=on;});tvledB.classList.toggle('on',on);applyLights();}
 nightB.onclick=function(){setNight(!nightOn);};
