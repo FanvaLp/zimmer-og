@@ -64,7 +64,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
+<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor bzw. neben dem Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -313,6 +313,30 @@ sb(22,46,45,261,193,46.2,0xdbe6f6);           // Schlaffläche 239 x 147 cm
 var bedObjs=room.children.slice(bedStart).filter(function(o){return o.type!=='Group';});
 bedObjs.forEach(function(o){o.visible=false;});
 var bedOn=false;
+// Couchtisch IKEA LACK, Eicheneff wlas, 90 x 55 x 45 cm (Maße laut IKEA). Plattendicke 5 cm, Beine 5 x 5 cm, Ablage bei ca. 20 cm = geschätzt.
+// Normal: vor dem Sofa (Abstand 40 cm zu den Sitzkissen). Sofa ausgeklappt: neben dem Sofa auf der PC-Seite (Längsseite parallel zur Sofa-Seite).
+var CTN=[2.33,1.77,3.23,2.32],CTB=[1.20,1.30,1.75,2.20];
+function lackTable(r){var x0=r[0],y0=r[1],x1=r[2],y1=r[3],C=0xe6d3b0;
+  box(x0,y0,0.40,x1,y1,0.45,C);
+  box(x0+0.005,y0+0.005,0.19,x1-0.005,y1-0.005,0.21,C);
+  [[x0,y0],[x1-0.05,y0],[x0,y1-0.05],[x1-0.05,y1-0.05]].forEach(function(p){box(p[0],p[1],0,p[0]+0.05,p[1]+0.05,0.40,C);});}
+function ctDims(c,fn){cat=c;var v=[];
+  function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
+  function hx(y,x0,x1){s([x0,y,0.012],[x1,y,0.012]);s([x0,y-0.05,0.012],[x0,y+0.05,0.012]);s([x1,y-0.05,0.012],[x1,y+0.05,0.012]);}
+  function vy(x,y0,y1){s([x,y0,0.012],[x,y1,0.012]);s([x-0.05,y0,0.012],[x+0.05,y0,0.012]);s([x-0.05,y1,0.012],[x+0.05,y1,0.012]);}
+  function vz(x,y,z0,z1){s([x,y,z0],[x,y,z1]);s([x-0.05,y,z0],[x+0.05,y,z0]);s([x-0.05,y,z1],[x+0.05,y,z1]);}
+  fn(hx,vy,vz);
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+  room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));}
+var ctS=room.children.length;
+cat='ctn';lackTable(CTN);
+var ctN=room.children.slice(ctS).filter(function(o){return o.type!=='Group';});
+ctDims('ctn',function(hx,vy,vz){hx(CTN[1]-0.10,CTN[0],CTN[2]);vy(2.23,CTN[1],CTN[3]);vy(2.23,CTN[3],2.72);hx(2.05,CTN[2],3.59);vy(2.90,SBD,CTN[1]);vz(CTN[2]+0.06,2.045,0,0.45);});
+ctS=room.children.length;
+cat='ctb';lackTable(CTB);
+var ctB=room.children.slice(ctS).filter(function(o){return o.type!=='Group';});
+ctB.forEach(function(o){o.visible=false;});
+ctDims('ctb',function(hx,vy,vz){hx(CTB[1]-0.12,CTB[0],CTB[2]);vy(1.10,CTB[1],CTB[3]);hx(2.00,CTB[2],1.975);hx(1.45,0.80,CTB[0]);vy(1.45,0.465,CTB[1]);vy(1.62,CTB[3],2.30);vz(CTB[2]+0.05,1.75,0,0.45);});
 cat='stuhl';
 // Stuhlunterlage 100 x 120 cm + Bürostuhl (Maße geschätzt: Sitz 50 x 50, Gesamthöhe 98, Fußkreuz Ø 66)
 var MX0=0.57,MX1=1.77,MY0=2.30,MY1=3.30,CCX=1.07,CCY=2.80;   // mittig unter dem 1,60-m-Tischteil (y 2,00-3,60)   // Unterlage 1,20 m (Tisch -> Sofa) x 1,00 m (längs zum Tisch), endet am Sofa (1,20 m) -> ragt 23 cm unter die Tischplatte
@@ -449,7 +473,7 @@ var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch
  'Schrank 99,8 × 60,4 × 201,2 cm':'schrank','201,2 cm':'schrank','99,8 cm':'schrank',
  'Sideboard 180 × 42 × 38 cm':'sideboard','38 cm':'sideboard','180 cm':'sideboard','Rest bis Fensterwand ≈ 0,23 m':'sideboard',
  'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
- 'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','35 cm Abstand zur Schrägenwand':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 93 cm: 5 cm Luft über Rücken (88 cm)':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 1,39 m':'bett',
+ 'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','35 cm Abstand zur Schrägenwand':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 93 cm: 5 cm Luft über Rücken (88 cm)':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 1,39 m':'bett','Couchtisch LACK 90 × 55 × 45 cm':'ctn','Breite 90 cm':'ctn','Tiefe 55 cm':'ctn','bis Sofa 40 cm':'ctn','bis Récamiere 36 cm':'ctn','bis Sideboard 1,35 m':'ctn','Höhe 45 cm':'ctn','Couchtisch LACK 90 × 55 × 45 cm (neben Sofa)':'ctb','Breite 55 cm':'ctb','Länge 90 cm':'ctb','bis Sofa 22 cm':'ctb','bis Schreibtisch 40 cm':'ctb','Schornstein bis Couchtisch 83 cm':'ctb','bis Stuhlunterlage 10 cm':'ctb','Tischhöhe 45 cm':'ctb',
  'Unterlage 120 cm':'stuhl','23 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
  'Tisch bis Sofa 97 cm':'abstand','Stuhl–Sofa 42 cm':'abstand'};
 var labels=[
@@ -465,6 +489,7 @@ var labels=[
  ['35 cm Abstand zur Schrägenwand',SX0-0.08,D-SGAP/2,0.02],['Tiefe 102 cm',SX0-0.08,D-SGAP-0.51,0.02],['193 cm',SX0+SWD+0.08,D-SGAP-0.965,0.02],
  ['Decke 93 cm: 5 cm Luft über Rücken (88 cm)',SX0+SWD/2,D-SGAP,0.95],
  ['Schlaffläche 239 × 147 cm',3.2,(BYF+BYR)/2,0.9],['239 cm',(BXA+BXB)/2,BYF-0.15,0.02],['147 cm',SX0-0.12,(BYF+BYR)/2,0.02],['Bettkante bis Sideboard 1,39 m',3.2,(SBD+BYF)/2,0.02],
+ ['Couchtisch LACK 90 × 55 × 45 cm',(CTN[0]+CTN[2])/2,(CTN[1]+CTN[3])/2,0.62],['Breite 90 cm',(CTN[0]+CTN[2])/2,CTN[1]-0.10,0.02],['Tiefe 55 cm',2.23,(CTN[1]+CTN[3])/2,0.02],['bis Sofa 40 cm',2.23,(CTN[3]+2.72)/2,0.02],['bis Récamiere 36 cm',(CTN[2]+3.59)/2,2.05,0.02],['bis Sideboard 1,35 m',2.90,(SBD+CTN[1])/2,0.02],['Höhe 45 cm',CTN[2]+0.06,2.045,0.22],['Couchtisch LACK 90 × 55 × 45 cm (neben Sofa)',(CTB[0]+CTB[2])/2,(CTB[1]+CTB[3])/2,0.62],['Breite 55 cm',(CTB[0]+CTB[2])/2,CTB[1]-0.12,0.02],['Länge 90 cm',1.10,(CTB[1]+CTB[3])/2,0.02],['bis Sofa 22 cm',(CTB[2]+1.975)/2,2.00,0.02],['bis Schreibtisch 40 cm',1.0,1.45,0.02],['Schornstein bis Couchtisch 83 cm',1.45,(0.465+CTB[1])/2,0.02],['bis Stuhlunterlage 10 cm',1.62,2.25,0.02],['Tischhöhe 45 cm',CTB[2]+0.05,1.75,0.22],
  ['Tisch bis Sofa 97 cm',(0.80+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['23 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
  ['Stuhl–Sofa 42 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,23 m',SB0+SBW+0.115,0.75,0.02]
 ].map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3]),cat:LC[l[0]]||'raum'};});
@@ -504,7 +529,7 @@ canvas.addEventListener('pointermove',function(e){
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
 ['v1','v2','v3','v4'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['stuhl','Stuhl & Unterlage'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['stuhl','Stuhl & Unterlage'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
@@ -516,10 +541,10 @@ var hBtn={};
   b.onclick=function(){hoverOn=a[1];if(!hoverOn){hoverCat=null;canvas.style.cursor='grab';}hBtn.Ein.classList.toggle('on',hoverOn);hBtn.Aus.classList.toggle('on',!hoverOn);};hBtn[a[0]]=b;catsEl.appendChild(b);});
 hBtn.Ein.classList.add('on');
 var bedBtn=document.getElementById('bed');
-function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});pinned.bett=on;sync();bedBtn.classList.toggle('on',on);}
+function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);}
 bedBtn.onclick=function(){setBed(!bedOn);};
 
-function isVis(k){if(k==='bett'&&!bedOn)return false;if(pinned[k])return true;if(hoverCat){if(hoverCat===k)return true;var L=LINK[hoverCat];if(L&&L.indexOf(k)>=0)return true;}return false;}
+function isVis(k){if(k==='bett'&&!bedOn)return false;var c=k;if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
 var ray=new THREE.Raycaster(),mv=new THREE.Vector2(),downXY=null;
 function pick(e){var r=canvas.getBoundingClientRect();mv.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mv,cam);
   var hits=ray.intersectObjects(room.children,true);
