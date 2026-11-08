@@ -491,7 +491,7 @@ var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
 CATS.forEach(function(c){var b=document.createElement('button');b.textContent=c[1];b.dataset.k=c[0];b.onclick=function(){pinned[c[0]]=!pinned[c[0]];sync();};catsEl.appendChild(b);});
 [['Alle',true],['Keine',false]].forEach(function(a){var b=document.createElement('button');b.textContent=a[0];b.onclick=function(){CATS.forEach(function(c){pinned[c[0]]=a[1];});sync();};catsEl.appendChild(b);});
-var sep=document.createElement('span');sep.className='lab';sep.textContent='· Beim Überfahren:';catsEl.appendChild(sep);
+var sep=document.createElement('span');sep.className='lab';sep.textContent='Maße beim Überfahren mit der Maus:';catsEl.appendChild(sep);
 var hBtn={};
 [['Ein',true],['Aus',false]].forEach(function(a){var b=document.createElement('button');b.textContent=a[0];b.title=a[1]?'Maße beim Überfahren mit der Maus zeigen':'Beim Überfahren nichts anzeigen (Klick und Leiste funktionieren weiter)';
   b.onclick=function(){hoverOn=a[1];if(!hoverOn){hoverCat=null;canvas.style.cursor='grab';}hBtn.Ein.classList.toggle('on',hoverOn);hBtn.Aus.classList.toggle('on',!hoverOn);};hBtn[a[0]]=b;catsEl.appendChild(b);});
