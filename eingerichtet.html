@@ -27,6 +27,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .panel{padding:6px 16px;display:flex;flex-direction:column;gap:6px}
 .grp{display:flex;align-items:center;gap:10px;min-width:0}
 .grp>.lab{flex:0 0 140px;font-weight:600;color:var(--fg);margin:0}
+#shareIn{display:none;flex:1;min-width:0;font:inherit;font-size:12px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--fg)}
 .hvg{padding:6px 8px;border:1px dashed var(--line);border-radius:10px;align-self:flex-start}
 .seg{display:flex;flex-wrap:wrap;min-width:0}
 .seg button{border-radius:0;margin:0 -1px -1px 0;position:relative}
@@ -53,6 +54,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
 <div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
+<div class="grp"><span class="lab">Teilen</span><div class="seg"><button id="shareBtn" title="Kopiert einen Link, der genau diese Auswahl (Teppich, Sofa, Ansicht) wieder einstellt">Link zu dieser Ansicht kopieren</button></div><input id="shareIn" readonly aria-label="Link zum Kopieren"></div>
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
@@ -569,6 +571,24 @@ try{var sv=JSON.parse(localStorage.getItem(LSK)||'null');
   setBed(!!sv.bed);if(sv.hover===false)hBtn.Aus.onclick();
   if(sv.zones&&!zones.visible)document.getElementById('tz').onclick();
   if(sv.view&&views[sv.view]){setView(sv.view);lastView=sv.view;}}}catch(e){}
+/* Teilen-Link: Auswahl steckt in der Adresse (?teppich=ikea200|ikea170|kaufland|kein&lage=quer|laengs&sofa=zu|offen&ansicht=1-4&zonen=1&masse=aus) */
+var VMAP={a:'ikea200',b:'ikea170',c:'kaufland'};
+function shareURL(){var q=['teppich='+(rugOn?VMAP[rugV]:'kein')];if(rugOn&&rugV==='a')q.push('lage='+(rugOr==='q'?'quer':'laengs'));q.push('sofa='+(bedOn?'offen':'zu'));q.push('ansicht='+lastView.slice(1));if(zones.visible)q.push('zonen=1');if(!hoverOn)q.push('masse=aus');return location.href.split(/[?#]/)[0]+'?'+q.join('&');}
+try{var up=new URLSearchParams(location.search);
+ if(up.has('teppich')){
+  if(zones.visible)document.getElementById('tz').onclick();if(!hoverOn)hBtn.Ein.onclick();rugOr='q';
+  var tp=up.get('teppich');if(tp==='kein'){rugOn=false;}else{Object.keys(VMAP).forEach(function(k){if(VMAP[k]===tp){rugV=k;rugOn=true;}});}
+  if(up.get('lage')==='laengs')rugOr='l';applyRug();
+  setBed(up.get('sofa')==='offen');
+  var an=up.get('ansicht');if(an&&views['v'+an]){setView('v'+an);lastView='v'+an;}
+  if(up.get('zonen')==='1')document.getElementById('tz').onclick();
+  if(up.get('masse')==='aus')hBtn.Aus.onclick();
+  saveUI();}}catch(e){}
+var shBtn=document.getElementById('shareBtn'),shIn=document.getElementById('shareIn'),shTxt=shBtn.textContent;
+shBtn.onclick=function(){var u=shareURL();
+ function ok(){shBtn.textContent='Kopiert ✓';shIn.style.display='none';setTimeout(function(){shBtn.textContent=shTxt;},2200);}
+ function fail(){shIn.value=u;shIn.style.display='block';shIn.focus();shIn.select();shBtn.textContent='Link unten markieren und kopieren';setTimeout(function(){shBtn.textContent=shTxt;},4000);}
+ try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,fail);}else{fail();}}catch(e){fail();}};
 document.querySelector('.panel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(views[b.id])lastView=b.id;saveUI();});
 
 

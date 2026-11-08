@@ -26,6 +26,18 @@ h2 span{font-weight:500;color:var(--muted);font-size:13px}
 .btn{flex:0 0 auto;background:var(--accent);color:#fff;text-decoration:none;border-radius:10px;padding:11px 18px;font-weight:600;font-size:14px;white-space:nowrap}
 .btn:hover,.btn:focus-visible{filter:brightness(1.08);outline:none}
 .note{margin-top:16px;color:var(--muted);font-size:13px}
+.sum{background:var(--panel);border:2px solid var(--accent);border-radius:14px;padding:16px 18px;margin:0 0 6px}
+.sum h2{margin:0 0 10px;border:0;padding:0}
+.sum .pick{display:flex;flex-wrap:wrap;margin:0 0 12px}
+.sum .pick button{font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;margin:0 -1px -1px 0}
+.sum .pick button:first-child{border-radius:10px 0 0 10px}.sum .pick button:last-child{border-radius:0 10px 10px 0;margin-right:0}
+.sum .pick button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.sum .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:15px}
+.sum .row small{color:var(--muted);display:block;font-size:12px}
+.sum input{width:110px;font:inherit;font-size:15px;text-align:right;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.sum .tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:20px;font-weight:700;color:var(--head)}
+.sum .open{margin-top:4px;color:var(--muted);font-size:13px}
+@media (max-width:560px){.sum .pick button{flex:1 1 100%;margin:0 0 -1px 0;border-radius:0!important}}
 @media (max-width:560px){.card{flex-direction:column;align-items:stretch}.btn{text-align:center}}
 </style>
 </head>
@@ -35,6 +47,45 @@ h2 span{font-weight:500;color:var(--muted);font-size:13px}
 <img class="banner" src="banner.jpg" alt="Zimmereinrichtung OG – Wohnen unterm Dach" width="2000" height="600">
 <h1>Einkaufsliste</h1>
 <p class="sub">Was noch ins Zimmer kommt – mit Maßen und Link zum jeweiligen Shop.</p>
+
+<section class="sum" id="sum">
+<h2>Gesamtpreis</h2>
+<div class="pick" id="pick"><button data-r="a" class="on">IKEA 200 × 300 (Haupt)</button><button data-r="b">IKEA 170 × 240</button><button data-r="c">Kaufland 250 × 300</button></div>
+<div id="rows"></div>
+<div class="tot"><span>Summe</span><span id="tot">–</span></div>
+<div class="open" id="open"></div>
+</section>
+<script>
+(function(){
+var RUG={a:['STOENSE Teppich 200 × 300',139.00,'IKEA'],b:['STOENSE Teppich 170 × 240',89.99,'IKEA'],c:['ETON Teppich 250 × 300',130.19,'Kaufland']};
+/* fest: Preis laut Shop; null = Preis hängt von deiner Konfiguration ab, hier selbst eintragen */
+var ITEMS=[['pax','PAX Kleiderschrank','IKEA – Preis je nach Konfiguration im Planer',null],['besta','BESTÅ TV-Bank mit Türen (Sideboard)','IKEA – Preis laut Seite (zuvor 199 €)',145.00],['soer','SÖRVALLEN Sofa','IKEA – Preis je nach Konfiguration',null],['lack','LACK Couchtisch','IKEA',19.99],['tv','Samsung Mini LED 75 Zoll M70H','Amazon – Preis bitte selbst eintragen',null]];
+var st={r:'a',v:{}};try{var x=JSON.parse(localStorage.getItem('einkauf_summe')||'null');if(x){st.r=RUG[x.r]?x.r:'a';st.v=x.v||{};}}catch(e){}
+function save(){try{localStorage.setItem('einkauf_summe',JSON.stringify(st));}catch(e){}}
+function eur(n){return n.toLocaleString('de-DE',{style:'currency',currency:'EUR'});}
+function num(t){var n=parseFloat(String(t||'').replace(/\./g,'').replace(',','.'));return isNaN(n)?null:n;}
+var rows=document.getElementById('rows');
+var built=false;
+function build(){var h='';
+ ITEMS.forEach(function(it){var p=it[3];
+  if(p===null)h+='<div class="row"><span>'+it[1]+'<small>'+it[2]+'</small></span><span><input data-k="'+it[0]+'" inputmode="decimal" placeholder="€ eintragen" value="'+String(st.v[it[0]]||'').replace(/"/g,'')+'"></span></div>';
+  else h+='<div class="row"><span>'+it[1]+'<small>'+it[2]+'</small></span><b>'+eur(p)+'</b></div>';});
+ h+='<div class="row" id="rugrow"></div>';rows.innerHTML=h;built=true;}
+function draw(){
+ if(!built)build();
+ [].forEach.call(document.querySelectorAll('#pick button'),function(b){b.classList.toggle('on',b.dataset.r===st.r);});
+ var tot=0,miss=[];
+ ITEMS.forEach(function(it){if(it[3]===null){var v=num(st.v[it[0]]);if(v===null)miss.push(it[1].split(' ')[0]);else tot+=v;}else tot+=it[3];});
+ var r=RUG[st.r];tot+=r[1];
+ document.getElementById('rugrow').innerHTML='<span>'+r[0]+'<small>'+r[2]+' – gewählter Teppich</small></span><b>'+eur(r[1])+'</b>';
+ document.getElementById('tot').textContent=eur(tot);
+ document.getElementById('open').textContent=miss.length?('Noch ohne Preis (nicht in der Summe): '+miss.join(', ')+'. Trage sie oben ein, die Summe rechnet sich neu.'):'Alle Posten sind enthalten.';
+}
+document.getElementById('pick').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.r=b.dataset.r;save();draw();});
+rows.addEventListener('input',function(e){var i=e.target;if(i.dataset&&i.dataset.k){st.v[i.dataset.k]=i.value;save();draw();}});
+draw();
+})();
+</script>
 
 <h2>IKEA <span>– 6 Artikel</span></h2>
 
