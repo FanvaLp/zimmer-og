@@ -55,12 +55,12 @@ footer summary{cursor:pointer;color:var(--muted)}
 <button id="v3">Schräge im Profil</button>
 <button id="v4">Von der Tür</button>
 <button id="tz">Kopfhöhen-Zonen</button>
-<button id="bed">Bett ausklappen</button>
+<button id="bed">Sofa ausgeklappt</button>
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher steht ohne Fußhöhe direkt auf dem Sideboard, Gesamthöhe 121,12 cm), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; im Bett-Modus Lage und Höhe der Schlaffläche), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
+<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher steht ohne Fußhöhe direkt auf dem Sideboard, Gesamthöhe 121,12 cm), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -290,7 +290,7 @@ sb(182.8,42,30,263.2,102,45,CU);            // Sitzkissen 2 (81 cm)
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));
 })();
 cat='bett';
-// Bett-Modus (Sofa ausgeklappt). IKEA-Angabe: Schlaffläche 239 x 147 cm (Länge x Breite). Annahme: Schlaffläche schließt vorn bündig mit der Récamiere ab (Sitztiefe Récamiere 154 cm ≈ Bettbreite 147 cm), flach auf Sitzhöhe, Rückenkissen weggeräumt.
+// Sofa ausgeklappt (Bett-Modus). IKEA-Angabe: Schlaffläche 239 x 147 cm (Länge x Breite). Annahme: Schlaffläche schließt vorn bündig mit der Récamiere ab (Sitztiefe Récamiere 154 cm ≈ Bettbreite 147 cm), flach auf Sitzhöhe, Rückenkissen weggeräumt.
 var bedStart=room.children.length;
 var BXA=SX0+(284-261)/100,BXB=SX0+(284-22)/100,BYF=D-SGAP-1.93,BYR=D-SGAP-0.46;
 sb(101.5,102,7,263.5,193,44,FR);              // ausgezogener Rahmen vorn
@@ -500,7 +500,7 @@ canvas.addEventListener('pointermove',function(e){
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
 ['v1','v2','v3','v4'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Bett'],['stuhl','Stuhl & Unterlage'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['stuhl','Stuhl & Unterlage'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
@@ -512,7 +512,7 @@ var hBtn={};
   b.onclick=function(){hoverOn=a[1];if(!hoverOn){hoverCat=null;canvas.style.cursor='grab';}hBtn.Ein.classList.toggle('on',hoverOn);hBtn.Aus.classList.toggle('on',!hoverOn);};hBtn[a[0]]=b;catsEl.appendChild(b);});
 hBtn.Ein.classList.add('on');
 var bedBtn=document.getElementById('bed');
-function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});pinned.bett=on;sync();bedBtn.classList.toggle('on',on);bedBtn.textContent=on?'Bett einklappen':'Bett ausklappen';}
+function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});pinned.bett=on;sync();bedBtn.classList.toggle('on',on);}
 bedBtn.onclick=function(){setBed(!bedOn);};
 
 function isVis(k){if(k==='bett'&&!bedOn)return false;if(pinned[k])return true;if(hoverCat){if(hoverCat===k)return true;var L=LINK[hoverCat];if(L&&L.indexOf(k)>=0)return true;}return false;}
