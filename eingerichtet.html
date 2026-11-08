@@ -17,7 +17,7 @@ header p{margin:0;color:var(--muted);font-size:13px}
 .bar{display:flex;flex-wrap:wrap;gap:6px;padding:6px 16px}
 button{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font:inherit;font-size:13px;cursor:pointer}
 button.on{border-color:var(--accent);color:var(--accent);font-weight:600}
-#stage{position:relative;flex:1;min-height:560px;margin:0 16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+#stage{position:relative;flex:1;min-height:max(560px,78vh);margin:0 16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
 canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .lbl{position:absolute;transform:translate(-50%,-50%);font-size:11px;font-weight:600;color:var(--accent);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1px 5px;white-space:nowrap;pointer-events:none}
 #legend{position:absolute;left:10px;bottom:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;display:none}
@@ -597,14 +597,14 @@ var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],
 var viewsBed={v6:[-0.678,-0.065,2.445,55,[3.631,0.15,0.91]],v7:[-0.301,-0.081,1.996,55,[3.631,0.15,0.91]],v8:[0.192,-0.083,1.942,55,[3.631,0.15,0.91]]};   // Bett ausgeklappt: liegend/angelehnt, Augenhöhe 0,75 m, Kopf am linken Ende / Mitte / rechten Ende der Schlaffläche
 function setView(k){var v=(bedOn&&viewsBed[k])||views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
   if(k==='v4'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(75,Math.min(125,2*Math.atan(Math.tan(0.9425)/asp)*180/Math.PI));cam.updateProjectionMatrix();}
-  if(k==='v6'||k==='v7'||k==='v8'){var asp6=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(38,Math.min(125,2*Math.atan(Math.tan(0.698)/asp6)*180/Math.PI));cam.updateProjectionMatrix();}
+  if(k==='v6'||k==='v7'||k==='v8'){var asp6=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(40,Math.min(125,2*Math.atan(Math.tan(0.96)/asp6)*180/Math.PI));cam.updateProjectionMatrix();}
   if(k==='v5'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);dist=Math.max(6,Math.min(25,6.04/asp));}
   ['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(i){document.getElementById(i).classList.toggle('on',i===k);});}
 function place(){
   cam.position.set(tgt.x+dist*Math.cos(el)*Math.sin(az),tgt.y+dist*Math.sin(el),tgt.z+dist*Math.cos(el)*Math.cos(az));
   cam.up.set(0,1,0);cam.lookAt(tgt);
 }
-function resize(){var w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;if(typeof lastView!=='undefined'&&/^v[678]$/.test(lastView))cam.fov=Math.max(38,Math.min(125,2*Math.atan(Math.tan(0.698)/cam.aspect)*180/Math.PI));cam.updateProjectionMatrix();}
+function resize(){var w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;if(typeof lastView!=='undefined'&&/^v[678]$/.test(lastView))cam.fov=Math.max(40,Math.min(125,2*Math.atan(Math.tan(0.96)/cam.aspect)*180/Math.PI));cam.updateProjectionMatrix();}
 window.addEventListener('resize',resize);
 // Steuerung
 var ptrs={},lastPinch=0;
@@ -617,7 +617,7 @@ canvas.addEventListener('pointermove',function(e){
   else if(ids.length===2){ptrs[e.pointerId]=[e.clientX,e.clientY];var a=ptrs[ids[0]],b=ptrs[ids[1]];var d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastPinch)dist=Math.max(3,Math.min(25,dist*lastPinch/d));lastPinch=d;}
 });
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
-['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');};});
+['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');if(/^v[678]$/.test(k)){try{stage.scrollIntoView({block:'end'});}catch(e){}}};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
 var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
