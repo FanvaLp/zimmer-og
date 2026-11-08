@@ -42,10 +42,14 @@ button{min-height:40px;padding:8px 14px;font-size:14px;touch-action:manipulation
 footer{padding:4px 12px calc(6px + env(safe-area-inset-bottom,0px));font-size:11px}
 footer summary{cursor:pointer;color:var(--muted)}
 @media (hover:none){.hv{display:none!important}}
+a.home{display:inline-block;margin:0 0 6px;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
+a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
+@media (hover:none){a.home{padding:10px 14px;margin-bottom:4px}}
 </style>
 </head>
 <body>
 <header>
+<a class="home" href="index.html">← Zur Startseite</a>
 <h1>Zimmer OG – eingerichtet</h1>
 <p>Ziehen = drehen · zwei Finger = zoomen · Objekt antippen = Maße</p>
 </header>
