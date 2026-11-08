@@ -483,7 +483,7 @@ cat='tisch';
 })();
 cat='led';
 // Nanoleaf Shapes Ultra Black Hexagons (9 Stück), Muster nach Vorlage: je 23 x 20 cm (Spitze zu Spitze x Kante zu Kante), ca. 1 cm tief, an der Wand über den Bildschirmen
-var ledObjs=[];
+var ledObjs=[],LEDLB=[];
 (function(){
   var R=0.1135,TH=0.010,SPX=0.1725,SPY=0.20,YC=2.80,ZC=1.90;
   var HEX=[[0,0,0x14141a],[1,0,0x5a2a98],[1,1,0x6a2fb0],[0,2,0x14141a],[2,1,0x9a3fd6],[3,0,0x6a5af0],[4,0,0x4a78ee],[5,-1,0x3fb4ea],[6,-1,0x2fe0c4]];
@@ -493,6 +493,16 @@ var ledObjs=[];
     var m=new THREE.Mesh(new THREE.CylinderGeometry(R,R,TH,6),[side,side,new THREE.MeshBasicMaterial({color:h[2]})]);
     m.rotation.z=Math.PI/2;m.position.copy(P(TH/2+0.001,y,z));room.add(m);ledObjs.push(m);
   });
+  // Maßlinien (nur sichtbar, wenn Nanoleaf an ist): Panel 23 x 20 cm laut Nanoleaf-Datenblatt, Muster 126,5 x 80 cm
+  var v=[],XL=0.02;
+  function s(a,b){v.push.apply(v,P(XL,a[0],a[1]).toArray());v.push.apply(v,P(XL,b[0],b[1]).toArray());}
+  function hy(z,ya,yb){s([ya,z],[yb,z]);s([ya,z-0.04],[ya,z+0.04]);s([yb,z-0.04],[yb,z+0.04]);}
+  function vz(yy,za,zb){s([yy,za],[yy,zb]);s([yy-0.04,za],[yy+0.04,za]);s([yy-0.04,zb],[yy+0.04,zb]);}
+  var yl=y0-0.115,yr=y0+6*SPX+0.115;
+  hy(1.33,yl,yr);vz(yr+0.07,1.40,2.20);hy(2.10,yr-0.23,yr);vz(y0+6*SPX,2.00,2.20);vz(2.33,1.17,1.40);
+  var gd=new THREE.BufferGeometry();gd.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+  room.add(new THREE.LineSegments(gd,new THREE.LineBasicMaterial({color:0xd2691e})));
+  LEDLB.push(['Nanoleaf Hexagons: 9 Stück, je 23 × 20 cm',0.05,y0+3*SPX,2.27],['Breite gesamt 126,5 cm',0.05,YC,1.36],['Höhe gesamt 80 cm (1,40 – 2,20 m über Boden)',0.05,yr+0.07,1.80],['23 cm',0.05,y0+6*SPX,2.135],['20 cm',0.05,y0+6*SPX,2.02],['23 cm bis Monitor',0.05,2.33,1.25]);
 })();
 cat='raum';
 // Beschriftungen
@@ -502,7 +512,7 @@ var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch
  'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
  'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','35 cm Abstand zur Schrägenwand':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 93 cm: 5 cm Luft über Rücken (88 cm)':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 1,39 m':'bett','Couchtisch LACK 90 × 55 × 45 cm':'ctn','Breite 90 cm':'ctn','Tiefe 55 cm':'ctn','bis Sofa 40 cm':'ctn','bis Récamiere 36 cm':'ctn','bis Sideboard 1,35 m':'ctn','Höhe 45 cm':'ctn','Couchtisch LACK 90 × 55 × 45 cm (vor dem Bett)':'ctb','Breite 90 cm (vor dem Bett)':'ctb','Tiefe 55 cm (vor dem Bett)':'ctb','bis Bettkante 20 cm':'ctb','bis Sideboard 64 cm':'ctb','Tischhöhe 45 cm':'ctb',
  'Unterlage 120 cm':'stuhl','23 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
- 'Tisch bis Sofa 97 cm':'abstand','Stuhl–Sofa 42 cm':'abstand'};Object.assign(LC,RUGLC);
+ 'Tisch bis Sofa 97 cm':'abstand','Stuhl–Sofa 42 cm':'abstand'};Object.assign(LC,RUGLC);LEDLB.forEach(function(l){LC[l[0]]='led';});
 var labels=[
  ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
  ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
@@ -520,7 +530,7 @@ var labels=[
  
  ['Tisch bis Sofa 97 cm',(0.80+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['23 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
  ['Stuhl–Sofa 42 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,23 m',SB0+SBW+0.115,0.75,0.02]
-].concat(RUGLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3]),cat:LC[l[0]]||'raum'};});
+].concat(RUGLB).concat(LEDLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3]),cat:LC[l[0]]||'raum'};});
 // Maßlinien (eingezeichnet)
 (function(){
   var v=[];
@@ -555,7 +565,7 @@ canvas.addEventListener('pointermove',function(e){
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
 ['v1','v2','v3','v4'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
@@ -609,7 +619,7 @@ shBtn.onclick=function(){var u=shareURL();
 document.querySelector('.panel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(views[b.id])lastView=b.id;saveUI();});
 
 
-function isVis(k){if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
+function isVis(k){if(k==='led'&&!ledOn)return false;if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
 var ray=new THREE.Raycaster(),mv=new THREE.Vector2(),downXY=null;
 function pick(e){var r=canvas.getBoundingClientRect();mv.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mv,cam);
   var hits=ray.intersectObjects(room.children,true);
@@ -623,7 +633,7 @@ canvas.addEventListener('pointerup',function(e){
   downXY=null;if(e.pointerType==='touch')hoverCat=null;});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){edgeMats.forEach(function(m){m.color.setHex(edgeColor());});});
 function loop(){
-  Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k);dimG[k].position.y=rugOn?0.02:0;});
+  Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k);dimG[k].position.y=(rugOn&&k!=='led')?0.02:0;});
   place();renderer.render(scene,cam);
   var w=stage.clientWidth,h=stage.clientHeight;
   labels.forEach(function(l){
