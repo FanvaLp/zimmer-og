@@ -26,7 +26,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .lab{font-size:13px;color:var(--muted);align-self:center;margin-right:4px}
 .panel{padding:6px 16px;display:flex;flex-direction:column;gap:6px}
 .grp{display:flex;align-items:center;gap:10px;min-width:0}
-.grp>.lab{flex:0 0 96px;font-weight:600;color:var(--fg);margin:0}
+.grp>.lab{flex:0 0 140px;font-weight:600;color:var(--fg);margin:0}
 .hvg{padding:6px 8px;border:1px dashed var(--line);border-radius:10px;align-self:flex-start}
 .seg{display:flex;flex-wrap:wrap;min-width:0}
 .seg button{border-radius:0;margin:0 -1px -1px 0;position:relative}
@@ -34,7 +34,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .seg button:last-child{border-radius:0 8px 8px 0;margin-right:0}
 .seg button:only-child{border-radius:8px}
 .seg button.on{background:var(--accent);border-color:var(--accent);color:var(--bg);z-index:1}
-@media (max-width:560px){.grp>.lab{flex-basis:70px;font-size:12px}.seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.seg::-webkit-scrollbar{display:none}.seg button{flex:0 0 auto;white-space:nowrap}}
+@media (max-width:560px){.grp>.lab{flex-basis:92px;font-size:12px}.seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.seg::-webkit-scrollbar{display:none}.seg button{flex:0 0 auto;white-space:nowrap}}
 footer{padding:8px 16px 12px;font-size:12px;color:var(--muted)}
 
 /* ---- Handy-Optimierung ---- */
@@ -69,7 +69,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
-<div class="grp" id="orgrp"><span class="lab">Lage</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
+<div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
