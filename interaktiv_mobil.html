@@ -579,14 +579,14 @@ var labels=[
 })();
 var showLbl=true;
 // Kamera
-var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40;
+var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40,curV='v1';
 var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[-2.356,0.222,3.41,81,[2.6,2.6,0.9]],v5:[Math.PI/2,0.04,6.0,40,[0,2.40,1.15]]};
-function setView(k){var v=views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
+function setView(k){curV=k;var v=views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
   if(k==='v4'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(75,Math.min(125,2*Math.atan(Math.tan(0.9425)/asp)*180/Math.PI));cam.updateProjectionMatrix();}
   if(k==='v5'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);dist=Math.max(6,Math.min(25,6.04/asp));}
   ['v1','v2','v3','v4','v5'].forEach(function(i){document.getElementById(i).classList.toggle('on',i===k);});}
 function place(){
-  cam.position.set(tgt.x+dist*fit*Math.cos(el)*Math.sin(az),tgt.y+dist*fit*Math.sin(el),tgt.z+dist*fit*Math.cos(el)*Math.cos(az));
+  cam.position.set(tgt.x+dist*(curV==='v4'?1:fit)*Math.cos(el)*Math.sin(az),tgt.y+dist*(curV==='v4'?1:fit)*Math.sin(el),tgt.z+dist*(curV==='v4'?1:fit)*Math.cos(el)*Math.cos(az));
   cam.up.set(0,1,0);cam.lookAt(tgt);
 }
 var fit=1;
