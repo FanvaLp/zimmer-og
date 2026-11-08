@@ -24,6 +24,16 @@ canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 #legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
 
 .lab{font-size:13px;color:var(--muted);align-self:center;margin-right:4px}
+.panel{padding:6px 16px;display:flex;flex-direction:column;gap:6px}
+.grp{display:flex;align-items:center;gap:10px;min-width:0}
+.grp>.lab{flex:0 0 96px;font-weight:600;color:var(--fg);margin:0}
+.seg{display:flex;flex-wrap:wrap;min-width:0}
+.seg button{border-radius:0;margin:0 -1px -1px 0;position:relative}
+.seg button:first-child{border-radius:8px 0 0 8px}
+.seg button:last-child{border-radius:0 8px 8px 0;margin-right:0}
+.seg button:only-child{border-radius:8px}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:var(--bg);z-index:1}
+@media (max-width:560px){.grp>.lab{flex-basis:70px;font-size:12px}.seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.seg::-webkit-scrollbar{display:none}.seg button{flex:0 0 auto;white-space:nowrap}}
 footer{padding:8px 16px 12px;font-size:12px;color:var(--muted)}
 a.home{display:inline-block;margin:0 0 6px;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
 a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
@@ -36,13 +46,11 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <h1>Zimmer Obergeschoss – 3D-Ansicht eingerichtet</h1>
 <p>Ziehen = drehen · Mausrad / zwei Finger = zoomen · Maße: mit der Maus über ein Möbelstück fahren oder es anklicken (Klick hält die Maße fest) – oder unten Gegenstände auswählen</p>
 </header>
-<div class="bar">
-<button id="v1" class="on">Übersicht</button>
-<button id="v2">Draufsicht</button>
-<button id="v3">Schräge im Profil</button>
-<button id="v4">Von der Tür</button>
-<button id="tz">Kopfhöhen-Zonen</button>
-<button id="bed">Sofa ausgeklappt</button><button id="rug">Teppich An / Aus</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button><button id="rugO">Ausrichtung 200 × 300: quer</button>
+<div class="panel">
+<div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
+<div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
+<div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
+<div class="grp" id="orgrp"><span class="lab">Lage</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
@@ -540,18 +548,18 @@ var hBtn={};
 [['Ein',true],['Aus',false]].forEach(function(a){var b=document.createElement('button');b.textContent=a[0];b.title=a[1]?'Maße beim Überfahren mit der Maus zeigen':'Beim Überfahren nichts anzeigen (Klick und Leiste funktionieren weiter)';
   b.onclick=function(){hoverOn=a[1];if(!hoverOn){hoverCat=null;canvas.style.cursor='grab';}hBtn.Ein.classList.toggle('on',hoverOn);hBtn.Aus.classList.toggle('on',!hoverOn);};hBtn[a[0]]=b;catsEl.appendChild(b);});
 hBtn.Ein.classList.add('on');
-var bedBtn=document.getElementById('bed');
-function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);}
-bedBtn.onclick=function(){setBed(!bedOn);};
-var rugBtn=document.getElementById('rug'),rugBA=document.getElementById('rugA'),rugBB=document.getElementById('rugB'),rugBC=document.getElementById('rugC'),rugBO=document.getElementById('rugO');
+var bedBtn=document.getElementById('bed'),bedOff=document.getElementById('bedoff');
+function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
+bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
+var rugBtn=document.getElementById('rug'),rugBA=document.getElementById('rugA'),rugBB=document.getElementById('rugB'),rugBC=document.getElementById('rugC'),rugQ=document.getElementById('rugQ'),rugL=document.getElementById('rugL'),orGrp=document.getElementById('orgrp');
 function applyRug(){var key=rugKey();Object.keys(rugGroups).forEach(function(k){rugGroups[k].forEach(function(o){o.visible=rugOn&&k===key;});});
-  rugBtn.classList.toggle('on',rugOn);rugBA.classList.toggle('on',rugOn&&rugV==='a');rugBB.classList.toggle('on',rugOn&&rugV==='b');rugBC.classList.toggle('on',rugOn&&rugV==='c');
-  rugBO.textContent='Ausrichtung 200 × 300: '+(rugOr==='q'?'quer':'längs');rugBO.classList.toggle('on',rugOn&&rugV==='a');}
+  rugBtn.classList.toggle('on',!rugOn);rugBA.classList.toggle('on',rugOn&&rugV==='a');rugBB.classList.toggle('on',rugOn&&rugV==='b');rugBC.classList.toggle('on',rugOn&&rugV==='c');
+  rugQ.classList.toggle('on',rugOr==='q');rugL.classList.toggle('on',rugOr==='l');orGrp.style.display=(rugOn&&rugV==='a')?'':'none';}
 function setRug(on){rugOn=on;applyRug();}
 function pickRug(v){rugV=v;rugOn=true;applyRug();}
-rugBtn.onclick=function(){setRug(!rugOn);};
+rugBtn.onclick=function(){setRug(false);};
 rugBA.onclick=function(){pickRug('a');};rugBB.onclick=function(){pickRug('b');};rugBC.onclick=function(){pickRug('c');};
-rugBO.onclick=function(){rugOr=(rugOr==='q')?'l':'q';pickRug('a');};
+rugQ.onclick=function(){rugOr='q';pickRug('a');};rugL.onclick=function(){rugOr='l';pickRug('a');};
 setRug(true);
 
 
