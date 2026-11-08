@@ -62,7 +62,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Größe 12,3 × 12,3 × 11,8 cm, Position), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</footer>
+<footer>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Amazon-Datenblatt: 24,6 cm Breite für 2 Stück = je 12,3 cm, Tiefe 13,3 cm, Höhe 13,3 cm; Position), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -485,17 +485,17 @@ cat='tisch';
   var fr=cv(256,300,function(g,w,h){g.fillStyle='#0b0b0d';g.fillRect(0,0,w,h);g.fillStyle='#17171b';for(var i=0;i<h;i+=8){g.fillRect(0,i,w,3);}g.fillStyle='#ff1a1a';g.fillRect(w-10,0,6,h);g.fillRect(0,0,4,h);});
   var fm=new THREE.Mesh(new THREE.PlaneGeometry(2*hx,cz1-cz0),new THREE.MeshBasicMaterial({map:fr}));fm.rotation.y=Math.PI;fm.position.set(0,(cz0+cz1)/2,-hy-0.001);pg.add(fm);
 })();
-// Lautsprecher Creative Pebble Pro (2 Stück), je 123 x 123 x 118 mm laut PC-Welt; rote LED im Fußring. Links hinter der Headset-Ladestation, rechts zwischen PC und rechtem Bildschirm.
+// Lautsprecher Creative Pebble Pro (2 Stück) nach Amazon-Datenblatt: 13,3 T x 24,6 B x 13,3 H cm für 2 Stück = je 12,3 cm breit (entlang Tisch), 13,3 cm tief (zum Nutzer), 13,3 cm hoch; rote LED im Fußring. Links hinter der Headset-Ladestation, rechts zwischen PC und rechtem Bildschirm.
 (function(){
-  var DZ=0.72,RS=0.0615;
+  var DZ=0.72,RS=0.0615,RF=0.0665,SK=RF/RS;   // RS = halbe Breite (12,3 cm), RF = halbe Tiefe/Höhe (13,3 cm)
   function spk(x,y){
     var g=new THREE.Group();
-    var body=new THREE.Mesh(new THREE.SphereGeometry(RS,24,16),new THREE.MeshLambertMaterial({color:0x121214}));body.scale.set(1,0.96,1);body.position.y=0.057;g.add(body);
-    var ax=new THREE.Group();ax.position.y=0.057;ax.rotation.z=-Math.PI/4;g.add(ax);   // Blickrichtung: zum Nutzer, schräg nach oben
+    var body=new THREE.Mesh(new THREE.SphereGeometry(RS,24,16),new THREE.MeshLambertMaterial({color:0x121214}));body.scale.set(SK,SK,1);body.position.y=RF;g.add(body);
+    var ax=new THREE.Group();ax.position.y=RF;ax.rotation.z=-Math.PI/4;g.add(ax);   // Blickrichtung: zum Nutzer, schräg nach oben
     function part(geo,col,h){var m=new THREE.Mesh(geo,new THREE.MeshLambertMaterial({color:col}));m.position.y=h;ax.add(m);}
-    part(new THREE.CylinderGeometry(0.044,0.047,0.006,28),0x26262a,RS-0.003);   // Blende
-    part(new THREE.CylinderGeometry(0.030,0.026,0.004,28),0xc98f6a,RS+0.0005);   // Membran (kupferfarben)
-    part(new THREE.CylinderGeometry(0.010,0.010,0.005,16),0xe3b690,RS+0.0025);   // Kappe
+    part(new THREE.CylinderGeometry(0.044,0.047,0.006,28),0x26262a,RF-0.003);   // Blende
+    part(new THREE.CylinderGeometry(0.030,0.026,0.004,28),0xc98f6a,RF+0.0005);   // Membran (kupferfarben)
+    part(new THREE.CylinderGeometry(0.010,0.010,0.005,16),0xe3b690,RF+0.0025);   // Kappe
     var ring=new THREE.Mesh(new THREE.TorusGeometry(0.046,0.0035,8,36),new THREE.MeshBasicMaterial({color:0xff2a2a}));ring.rotation.x=Math.PI/2;ring.position.y=0.004;g.add(ring);   // rote LED
     var glow=new THREE.Mesh(new THREE.CircleGeometry(0.085,32),new THREE.MeshBasicMaterial({color:0xff2a2a,transparent:true,opacity:0.22}));glow.rotation.x=-Math.PI/2;glow.position.y=0.0015;g.add(glow);
     g.position.copy(P(x,y,DZ));room.add(g);

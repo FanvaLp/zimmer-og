@@ -59,7 +59,7 @@ h2 span{font-weight:500;color:var(--muted);font-size:13px}
 (function(){
 var RUG={a:['STOENSE Teppich 200 × 300',139.00,'IKEA'],b:['STOENSE Teppich 170 × 240',89.99,'IKEA'],c:['ETON Teppich 250 × 300',130.19,'Kaufland']};
 /* fest: Preis laut Shop; null = Preis hängt von deiner Konfiguration ab, hier selbst eintragen */
-var ITEMS=[['pax','PAX Kleiderschrank 100 × 60 × 201 cm','IKEA – Planung: Korpus, 2 STORKLINTA-Türen (Eiche), Griffe, Stange, 2 Böden',221.00],['besta','BESTÅ TV-Bank mit Türen (Sideboard)','IKEA – Preis laut Seite (zuvor 199 €)',145.00],['soer','SÖRVALLEN 3er-Bettsofa mit Récamiere','IKEA – Tallmyra mittelgrau, Récamiere links',1599.00],['lack','LACK Couchtisch','IKEA',19.99],['tv','Samsung Mini LED 75 Zoll M70H','Amazon – Preis laut Seite (UVP 1.249 €)',699.00]];
+var ITEMS=[['pax','PAX Kleiderschrank 100 × 60 × 201 cm','IKEA – Planung: Korpus, 2 STORKLINTA-Türen (Eiche), Griffe, Stange, 2 Böden',221.00],['besta','BESTÅ TV-Bank mit Türen (Sideboard)','IKEA – Preis laut Seite (zuvor 199 €)',145.00],['soer','SÖRVALLEN 3er-Bettsofa mit Récamiere','IKEA – Tallmyra mittelgrau, Récamiere links',1599.00],['lack','LACK Couchtisch','IKEA',19.99],['tv','Samsung Mini LED 75 Zoll M70H','Amazon – Preis laut Seite (UVP 1.249 €)',699.00],['spk','Creative Pebble Pro Lautsprecher (2 Stück)','Amazon – Preis bitte eintragen',null]];
 var st={r:'a',v:{}};try{var x=JSON.parse(localStorage.getItem('einkauf_summe')||'null');if(x){st.r=RUG[x.r]?x.r:'a';st.v=x.v||{};}}catch(e){}
 function save(){try{localStorage.setItem('einkauf_summe',JSON.stringify(st));}catch(e){}}
 function eur(n){return n.toLocaleString('de-DE',{style:'currency',currency:'EUR'});}
@@ -107,10 +107,13 @@ draw();
 <div class="card"><div class="info"><div class="name">Alternative: STOENSE Teppich Kurzflor, mittelgrau, 170 × 240 cm<small>IKEA</small></div><div class="dim">170 × 240 cm (quer gelegt: 240 breit × 170 tief), Gesamtdicke 18 mm · kleinere Variante, vor dem Sofa · 89,99 €</div><div class="tags"><span class="tag">Alternative zum 200 × 300 cm – in den 3D-Ansichten per „IKEA 170 × 240“ wählbar</span><span class="tag">Eigene Produktseite für die Größe 170 × 240 cm (Artikelnr. 004.268.28)</span></div></div>
 <a class="btn" href="https://www.ikea.com/de/en/p/stoense-rug-low-pile-medium-grey-00426828/" target="_blank" rel="noopener">Zum Produkt ↗</a></div>
 
-<h2>Amazon <span>– 1 Artikel</span></h2>
+<h2>Amazon <span>– 2 Artikel</span></h2>
 
 <div class="card"><div class="info"><div class="name">Samsung Mini LED 75 Zoll<small>M70H</small></div><div class="dim">Panel 166,8 × 95,8 × 7,7 cm, mit Standfüßen 100,8 cm hoch · steht auf dem Sideboard (zusammen 138,8 cm hoch) · 699,00 € (Amazon, UVP 1.249 €)</div><div class="tags"><span class="tag">4K, Bildwiederholfrequenz 60 Hz (Amazon-Datenblatt); „144Hz“ in der Überschrift = Bildverarbeitung Motion Xcelerator</span><span class="tag">Modell GU75M70HAU, 30 kg, 3 × HDMI, 2 Jahre Garantie</span><span class="tag">Fußabstand 125 cm, Fußtiefe 28 cm</span></div></div>
 <a class="btn" href="https://www.amazon.de/dp/B0GXZSFCSF" target="_blank" rel="noopener">Zum Produkt ↗</a></div>
+
+<div class="card"><div class="info"><div class="name">Creative Pebble Pro Lautsprecher<small>Amazon</small></div><div class="dim">2 Stück, je 12,3 × 13,3 × 13,3 cm (B × T × H) · auf dem Schreibtisch: links hinter der Headset-Ladestation, rechts zwischen PC und rechtem Bildschirm · Preis: siehe Amazon</div><div class="tags"><span class="tag">Maße laut Amazon: 13,3 T × 24,6 B × 13,3 H cm für 2 Stück (24,6 cm = beide nebeneinander), Gewicht 780 g</span><span class="tag">Stereo, Bluetooth, RGB-Beleuchtung (im Modell rot), Farbe Schwarz, Kunststoff</span><span class="tag">Steuerung per Drucktaste, begrenzte Garantie</span><span class="tag">Amazon nennt außerdem „Lautsprechergröße 13,8 cm“ (Bedeutung unklar, im Modell nicht verwendet)</span></div></div>
+<a class="btn" href="https://www.amazon.de/dp/B0DXW25R3D" target="_blank" rel="noopener">Zum Produkt ↗</a></div>
 
 <h2>Kaufland <span>– 1 Artikel (Alternative)</span></h2>
 
