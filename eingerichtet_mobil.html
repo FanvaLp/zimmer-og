@@ -57,6 +57,12 @@ footer summary{cursor:pointer;color:var(--muted)}
 a.home{display:inline-block;margin:0 0 6px;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
 a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 @media (hover:none){a.home{padding:10px 14px;margin-bottom:4px}}
+#cmpBar{position:absolute;top:0;bottom:0;left:50%;width:44px;margin-left:-22px;cursor:ew-resize;touch-action:none;z-index:5}
+#cmpBar::before{content:"";position:absolute;left:21px;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.45)}
+#cmpBar .hd{position:absolute;top:50%;left:6px;width:32px;height:32px;margin-top:-16px;border-radius:50%;background:#fff;color:#222;font-size:16px;line-height:32px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.5)}
+#cmpBar .cl{position:absolute;top:8px;font-size:11px;font-weight:700;background:rgba(0,0,0,.65);color:#fff;border-radius:5px;padding:2px 6px;white-space:nowrap}
+#cmpBar .cl.l{right:30px}#cmpBar .cl.r{left:30px}
+#measLbl{z-index:6;background:#d2691e;color:#fff;border-color:#d2691e;font-size:13px;padding:2px 8px}
 </style>
 </head>
 <body>
@@ -67,6 +73,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 </header>
 <div class="panel">
 <div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt oder angeklickt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen">Nichts zeigen</button></div></div>
+<div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="nightB" title="Raum dunkel: nur Nanoleaf und die LED hinter dem Fernseher leuchten">Nacht</button><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button><button id="measClr" style="display:none" title="Messung löschen">Messung löschen</button><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button></div></div>
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="v5" title="Blick gerade auf die Schreibtischwand, Dachschräge wird ausgeblendet">Schreibtischwand</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
 <div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,15 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am linken Ende">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,15 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, in der Mitte">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,15 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am rechten Ende">L-Stück</button></div></div>
 <div class="grp"><span class="lab">Dachschräge</span><div class="seg"><button id="slopeOn" class="on" title="Dachschräge anzeigen">Anzeigen</button><button id="slopeOff" title="Dachschräge ausblenden, z. B. für den freien Blick auf die Schreibtischwand">Ausblenden</button></div></div>
@@ -77,9 +84,9 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="grp"><span class="lab">Teilen</span><div class="seg"><button id="shareBtn" title="Kopiert einen Link, der genau diese Auswahl (Teppich, Sofa, Ansicht) wieder einstellt">Link zu dieser Ansicht kopieren</button></div><input id="shareIn" readonly aria-label="Link zum Kopieren"></div>
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
-<div id="stage"><canvas id="c"></canvas>
+<div id="stage"><canvas id="c"></canvas><div id="cmpBar" style="display:none"><span class="cl l">Leer</span><span class="cl r">Eingerichtet</span><div class="hd">⇆</div></div>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Hersteller-Datenblatt: je 12,3 × 12,3 × 11,8 cm; Position), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
+<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Hersteller-Datenblatt: je 12,3 × 12,3 × 11,8 cm; Position), LED-Streifen hinter dem Fernseher (Philips Hue Flux 5 m: Umfang ≈ 4,97 m bei 3,5 cm Abstand zum Rand; Farbe und Lichtschein beispielhaft), Heizkörper-Anschlussrohre (Lage nach Foto geschätzt), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -89,7 +96,7 @@ var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
 var scene=new THREE.Scene();
 var cam=new THREE.PerspectiveCamera(40,1,0.1,100);
-scene.add(new THREE.HemisphereLight(0xffffff,0x9a8f80,0.95));
+var hemi=new THREE.HemisphereLight(0xffffff,0x9a8f80,0.95);scene.add(hemi);
 var dl=new THREE.DirectionalLight(0xffffff,0.45);dl.position.set(3,6,-4);scene.add(dl);
 function P(x,y,z){return new THREE.Vector3(x,z,y);}
 var center=P(W/2,D/2,H/2);
@@ -102,7 +109,7 @@ room.add=function(o){
   if(!o.userData.cat)o.userData.cat=cat;
   return THREE.Group.prototype.add.call(room,o);
 };
-function edgeColor(){return matchMedia('(prefers-color-scheme: dark)').matches?0xcfcfcf:0x333333;}
+function edgeColor(){if(typeof nightOn!=='undefined'&&nightOn)return 0x5a5a6a;return matchMedia('(prefers-color-scheme: dark)').matches?0xcfcfcf:0x333333;}
 var edgeMats=[];
 function addTris(tris,color,opts){
   opts=opts||{};
@@ -183,6 +190,8 @@ function box(x0,y0,z0,x1,y1,z1,color){
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
 box(W-0.15,YS-1.48+0.24,0.10,W,YS-0.24,0.70,0xffffff); // Heizkörper
+// Heizkörper-Anschlussrohre zum Boden (nach Foto geschätzt: am türfernen Ende des Heizkörpers, ca. 6 cm Wandabstand)
+[1.815,1.865].forEach(function(py){var pm=new THREE.Mesh(new THREE.CylinderGeometry(0.009,0.009,0.10,10),new THREE.MeshLambertMaterial({color:0xc9ccd0}));pm.position.copy(P(W-0.08,py,0.05));room.add(pm);var rs=new THREE.Mesh(new THREE.CylinderGeometry(0.022,0.022,0.004,16),new THREE.MeshLambertMaterial({color:0xf2f2f2}));rs.position.copy(P(W-0.08,py,0.002));room.add(rs);});
 cat='tisch';
 // Schreibtisch an der linken Wand (aus zwei Tischen, zusammen 2,40 m, je 80 cm tief, 72 cm hoch)
 // 49 cm Abstand zur Schrägenwand, 1,20 m Abstand zur Türwand. Aufteilung 1,60 m + 0,80 m geschätzt.
@@ -258,7 +267,7 @@ cat='sofa';
 // Sofa IKEA SÖRVALLEN (3er mit Récamiere): 284 x 193 (mind. 102) x 88 cm, Sitzhöhe 45, Armlehnen 58, Sitzbreite 243, Sitztiefe 60 (Récamiere 153), Beine 7 cm.
 // Rücken zur Schrägenwand, Blick in den Raum. Récamiere auf der Seite der Fensterwand (Ostseite, u wird gespiegelt).
 // Decke über dem Sofa: 0,62 m + 0,884 * Abstand zur Schrägenwand -> 88 cm Rücken braucht mind. 29,4 cm Abstand, gewählt 35 cm.
-var backObjs=[],SGAP=0.35,SX0=1.77,SWD=2.84,LEGC=0xdcb98a;
+var backObjs=[],SGAP=0.35,SX0=1.62,SWD=2.84,LEGC=0xdcb98a;
 // Stoff "Lejde grau/schwarz": mittelgraues, meliertes Gewebe (Textur aus Pünktchen)
 var fabTex=(function(){var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');g.fillStyle='#8a8c90';g.fillRect(0,0,128,128);
   var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
@@ -303,7 +312,7 @@ sb(182.8,42,30,263.2,102,45,CU);            // Sitzkissen 2 (81 cm)
   function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
   function hl(y,x0,x1){s([x0,y,0.01],[x1,y,0.01]);s([x0,y-0.05,0.01],[x0,y+0.05,0.01]);s([x1,y-0.05,0.01],[x1,y+0.05,0.01]);}
   function vl2(x,y0,y1){s([x,y0,0.01],[x,y1,0.01]);s([x-0.05,y0,0.01],[x+0.05,y0,0.01]);s([x-0.05,y1,0.01],[x+0.05,y1,0.01]);}
-  hl(D-SGAP/2,SX0,SX0+SWD);                          // Breite 284 cm (im Abstand zur Wand)
+  hl(D-SGAP/2,SX0,SX0+SWD);hl(1.88,SX0+SWD,W-0.15);                          // Breite 284 cm (im Abstand zur Wand)
   vl2(SX0-0.08,D,yb);vl2(SX0-0.08,yb,yb-1.02);  // 35 cm Abstand, 102 cm Tiefe
   vl2(SX0+SWD+0.08,yb,yb-1.93);                          // 193 cm Tiefe mit Récamiere
   var cx=SX0+SWD/2;s([cx,yb,0.88],[cx,yb,ZC]);s([cx-0.05,yb,0.88],[cx+0.05,yb,0.88]);s([cx-0.05,yb,ZC],[cx+0.05,yb,ZC]);   // Luft über dem Rücken
@@ -323,7 +332,7 @@ sb(22,46,45,261,193,46.2,0xdbe6f6);           // Schlaffläche 239 x 147 cm
   function vl2(x,y0,y1){s([x,y0,0.01],[x,y1,0.01]);s([x-0.05,y0,0.01],[x+0.05,y0,0.01]);s([x-0.05,y1,0.01],[x+0.05,y1,0.01]);}
   hl(BYF-0.15,BXA,BXB);                  // 239 cm Länge
   vl2(SX0-0.12,BYR,BYF);                 // 147 cm Breite
-  vl2(4.25,SBD,BYF);                      // Bettkante bis Sideboard
+  vl2(4.10,SBD,BYF);                      // Bettkante bis Sideboard
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));
 })();
@@ -332,7 +341,7 @@ bedObjs.forEach(function(o){o.visible=false;});
 var bedOn=false;
 // Couchtisch IKEA LACK, Eicheneff wlas, 90 x 55 x 45 cm (Maße laut IKEA). Plattendicke 5 cm, Beine 5 x 5 cm, Ablage bei ca. 20 cm = geschätzt.
 // Normal: vor dem Sofa (Abstand 40 cm zu den Sitzkissen). Sofa ausgeklappt: vor dem ausgeklappten Sofa (20 cm Abstand zur Bettkante, 64 cm bis zum Sideboard).
-var CTN=[2.33,1.77,3.23,2.32],CTB=[2.75,1.06,3.65,1.61];
+var CTN=[2.18,1.77,3.08,2.32],CTB=[2.60,1.06,3.50,1.61];
 function lackTable(r){var x0=r[0],y0=r[1],x1=r[2],y1=r[3],C=0xe6d3b0;
   box(x0,y0,0.40,x1,y1,0.45,C);
   box(x0+0.005,y0+0.005,0.19,x1-0.005,y1-0.005,0.21,C);
@@ -348,33 +357,33 @@ function ctDims(c,fn){cat=c;var v=[];
 var ctS=room.children.length;
 cat='ctn';lackTable(CTN);
 var ctN=room.children.slice(ctS).filter(function(o){return o.type!=='Group';});
-ctDims('ctn',function(hx,vy,vz){hx(CTN[1]-0.10,CTN[0],CTN[2]);vy(2.23,CTN[1],CTN[3]);vy(2.23,CTN[3],2.72);hx(2.05,CTN[2],3.59);vy(2.90,SBD,CTN[1]);vz(CTN[2]+0.06,2.045,0,0.45);});
+ctDims('ctn',function(hx,vy,vz){hx(CTN[1]-0.10,CTN[0],CTN[2]);vy(2.08,CTN[1],CTN[3]);vy(2.08,CTN[3],2.72);hx(2.05,CTN[2],SX0+1.825);vy(2.75,SBD,CTN[1]);vz(CTN[2]+0.06,2.045,0,0.45);});
 ctS=room.children.length;
 cat='ctb';lackTable(CTB);
 var ctB=room.children.slice(ctS).filter(function(o){return o.type!=='Group';});
 ctB.forEach(function(o){o.visible=false;});
-ctDims('ctb',function(hx,vy,vz){hx(CTB[1]-0.10,CTB[0],CTB[2]);vy(2.65,CTB[1],CTB[3]);vy(2.65,CTB[3],BYF);vy(3.85,SBD,CTB[1]);vz(CTB[2]+0.06,(CTB[1]+CTB[3])/2,0,0.45);});
+ctDims('ctb',function(hx,vy,vz){hx(CTB[1]-0.10,CTB[0],CTB[2]);vy(2.50,CTB[1],CTB[3]);vy(2.50,CTB[3],BYF);vy(3.70,SBD,CTB[1]);vz(CTB[2]+0.06,(CTB[1]+CTB[3])/2,0,0.45);});
 // Teppiche (Auswahl): A = IKEA STOENSE mittelgrau 200 x 300 cm (quer oder längs), B = IKEA STOENSE 170 x 240 cm (quer), C = Alternative Kaufland ETON silber Grau 250 x 300 cm. Dicke IKEA 18 mm laut IKEA, Kaufland geschätzt 20 mm. Ein/Aus und Auswahl per Knopf.
 var RUGS={
- a:{k:'tp1',r:[1.76,0.84,4.76,2.84],th:0.018,col:0x8e9093,tag:'IKEA 200 × 300 quer',nm:'Teppich IKEA STOENSE 200 × 300 cm (quer gelegt)'},
- al:{k:'tp1l',r:[2.19,0.74,4.19,3.74],th:0.018,col:0x8e9093,tag:'IKEA 200 × 300 längs',nm:'Teppich IKEA STOENSE 200 × 300 cm (längs gelegt)'},
- b:{k:'tp3',r:[1.99,1.14,4.39,2.84],th:0.018,col:0x8e9093,tag:'IKEA 170 × 240 quer',nm:'Teppich IKEA STOENSE 170 × 240 cm (quer gelegt)'},
- c:{k:'tp2',r:[1.74,1.24,4.74,3.74],th:0.011,col:0x9a9c9f,tag:'Kaufland 250 × 300',nm:'Alternative: Teppich Kaufland ETON 250 × 300 cm'}};
+ a:{k:'tp1',r:[1.56,0.84,4.56,2.84],th:0.018,col:0x8e9093,tag:'IKEA 200 × 300 quer',nm:'Teppich IKEA STOENSE 200 × 300 cm (quer gelegt)'},
+ al:{k:'tp1l',r:[2.04,0.74,4.04,3.74],th:0.018,col:0x8e9093,tag:'IKEA 200 × 300 längs',nm:'Teppich IKEA STOENSE 200 × 300 cm (längs gelegt)'},
+ b:{k:'tp3',r:[1.84,1.14,4.24,2.84],th:0.018,col:0x8e9093,tag:'IKEA 170 × 240 quer',nm:'Teppich IKEA STOENSE 170 × 240 cm (quer gelegt)'},
+ c:{k:'tp2',r:[1.56,1.24,4.56,3.74],th:0.011,col:0x9a9c9f,tag:'Kaufland 250 × 300',nm:'Alternative: Teppich Kaufland ETON 250 × 300 cm'}};
 var rugOn=true,rugV='a',rugOr='q',rugGroups={},RUGLC={},RUGLB=[];
 function rugKey(){return rugV==='a'?(rugOr==='q'?'tp1':'tp1l'):(rugV==='b'?'tp3':'tp2');}
 Object.keys(RUGS).forEach(function(n){var R=RUGS[n],r=R.r,s=room.children.length,w=Math.round((r[2]-r[0])*100),d=Math.round((r[3]-r[1])*100),g=Math.round((r[1]-SBD)*100);
   cat=R.k;box(r[0],r[1],0,r[2],r[3],R.th,R.col);
   rugGroups[R.k]=room.children.slice(s).filter(function(o){return o.type!=='Group';});
   rugGroups[R.k].forEach(function(o){o.visible=false;});
-  ctDims(R.k,function(hx,vy){hx(r[1]-0.10,r[0],r[2]);vy(1.70,r[1],r[3]);vy(3.00,SBD,r[1]);});
-  var t1=R.nm,t2=R.tag+': '+w+' cm breit',t3=R.tag+': '+d+' cm tief',t4=R.tag+': '+g+' cm bis Sideboard';
-  [t1,t2,t3,t4].forEach(function(x){RUGLC[x]=R.k;});
-  RUGLB.push([t1,(r[0]+r[2])/2,r[1]+0.11,0.05],[t2,(r[0]+r[2])/2,r[1]-0.10,0.02],[t3,1.70,(r[1]+r[3])/2,0.02],[t4,3.00,(SBD+r[1])/2,0.02]);
+  ctDims(R.k,function(hx,vy){hx(r[1]-0.10,r[0],r[2]);vy(r[0]-0.06,r[1],r[3]);vy(3.00,SBD,r[1]);hx(1.84,r[2],W);});
+  var t1=R.nm,t2=R.tag+': '+w+' cm breit',t3=R.tag+': '+d+' cm tief',t4=R.tag+': '+g+' cm bis Sideboard',t5=R.tag+': '+Math.round((W-r[2])*100)+' cm bis Wand (Heizkörper-Rohre)';
+  [t1,t2,t3,t4,t5].forEach(function(x){RUGLC[x]=R.k;});
+  RUGLB.push([t1,(r[0]+r[2])/2,r[1]+0.11,0.05],[t2,(r[0]+r[2])/2,r[1]-0.10,0.02],[t3,r[0]-0.06,(r[1]+r[3])/2,0.02],[t4,3.00,(SBD+r[1])/2,0.02],[t5,(r[2]+W)/2,1.90,0.02]);
 });
 
 cat='stuhl';
 // Stuhlunterlage 100 x 120 cm + Bürostuhl (Maße geschätzt: Sitz 50 x 50, Gesamthöhe 98, Fußkreuz Ø 66)
-var MX0=0.57,MX1=1.77,MY0=2.30,MY1=3.30,CCX=1.07,CCY=2.80;   // mittig unter dem 1,60-m-Tischteil (y 2,00-3,60)   // Unterlage 1,20 m (Tisch -> Sofa) x 1,00 m (längs zum Tisch), endet am Sofa (1,20 m) -> ragt 23 cm unter die Tischplatte
+var MX0=0.42,MX1=1.62,MY0=2.30,MY1=3.30,CCX=1.07,CCY=2.80;   // mittig unter dem 1,60-m-Tischteil (y 2,00-3,60)   // Unterlage 1,20 m (Tisch -> Sofa) x 1,00 m (längs zum Tisch), endet am Sofa (1,20 m) -> ragt 23 cm unter die Tischplatte
 box(MX0,MY0,0,MX1,MY1,0.008,0x6e6e72);
 var CHC=0x222226;
 box(CCX-0.225,CCY-0.225,0.45,CCX+0.225,CCY+0.225,0.51,CHC);      // Sitzfläche 45 x 45
@@ -502,6 +511,7 @@ cat='tisch';
   var fr=cv(256,300,function(g,w,h){g.fillStyle='#0b0b0d';g.fillRect(0,0,w,h);g.fillStyle='#17171b';for(var i=0;i<h;i+=8){g.fillRect(0,i,w,3);}g.fillStyle='#ff1a1a';g.fillRect(w-10,0,6,h);g.fillRect(0,0,4,h);});
   var fm=new THREE.Mesh(new THREE.PlaneGeometry(2*hx,cz1-cz0),new THREE.MeshBasicMaterial({map:fr}));fm.rotation.y=Math.PI;fm.position.set(0,(cz0+cz1)/2,-hy-0.001);pg.add(fm);
 })();
+var spkLedObjs=[];
 // Lautsprecher Creative Pebble Pro (2 Stück) nach Hersteller-Datenblatt: je 123 x 123 x 118 mm (L x B x H); rote LED im Fußring. Links hinter der Headset-Ladestation, rechts zwischen PC und rechtem Bildschirm.
 (function(){
   var DZ=0.72,RS=0.0615,RF=0.0605,HY=0.059;   // RS = halbe Breite/Tiefe (12,3 cm), HY = halbe Höhe (11,8 cm), RF = Abstand der Front (45° geneigt) vom Zentrum
@@ -514,7 +524,7 @@ cat='tisch';
     part(new THREE.CylinderGeometry(0.030,0.026,0.004,28),0xc98f6a,RF+0.0005);   // Membran (kupferfarben)
     part(new THREE.CylinderGeometry(0.010,0.010,0.005,16),0xe3b690,RF+0.0025);   // Kappe
     var ring=new THREE.Mesh(new THREE.TorusGeometry(0.046,0.0035,8,36),new THREE.MeshBasicMaterial({color:0xff2a2a}));ring.rotation.x=Math.PI/2;ring.position.y=0.004;g.add(ring);   // rote LED
-    var glow=new THREE.Mesh(new THREE.CircleGeometry(0.085,32),new THREE.MeshBasicMaterial({color:0xff2a2a,transparent:true,opacity:0.22}));glow.rotation.x=-Math.PI/2;glow.position.y=0.0015;g.add(glow);
+    var glow=new THREE.Mesh(new THREE.CircleGeometry(0.085,32),new THREE.MeshBasicMaterial({color:0xff2a2a,transparent:true,opacity:0.22}));glow.rotation.x=-Math.PI/2;glow.position.y=0.0015;g.add(glow);spkLedObjs.push(ring,glow);
     g.position.copy(P(x,y,DZ));room.add(g);
   }
   spk(0.12,3.46);spk(0.13,2.12);
@@ -542,15 +552,30 @@ var ledObjs=[],LEDLB=[];
   room.add(new THREE.LineSegments(gd,new THREE.LineBasicMaterial({color:0xd2691e})));
   LEDLB.push(['Nanoleaf Hexagons: 9 Stück, je 23 × 20 cm',0.05,y0-3*SPX,2.28],['Breite gesamt 126,5 cm',0.05,YC,2.21],['Höhe gesamt 80 cm (1,30 – 2,10 m über Boden)',0.05,yl-0.07,1.70],['23 cm',0.05,y0-6*SPX,2.035],['20 cm',0.05,y0-6*SPX,1.92],['13 cm bis Monitor',0.05,3.27,1.235]);
 })();
+cat='tvled';
+// LED-Streifen Philips Hue Flux 5 m (Amazon B0FJNCTLJK) hinter dem Fernseher: rund um die Panel-Rückseite, 3,5 cm vom Rand (Umfang ca. 4,97 m), Lichtschein an der Wand dahinter
+var tvLedObjs=[],tvHalo=null,TVLB=[];
+(function(){
+  var ins=0.035,x0=TVCX-TVW/2+ins,x1=TVCX+TVW/2-ins,z0=TVZ0+ins,z1=TVZ0+TVH-ins,yb=TVF-0.012-0.006,tk=0.012;
+  var mat=new THREE.MeshBasicMaterial({color:0xff4fa8});
+  function strip(a0,b0,a1,b1){var m=new THREE.Mesh(new THREE.BoxGeometry(a1-a0,b1-b0,0.006),mat);m.position.copy(P((a0+a1)/2,yb+0.003,(b0+b1)/2));room.add(m);tvLedObjs.push(m);}
+  strip(x0,z1-tk,x1,z1);strip(x0,z0,x1,z0+tk);strip(x0,z0,x0+tk,z1);strip(x1-tk,z0,x1,z1);
+  var cvw=document.createElement('canvas');cvw.width=256;cvw.height=160;var g=cvw.getContext('2d');
+  g.fillStyle='#000';g.fillRect(0,0,256,160);g.fillStyle='#ff4fa8';g.shadowColor='#ff4fa8';
+  g.shadowBlur=34;g.fillRect(31,29,194,102);g.shadowBlur=18;g.fillRect(31,29,194,102);
+  var hm=new THREE.Mesh(new THREE.PlaneGeometry(2.2,1.5),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cvw),transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false}));
+  hm.userData.noPick=true;hm.position.copy(P(TVCX,0.006,TVZ0+TVH/2));room.add(hm);tvLedObjs.push(hm);tvHalo=hm;
+  TVLB.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,97 m (3,5 cm vom Rand)',TVCX,TVF-0.02,TVZ0+TVH+0.30]);
+})();
 cat='raum';
 // Beschriftungen
 var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch','Wand bis Tisch 49 cm':'tisch','Tisch 2,40 m':'tisch','Tisch bis Türwand 1,20 m':'tisch',
  'Schrank 99,8 × 60,4 × 201,2 cm':'schrank','201,2 cm':'schrank','99,8 cm':'schrank',
  'Sideboard 180 × 42 × 38 cm':'sideboard','38 cm':'sideboard','180 cm':'sideboard','Rest bis Fensterwand ≈ 0,23 m':'sideboard',
  'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
- 'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','35 cm Abstand zur Schrägenwand':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 93 cm: 5 cm Luft über Rücken (88 cm)':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 1,39 m':'bett','Couchtisch LACK 90 × 55 × 45 cm':'ctn','Breite 90 cm':'ctn','Tiefe 55 cm':'ctn','bis Sofa 40 cm':'ctn','bis Récamiere 36 cm':'ctn','bis Sideboard 1,35 m':'ctn','Höhe 45 cm':'ctn','Couchtisch LACK 90 × 55 × 45 cm (vor dem Bett)':'ctb','Breite 90 cm (vor dem Bett)':'ctb','Tiefe 55 cm (vor dem Bett)':'ctb','bis Bettkante 20 cm':'ctb','bis Sideboard 64 cm':'ctb','Tischhöhe 45 cm':'ctb',
- 'Unterlage 120 cm':'stuhl','23 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
- 'Tisch bis Sofa 97 cm':'abstand','Stuhl–Sofa 42 cm':'abstand'};Object.assign(LC,RUGLC);LEDLB.forEach(function(l){LC[l[0]]='led';});
+ 'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','35 cm Abstand zur Schrägenwand':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 93 cm: 5 cm Luft über Rücken (88 cm)':'sofa','15 cm bis Heizkörper':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 1,39 m':'bett','Couchtisch LACK 90 × 55 × 45 cm':'ctn','Breite 90 cm':'ctn','Tiefe 55 cm':'ctn','bis Sofa 40 cm':'ctn','bis Récamiere 36 cm':'ctn','bis Sideboard 1,35 m':'ctn','Höhe 45 cm':'ctn','Couchtisch LACK 90 × 55 × 45 cm (vor dem Bett)':'ctb','Breite 90 cm (vor dem Bett)':'ctb','Tiefe 55 cm (vor dem Bett)':'ctb','bis Bettkante 20 cm':'ctb','bis Sideboard 64 cm':'ctb','Tischhöhe 45 cm':'ctb',
+ 'Unterlage 120 cm':'stuhl','38 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
+ 'Tisch bis Sofa 82 cm':'abstand','Stuhl–Sofa 27 cm':'abstand'};Object.assign(LC,RUGLC);LEDLB.forEach(function(l){LC[l[0]]='led';});TVLB.forEach(function(l){LC[l[0]]='tvled';});
 var labels=[
  ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
  ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
@@ -562,13 +587,13 @@ var labels=[
  ['201,2 cm',PX0+PW/2,PD+0.08,PH/2],['38 cm',SB0+SBW+0.06,SBD,SBH/2],['100,8 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TVH/2],['138,8 cm gesamt',SB0+SBW+0.14,SBD,(TVZ0+TVH)/2],
  ['Sofa SÖRVALLEN 284 × 193 × 88 cm',SX0+SWD/2,D-SGAP-0.6,1.0],['284 cm',SX0+SWD/2,D-SGAP/2,0.02],
  ['35 cm Abstand zur Schrägenwand',SX0-0.08,D-SGAP/2,0.02],['Tiefe 102 cm',SX0-0.08,D-SGAP-0.51,0.02],['193 cm',SX0+SWD+0.08,D-SGAP-0.965,0.02],
- ['Decke 93 cm: 5 cm Luft über Rücken (88 cm)',SX0+SWD/2,D-SGAP,0.95],
- ['Schlaffläche 239 × 147 cm',3.2,(BYF+BYR)/2,0.9],['239 cm',(BXA+BXB)/2,BYF-0.15,0.02],['147 cm',SX0-0.12,(BYF+BYR)/2,0.02],['Bettkante bis Sideboard 1,39 m',4.25,(SBD+BYF)/2,0.02],
- ['Couchtisch LACK 90 × 55 × 45 cm',(CTN[0]+CTN[2])/2,(CTN[1]+CTN[3])/2,0.62],['Breite 90 cm',(CTN[0]+CTN[2])/2,CTN[1]-0.10,0.02],['Tiefe 55 cm',2.23,(CTN[1]+CTN[3])/2,0.02],['bis Sofa 40 cm',2.23,(CTN[3]+2.72)/2,0.02],['bis Récamiere 36 cm',(CTN[2]+3.59)/2,2.05,0.02],['bis Sideboard 1,35 m',2.90,(SBD+CTN[1])/2,0.02],['Höhe 45 cm',CTN[2]+0.06,2.045,0.22],['Couchtisch LACK 90 × 55 × 45 cm (vor dem Bett)',(CTB[0]+CTB[2])/2,(CTB[1]+CTB[3])/2,0.62],['Breite 90 cm (vor dem Bett)',(CTB[0]+CTB[2])/2,CTB[1]-0.10,0.02],['Tiefe 55 cm (vor dem Bett)',2.65,(CTB[1]+CTB[3])/2,0.02],['bis Bettkante 20 cm',2.65,(CTB[3]+BYF)/2,0.02],['bis Sideboard 64 cm',3.85,(SBD+CTB[1])/2,0.02],['Tischhöhe 45 cm',CTB[2]+0.06,(CTB[1]+CTB[3])/2,0.22],
+ ['Decke 93 cm: 5 cm Luft über Rücken (88 cm)',SX0+SWD/2,D-SGAP,0.95],['15 cm bis Heizkörper',SX0+SWD+0.075,1.95,0.02],
+ ['Schlaffläche 239 × 147 cm',3.05,(BYF+BYR)/2,0.9],['239 cm',(BXA+BXB)/2,BYF-0.15,0.02],['147 cm',SX0-0.12,(BYF+BYR)/2,0.02],['Bettkante bis Sideboard 1,39 m',4.10,(SBD+BYF)/2,0.02],
+ ['Couchtisch LACK 90 × 55 × 45 cm',(CTN[0]+CTN[2])/2,(CTN[1]+CTN[3])/2,0.62],['Breite 90 cm',(CTN[0]+CTN[2])/2,CTN[1]-0.10,0.02],['Tiefe 55 cm',2.08,(CTN[1]+CTN[3])/2,0.02],['bis Sofa 40 cm',2.08,(CTN[3]+2.72)/2,0.02],['bis Récamiere 36 cm',(CTN[2]+SX0+1.825)/2,2.05,0.02],['bis Sideboard 1,35 m',2.75,(SBD+CTN[1])/2,0.02],['Höhe 45 cm',CTN[2]+0.06,2.045,0.22],['Couchtisch LACK 90 × 55 × 45 cm (vor dem Bett)',(CTB[0]+CTB[2])/2,(CTB[1]+CTB[3])/2,0.62],['Breite 90 cm (vor dem Bett)',(CTB[0]+CTB[2])/2,CTB[1]-0.10,0.02],['Tiefe 55 cm (vor dem Bett)',2.50,(CTB[1]+CTB[3])/2,0.02],['bis Bettkante 20 cm',2.50,(CTB[3]+BYF)/2,0.02],['bis Sideboard 64 cm',3.70,(SBD+CTB[1])/2,0.02],['Tischhöhe 45 cm',CTB[2]+0.06,(CTB[1]+CTB[3])/2,0.22],
  
- ['Tisch bis Sofa 97 cm',(0.80+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['23 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
- ['Stuhl–Sofa 42 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,23 m',SB0+SBW+0.115,0.75,0.02]
-].concat(RUGLB).concat(LEDLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3]),cat:LC[l[0]]||'raum'};});
+ ['Tisch bis Sofa 82 cm',(0.80+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['38 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
+ ['Stuhl–Sofa 27 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,23 m',SB0+SBW+0.115,0.75,0.02]
+].concat(RUGLB).concat(LEDLB).concat(TVLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3]),cat:LC[l[0]]||'raum'};});
 // Maßlinien (eingezeichnet)
 (function(){
   var v=[];
@@ -581,8 +606,8 @@ var labels=[
 var showLbl=true;
 // Kamera
 var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40,curV='v1';
-var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[-2.356,0.222,3.41,81,[2.6,2.6,0.9]],v5:[Math.PI/2,0.04,6.0,40,[0,2.40,1.15]],v6:[-0.390,0.073,3.296,55,[3.631,0.15,0.91]],v7:[-0.144,0.078,3.081,55,[3.631,0.15,0.91]],v8:[0.121,0.078,3.072,55,[3.631,0.15,0.91]]};
-var viewsBed={v6:[-0.522,-0.058,2.774,55,[3.631,0.15,0.91]],v7:[-0.182,-0.065,2.445,55,[3.631,0.15,0.91]],v8:[0.213,-0.065,2.461,55,[3.631,0.15,0.91]]};   // Bett ausgeklappt: liegend/angelehnt, Augenhöhe 0,75 m, Kopf am linken Ende / Mitte / rechten Ende der Schlaffläche
+var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[-2.356,0.222,3.41,81,[2.6,2.6,0.9]],v5:[Math.PI/2,0.04,6.0,40,[0,2.40,1.15]],v6:[-0.432,0.072,3.356,55,[3.631,0.15,0.91]],v7:[-0.192,0.077,3.106,55,[3.631,0.15,0.91]],v8:[0.072,0.079,3.057,55,[3.631,0.15,0.91]]};
+var viewsBed={v6:[-0.568,-0.056,2.851,55,[3.631,0.15,0.91]],v7:[-0.241,-0.065,2.477,55,[3.631,0.15,0.91]],v8:[0.153,-0.066,2.433,55,[3.631,0.15,0.91]]};   // Bett ausgeklappt: liegend/angelehnt, Augenhöhe 0,75 m, Kopf am linken Ende / Mitte / rechten Ende der Schlaffläche
 function setView(k){curV=k;var v=(bedOn&&viewsBed[k])||views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
   if(k==='v4'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(75,Math.min(125,2*Math.atan(Math.tan(0.9425)/asp)*180/Math.PI));cam.updateProjectionMatrix();}
   if(k==='v6'||k==='v7'||k==='v8'){var asp6=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(55,Math.min(125,2*Math.atan(Math.tan(0.698)/asp6)*180/Math.PI));cam.updateProjectionMatrix();}
@@ -609,7 +634,7 @@ canvas.addEventListener('pointermove',function(e){
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
 ['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
@@ -622,7 +647,7 @@ var bedBtn=document.getElementById('bed'),bedOff=document.getElementById('bedoff
 function setBed(on){bedOn=on;if(/^v[678]$/.test(lastView))setView(lastView);bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
 bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
 var ledOn=true,ledB1=document.getElementById('ledOn'),ledB0=document.getElementById('ledOff');
-function setLed(on){ledOn=on;ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
+function setLed(on){ledOn=on;applyLights();ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
 ledB1.onclick=function(){setLed(true);};ledB0.onclick=function(){setLed(false);};
 var slopeOn=true,slB1=document.getElementById('slopeOn'),slB0=document.getElementById('slopeOff');
 function setSlope(on){slopeOn=on;slopeObjs.forEach(function(o){o.visible=on;});slB1.classList.toggle('on',on);slB0.classList.toggle('on',!on);}
@@ -666,29 +691,86 @@ shBtn.onclick=function(){var u=shareURL();
 document.querySelector('.panel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(views[b.id])lastView=b.id;saveUI();});
 
 
-function isVis(k){if(k==='led'&&!ledOn)return false;if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
+function isVis(k){if(k==='led'&&!ledOn)return false;if(k==='tvled'&&!tvLedOn)return false;if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
 var ray=new THREE.Raycaster(),mv=new THREE.Vector2(),downXY=null;
 function pick(e){var r=canvas.getBoundingClientRect();mv.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mv,cam);
   var hits=ray.intersectObjects(room.children,true);
-  for(var i=0;i<hits.length;i++){var o=hits[i].object;if(!o.isMesh||!o.visible)continue;while(o&&!(o.userData&&o.userData.cat))o=o.parent;if(o)return o.userData.cat;}
+  for(var i=0;i<hits.length;i++){var o=hits[i].object;if(!o.isMesh||!o.visible||(o.userData&&o.userData.noPick))continue;while(o&&!(o.userData&&o.userData.cat))o=o.parent;if(o)return o.userData.cat;}
   return null;}
-canvas.addEventListener('pointermove',function(e){if(Object.keys(ptrs).length)return;if(e.pointerType==='touch'||!hoverOn)return;var k=pick(e);hoverCat=k;canvas.style.cursor=k?'pointer':'grab';});
+canvas.addEventListener('pointermove',function(e){if(Object.keys(ptrs).length)return;if(e.pointerType==='touch'||!hoverOn||measureOn||cmpOn)return;var k=pick(e);hoverCat=k;canvas.style.cursor=k?'pointer':'grab';});
 canvas.addEventListener('pointerleave',function(){hoverCat=null;});
 canvas.addEventListener('pointerdown',function(e){downXY=[e.clientX,e.clientY];});
 canvas.addEventListener('pointerup',function(e){
-  if(downXY&&Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])<6){var k=pick(e);if(k){pinned[k]=!pinned[k];sync();}}
+  if(downXY&&Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])<6){if(!measureOn&&!cmpOn){var k=pick(e);if(k){pinned[k]=!pinned[k];sync();}}}
   downXY=null;if(e.pointerType==='touch')hoverCat=null;});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){edgeMats.forEach(function(m){m.color.setHex(edgeColor());});});
+/* Werkzeuge: Nacht, Vorher/Nachher, Messen, TV-LED */
+var tvLedOn=true,nightOn=false,cmpOn=false,cmpX=0.5,measureOn=false;
+var nlLight=new THREE.PointLight(0x7a6af0,0,3.6,1.3);nlLight.position.copy(P(0.45,2.65,1.75));scene.add(nlLight);
+var tvLight=new THREE.PointLight(0xff4fa8,0,3.8,1.2);tvLight.position.copy(P(TVCX,0.12,TVZ0+TVH/2));scene.add(tvLight);
+var nightB=document.getElementById('nightB'),cmpB=document.getElementById('cmpB'),measB=document.getElementById('measB'),measClr=document.getElementById('measClr'),tvledB=document.getElementById('tvledB'),cmpBar=document.getElementById('cmpBar');
+function applyLights(){if(!nlLight||!tvLight)return;nlLight.intensity=(nightOn&&ledOn)?0.9:0;tvLight.intensity=(nightOn&&tvLedOn)?1.0:0;}
+function setNight(on){nightOn=on;hemi.intensity=on?0.10:0.95;dl.intensity=on?0:0.45;stage.style.background=on?'#07070b':'';
+  spkLedObjs.forEach(function(o){o.visible=!on;});edgeMats.forEach(function(m){m.color.setHex(edgeColor());});
+  if(tvHalo)tvHalo.material.opacity=on?1:0.5;nightB.classList.toggle('on',on);applyLights();}
+function setTvLed(on){tvLedOn=on;tvLedObjs.forEach(function(o){o.visible=on;});tvledB.classList.toggle('on',on);applyLights();}
+nightB.onclick=function(){setNight(!nightOn);};
+tvledB.onclick=function(){setTvLed(!tvLedOn);};
+applyLights();
+// Vorher / Nachher
+function setCmp(on){cmpOn=on;if(on&&measureOn)setMeas(false);cmpBar.style.display=on?'block':'none';cmpB.classList.toggle('on',on);if(on)hoverCat=null;}
+cmpB.onclick=function(){setCmp(!cmpOn);};
+(function(){var drag=false;
+  function upd(e){var r=stage.getBoundingClientRect();cmpX=Math.max(0.04,Math.min(0.96,(e.clientX-r.left)/r.width));cmpBar.style.left=(cmpX*100)+'%';}
+  cmpBar.addEventListener('pointerdown',function(e){drag=true;try{cmpBar.setPointerCapture(e.pointerId);}catch(x){}e.stopPropagation();e.preventDefault();upd(e);});
+  cmpBar.addEventListener('pointermove',function(e){if(drag)upd(e);});
+  cmpBar.addEventListener('pointerup',function(){drag=false;});cmpBar.addEventListener('pointercancel',function(){drag=false;});
+})();
+function furnHide(){var st=[];room.children.forEach(function(o){var c=o.userData&&o.userData.cat;var hide=c?(c!=='raum'):(o.isGroup&&o!==dimG.raum);if(hide&&o.visible){st.push(o);o.visible=false;}});return st;}
+function renderScene(){
+  if(!cmpOn){renderer.render(scene,cam);return;}
+  var w=stage.clientWidth,h=stage.clientHeight,sx=Math.round(w*cmpX);
+  var hidden=furnHide(),li=[nlLight.intensity,tvLight.intensity];nlLight.intensity=0;tvLight.intensity=0;
+  renderer.setScissorTest(true);renderer.setScissor(0,0,sx,h);renderer.render(scene,cam);
+  hidden.forEach(function(o){o.visible=true;});nlLight.intensity=li[0];tvLight.intensity=li[1];
+  renderer.setScissor(sx,0,w-sx,h);renderer.render(scene,cam);renderer.setScissorTest(false);}
+// Messen
+var measG=new THREE.Group();scene.add(measG);
+var measPts=[],measAnchor=null,measText='',measLbl=document.createElement('div'),measDown=null;
+measLbl.id='measLbl';measLbl.className='lbl';measLbl.style.display='none';stage.appendChild(measLbl);
+function measClear(){while(measG.children.length)measG.remove(measG.children[0]);measPts=[];measAnchor=null;measLbl.style.display='none';}
+function setMeas(on){measureOn=on;if(on&&cmpOn)setCmp(false);measB.classList.toggle('on',on);measClr.style.display=on?'':'none';canvas.style.cursor=on?'crosshair':'grab';if(on)hoverCat=null;else measClear();}
+measB.onclick=function(){setMeas(!measureOn);};measClr.onclick=measClear;
+function visChain(o){while(o){if(!o.visible)return false;o=o.parent;}return true;}
+function measPick(e){var r=canvas.getBoundingClientRect();mv.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mv,cam);
+  var hits=ray.intersectObjects(room.children,true);
+  for(var i=0;i<hits.length;i++){var o=hits[i].object;if(!o.isMesh||!visChain(o)||(o.userData&&o.userData.noPick))continue;var mt=o.material;if(mt&&!Array.isArray(mt)&&mt.transparent&&mt.opacity<0.5)continue;return hits[i].point.clone();}
+  return null;}
+function fmtL(d){return d>=1?(d.toFixed(2).replace('.',',')+' m'):(Math.round(d*100)+' cm');}
+canvas.addEventListener('pointerdown',function(e){measDown=[e.clientX,e.clientY];});
+canvas.addEventListener('pointerup',function(e){
+  if(!measureOn||!measDown||Math.hypot(e.clientX-measDown[0],e.clientY-measDown[1])>=6)return;
+  var p=measPick(e);if(!p)return;
+  if(measPts.length>=2)measClear();
+  measPts.push(p);
+  var mk=new THREE.Mesh(new THREE.SphereGeometry(0.03,12,8),new THREE.MeshBasicMaterial({color:0xd2691e,depthTest:false}));mk.renderOrder=10;mk.position.copy(p);measG.add(mk);
+  if(measPts.length===1){measAnchor=p.clone();measText='Punkt 1 gesetzt – jetzt zweiten Punkt anklicken';}
+  else{var a=measPts[0],b=measPts[1],lg=new THREE.BufferGeometry().setFromPoints([a,b]);
+    var ln=new THREE.Line(lg,new THREE.LineBasicMaterial({color:0xd2691e,depthTest:false}));ln.renderOrder=9;measG.add(ln);
+    var tot=a.distanceTo(b),hor=Math.hypot(b.x-a.x,b.z-a.z),ver=Math.abs(b.y-a.y);
+    measAnchor=a.clone().add(b).multiplyScalar(0.5);measText=fmtL(tot)+'  (waagerecht '+fmtL(hor)+' · Höhe '+fmtL(ver)+')';}
+  measLbl.textContent=measText;});
 function loop(){
-  Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k);dimG[k].position.y=(rugOn&&k!=='led')?0.02:0;});
-  place();renderer.render(scene,cam);
+  Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k)&&!cmpOn;dimG[k].position.y=(rugOn&&k!=='led')?0.02:0;});
+  place();renderScene();
   var w=stage.clientWidth,h=stage.clientHeight;
   labels.forEach(function(l){
-    if(!isVis(l.cat)){l.el.style.display='none';return;}
+    if(cmpOn||!isVis(l.cat)){l.el.style.display='none';return;}
     var v=l.p.clone().project(cam);
     l.el.style.display=(v.z<1)?'block':'none';
     l.el.style.left=((v.x+1)/2*w)+'px';l.el.style.top=((1-v.y)/2*h)+'px';
   });
+  if(measAnchor){var mp=measAnchor.clone().project(cam);measLbl.style.display=(mp.z<1)?'block':'none';measLbl.style.left=((mp.x+1)/2*w)+'px';measLbl.style.top=((1-mp.y)/2*h-14)+'px';}
   requestAnimationFrame(loop);
 }
 resize();loop();

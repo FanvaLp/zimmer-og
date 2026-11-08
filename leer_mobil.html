@@ -155,6 +155,8 @@ function box(x0,y0,z0,x1,y1,z1,color){
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
 box(W-0.15,YS-1.48+0.24,0.10,W,YS-0.24,0.70,0xffffff); // Heizkörper
+// Heizkörper-Anschlussrohre zum Boden (nach Foto geschätzt: am türfernen Ende des Heizkörpers, ca. 6 cm Wandabstand)
+[1.815,1.865].forEach(function(py){var pm=new THREE.Mesh(new THREE.CylinderGeometry(0.009,0.009,0.10,10),new THREE.MeshLambertMaterial({color:0xc9ccd0}));pm.position.copy(P(W-0.08,py,0.05));room.add(pm);var rs=new THREE.Mesh(new THREE.CylinderGeometry(0.022,0.022,0.004,16),new THREE.MeshLambertMaterial({color:0xf2f2f2}));rs.position.copy(P(W-0.08,py,0.002));room.add(rs);});
 // Beschriftungen
 var labels=[
  ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
