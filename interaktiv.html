@@ -50,7 +50,8 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 </header>
 <div class="panel">
 <div class="grp hv hvg"><span class="lab">Maße anzeigen</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Beim Überfahren: Ein</button><button id="hvOff" title="Beim Überfahren nichts anzeigen (Klick und Auswahl unten funktionieren weiter)">Aus</button></div></div>
-<div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
+<div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="v5" title="Blick gerade auf die Schreibtischwand, Dachschräge wird ausgeblendet">Schreibtischwand</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
+<div class="grp"><span class="lab">Dachschräge</span><div class="seg"><button id="slopeOn" class="on" title="Dachschräge anzeigen">Anzeigen</button><button id="slopeOff" title="Dachschräge ausblenden, z. B. für den freien Blick auf die Schreibtischwand">Ausblenden</button></div></div>
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="grp"><span class="lab">Nanoleaf (Wand)</span><div class="seg"><button id="ledOn" class="on" title="Neun Nanoleaf-Hexagons an der Wand über den Bildschirmen anzeigen">An</button><button id="ledOff" title="Nanoleaf-Hexagons ausblenden">Aus</button></div></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
@@ -123,8 +124,10 @@ var eWin={u0:YS-1.48,u1:YS,v0:0.855,v1:2.05};
 addTris(shapeTris([[0,0],[D,0],[D,K],[YS,H],[0,H]],[rect(eWin.u0,eWin.v0,eWin.u1,eWin.v1)],function(u,v){return [W,u,v];}),CW);           // Fensterwand
 // Schräge
 var A=[SX,D,K],Dp=[W,D,K],E=[W,YS,H],B=[BX,YS,H],C=[BX,D,H];
+var slopeS=room.children.length;
 addTris([[A,Dp,E],[A,E,B]],CS);   // Hauptschräge
 addTris([[A,B,C]],CS);            // Übergang (Diagonale)
+var slopeObjs=room.children.slice(slopeS);
 // Decke (L-Form) und Boden
 addTris(shapeTris([[0,0],[W,0],[W,YS],[BX,YS],[BX,D],[0,D]],null,function(u,v){return [u,v,H];}),0xfbfbf8);
 var floor=addTris(shapeTris([[0,0],[W,0],[W,D],[0,D]],null,function(u,v){return [u,v,0];}),0xb08455);
@@ -543,9 +546,10 @@ var labels=[
 var showLbl=true;
 // Kamera
 var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40;
-var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[2.55,0.30,9.5,40]};
-function setView(k){var v=views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();
-  ['v1','v2','v3','v4'].forEach(function(i){document.getElementById(i).classList.toggle('on',i===k);});}
+var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[2.55,0.30,9.5,40],v5:[Math.PI/2,0.04,6.0,40,[0,2.40,1.15]]};
+function setView(k){var v=views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
+  if(k==='v5'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);dist=Math.max(6,Math.min(25,6.04/asp));}
+  ['v1','v2','v3','v4','v5'].forEach(function(i){document.getElementById(i).classList.toggle('on',i===k);});}
 function place(){
   cam.position.set(tgt.x+dist*Math.cos(el)*Math.sin(az),tgt.y+dist*Math.sin(el),tgt.z+dist*Math.cos(el)*Math.cos(az));
   cam.up.set(0,1,0);cam.lookAt(tgt);
@@ -563,7 +567,7 @@ canvas.addEventListener('pointermove',function(e){
   else if(ids.length===2){ptrs[e.pointerId]=[e.clientX,e.clientY];var a=ptrs[ids[0]],b=ptrs[ids[1]];var d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastPinch)dist=Math.max(3,Math.min(25,dist*lastPinch/d));lastPinch=d;}
 });
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
-['v1','v2','v3','v4'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);};});
+['v1','v2','v3','v4','v5'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
 var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
@@ -580,6 +584,9 @@ bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false)
 var ledOn=true,ledB1=document.getElementById('ledOn'),ledB0=document.getElementById('ledOff');
 function setLed(on){ledOn=on;ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
 ledB1.onclick=function(){setLed(true);};ledB0.onclick=function(){setLed(false);};
+var slopeOn=true,slB1=document.getElementById('slopeOn'),slB0=document.getElementById('slopeOff');
+function setSlope(on){slopeOn=on;slopeObjs.forEach(function(o){o.visible=on;});slB1.classList.toggle('on',on);slB0.classList.toggle('on',!on);}
+slB1.onclick=function(){setSlope(true);};slB0.onclick=function(){setSlope(false);};
 var rugBtn=document.getElementById('rug'),rugBA=document.getElementById('rugA'),rugBB=document.getElementById('rugB'),rugBC=document.getElementById('rugC'),rugQ=document.getElementById('rugQ'),rugL=document.getElementById('rugL'),orGrp=document.getElementById('orgrp');
 function applyRug(){var key=rugKey();Object.keys(rugGroups).forEach(function(k){rugGroups[k].forEach(function(o){o.visible=rugOn&&k===key;});});
   rugBtn.classList.toggle('on',!rugOn);rugBA.classList.toggle('on',rugOn&&rugV==='a');rugBB.classList.toggle('on',rugOn&&rugV==='b');rugBC.classList.toggle('on',rugOn&&rugV==='c');
@@ -592,21 +599,21 @@ rugQ.onclick=function(){rugOr='q';pickRug('a');};rugL.onclick=function(){rugOr='
 setRug(true);
 /* Auswahl merken (nur in diesem Browser, localStorage) */
 var lastView='v1',LSK='zimmerOG_'+(location.pathname.split('/').pop()||'seite');
-function saveUI(){try{localStorage.setItem(LSK,JSON.stringify({rugOn:rugOn,rugV:rugV,rugOr:rugOr,bed:bedOn,hover:hoverOn,zones:zones.visible,view:lastView,led:ledOn}));}catch(e){}}
+function saveUI(){try{localStorage.setItem(LSK,JSON.stringify({rugOn:rugOn,rugV:rugV,rugOr:rugOr,bed:bedOn,hover:hoverOn,zones:zones.visible,view:lastView,led:ledOn,slope:slopeOn}));}catch(e){}}
 try{var sv=JSON.parse(localStorage.getItem(LSK)||'null');
  if(sv){rugOn=sv.rugOn!==false;if(['a','b','c'].indexOf(sv.rugV)>=0)rugV=sv.rugV;if(sv.rugOr==='q'||sv.rugOr==='l')rugOr=sv.rugOr;applyRug();
-  setBed(!!sv.bed);setLed(sv.led!==false);if(sv.hover===false)hBtn.Aus.onclick();
+  setBed(!!sv.bed);setLed(sv.led!==false);setSlope(sv.slope!==false);if(sv.hover===false)hBtn.Aus.onclick();
   if(sv.zones&&!zones.visible)document.getElementById('tz').onclick();
   if(sv.view&&views[sv.view]){setView(sv.view);lastView=sv.view;}}}catch(e){}
 /* Teilen-Link: Auswahl steckt in der Adresse (?teppich=ikea200|ikea170|kaufland|kein&lage=quer|laengs&sofa=zu|offen&ansicht=1-4&zonen=1&masse=aus) */
 var VMAP={a:'ikea200',b:'ikea170',c:'kaufland'};
-function shareURL(){var q=['teppich='+(rugOn?VMAP[rugV]:'kein')];if(rugOn&&rugV==='a')q.push('lage='+(rugOr==='q'?'quer':'laengs'));q.push('sofa='+(bedOn?'offen':'zu'));q.push('ansicht='+lastView.slice(1));if(zones.visible)q.push('zonen=1');if(!hoverOn)q.push('masse=aus');if(!ledOn)q.push('led=aus');return location.href.split(/[?#]/)[0]+'?'+q.join('&');}
+function shareURL(){var q=['teppich='+(rugOn?VMAP[rugV]:'kein')];if(rugOn&&rugV==='a')q.push('lage='+(rugOr==='q'?'quer':'laengs'));q.push('sofa='+(bedOn?'offen':'zu'));q.push('ansicht='+lastView.slice(1));if(zones.visible)q.push('zonen=1');if(!hoverOn)q.push('masse=aus');if(!ledOn)q.push('led=aus');if(!slopeOn)q.push('schraege=aus');return location.href.split(/[?#]/)[0]+'?'+q.join('&');}
 try{var up=new URLSearchParams(location.search);
  if(up.has('teppich')){
   if(zones.visible)document.getElementById('tz').onclick();if(!hoverOn)hBtn.Ein.onclick();rugOr='q';
   var tp=up.get('teppich');if(tp==='kein'){rugOn=false;}else{Object.keys(VMAP).forEach(function(k){if(VMAP[k]===tp){rugV=k;rugOn=true;}});}
   if(up.get('lage')==='laengs')rugOr='l';applyRug();
-  setBed(up.get('sofa')==='offen');setLed(up.get('led')!=='aus');
+  setBed(up.get('sofa')==='offen');setLed(up.get('led')!=='aus');setSlope(up.get('schraege')!=='aus');
   var an=up.get('ansicht');if(an&&views['v'+an]){setView('v'+an);lastView='v'+an;}
   if(up.get('zonen')==='1')document.getElementById('tz').onclick();
   if(up.get('masse')==='aus')hBtn.Aus.onclick();
