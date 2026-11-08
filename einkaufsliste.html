@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einkaufsliste – Zimmer OG</title>
+<style>
+:root{--bg:#fbf3e8;--fg:#3b2616;--muted:#8a6a52;--panel:#fffaf2;--line:#ecd9bf;--accent:#c8643c;--head:#5a3825;--tag:#f6e6d0;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#1d1813;--fg:#f1e6d8;--muted:#b79c82;--panel:#2a231b;--line:#43372a;--accent:#e0805a;--head:#f3d9bf;--tag:#3a2f23;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+main{max-width:760px;margin:0 auto}
+.back{display:inline-block;margin:0 0 10px;color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+.banner{display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 2px 12px rgba(90,56,37,.15)}
+h1{font-size:24px;margin:20px 0 4px;color:var(--head)}
+.sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+.card{display:flex;gap:16px;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+.info{min-width:0}
+.name{font-size:18px;font-weight:700;color:var(--head)}
+.name small{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.dim{color:var(--muted);font-size:14px;margin-top:2px}
+.tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12px;background:var(--tag);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.btn{flex:0 0 auto;background:var(--accent);color:#fff;text-decoration:none;border-radius:10px;padding:11px 18px;font-weight:600;font-size:14px;white-space:nowrap}
+.btn:hover,.btn:focus-visible{filter:brightness(1.08);outline:none}
+.note{margin-top:16px;color:var(--muted);font-size:13px}
+@media (max-width:560px){.card{flex-direction:column;align-items:stretch}.btn{text-align:center}}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Zur Übersicht</a>
+<img class="banner" src="banner.jpg" alt="Zimmereinrichtung OG – Wohnen unterm Dach" width="2000" height="600">
+<h1>Einkaufsliste</h1>
+<p class="sub">Was noch ins Zimmer kommt – mit Maßen und Link zum jeweiligen Shop.</p>
+
+<div class="card"><div class="info"><div class="name">PAX Kleiderschrank<small>IKEA</small></div><div class="dim">99,8 × 60,4 × 201,2 cm · neben dem Mauervorsprung an der Türwand</div><div class="tags"><span class="tag">Konfiguration im IKEA-Planer</span></div></div>
+<a class="btn" href="https://www.ikea.com/addon-app/storageone/pax/web/latest/de/de/#/planner" target="_blank" rel="noopener">Zum Planer ↗</a></div>
+
+<div class="card"><div class="info"><div class="name">BESTÅ TV-Bank mit Türen<small>IKEA</small></div><div class="dim">180 × 42 × 38 cm · neben dem Schrank, auf dem Boden</div><div class="tags"><span class="tag">Eicheneffekt, Lappviken</span></div></div>
+<a class="btn" href="https://www.ikea.com/de/de/p/besta-tv-bank-mit-tueren-eicheneff-wlas-lappviken-eicheneff-wlas-s89330709/" target="_blank" rel="noopener">Zum Produkt ↗</a></div>
+
+<div class="card"><div class="info"><div class="name">Samsung Mini LED 65 Zoll<small>M70H</small></div><div class="dim">Panel 144,4 × 83,1 × 7,7 cm · steht auf dem Sideboard (zusammen 121 cm hoch)</div><div class="tags"><span class="tag">Modell GU65M70H</span></div></div>
+<a class="btn" href="https://geizhals.de/samsung-gu65m70h-a3799699.html" target="_blank" rel="noopener">Zum Produkt ↗</a></div>
+
+<div class="card"><div class="info"><div class="name">SÖRVALLEN 3er-Sofa mit Récamiere<small>IKEA</small></div><div class="dim">284 × 193 × 88 cm · unter der Schräge, 35 cm Abstand zur Schrägenwand</div><div class="tags"><span class="tag">Récamiere rechts</span><span class="tag">Lejde grau/schwarz</span></div></div>
+<a class="btn" href="https://www.ikea.com/de/de/p/soervallen-3er-sofa-mit-recamiere-rechts-lejde-grau-schwarz-s19304148/" target="_blank" rel="noopener">Zum Produkt ↗</a></div>
+
+<p class="note">Die Links führen zu den Seiten der Anbieter, dort stehen aktuelle Preise und Lieferzeiten. Alle Maße stammen von den Produktseiten bzw. Datenblättern.</p>
+</main>
+</body>
+</html>
