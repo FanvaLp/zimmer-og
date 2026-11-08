@@ -561,6 +561,15 @@ rugBtn.onclick=function(){setRug(false);};
 rugBA.onclick=function(){pickRug('a');};rugBB.onclick=function(){pickRug('b');};rugBC.onclick=function(){pickRug('c');};
 rugQ.onclick=function(){rugOr='q';pickRug('a');};rugL.onclick=function(){rugOr='l';pickRug('a');};
 setRug(true);
+/* Auswahl merken (nur in diesem Browser, localStorage) */
+var lastView='v1',LSK='zimmerOG_'+(location.pathname.split('/').pop()||'seite');
+function saveUI(){try{localStorage.setItem(LSK,JSON.stringify({rugOn:rugOn,rugV:rugV,rugOr:rugOr,bed:bedOn,hover:hoverOn,zones:zones.visible,view:lastView}));}catch(e){}}
+try{var sv=JSON.parse(localStorage.getItem(LSK)||'null');
+ if(sv){rugOn=sv.rugOn!==false;if(['a','b','c'].indexOf(sv.rugV)>=0)rugV=sv.rugV;if(sv.rugOr==='q'||sv.rugOr==='l')rugOr=sv.rugOr;applyRug();
+  setBed(!!sv.bed);if(sv.hover===false)hBtn.Aus.onclick();
+  if(sv.zones&&!zones.visible)document.getElementById('tz').onclick();
+  if(sv.view&&views[sv.view]){setView(sv.view);lastView=sv.view;}}}catch(e){}
+document.querySelector('.panel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(views[b.id])lastView=b.id;saveUI();});
 
 
 function isVis(k){if(k==='bett'&&!bedOn)return false;var isRug=(k==='tp1'||k==='tp1l'||k==='tp2'||k==='tp3');if(isRug&&(!rugOn||k!==rugKey()))return false;var c=k;if(isRug)c='teppich';if(k==='ctn'||k==='ctb'){if((k==='ctb')!==bedOn)return false;c='couchtisch';}var hc=(hoverCat==='ctn'||hoverCat==='ctb')?'couchtisch':(hoverCat==='tp1'||hoverCat==='tp1l'||hoverCat==='tp2'||hoverCat==='tp3')?'teppich':hoverCat;if(pinned[c])return true;if(hc){if(hc===c)return true;var L=LINK[hc];if(L&&L.indexOf(c)>=0)return true;}return false;}
