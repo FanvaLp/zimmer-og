@@ -27,6 +27,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .panel{padding:6px 16px;display:flex;flex-direction:column;gap:6px}
 .grp{display:flex;align-items:center;gap:10px;min-width:0}
 .grp>.lab{flex:0 0 96px;font-weight:600;color:var(--fg);margin:0}
+.hvg{padding:6px 8px;border:1px dashed var(--line);border-radius:10px;align-self:flex-start}
 .seg{display:flex;flex-wrap:wrap;min-width:0}
 .seg button{border-radius:0;margin:0 -1px -1px 0;position:relative}
 .seg button:first-child{border-radius:8px 0 0 8px}
@@ -47,6 +48,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <p>Ziehen = drehen · Mausrad / zwei Finger = zoomen · Maße: mit der Maus über ein Möbelstück fahren oder es anklicken (Klick hält die Maße fest) – oder unten Gegenstände auswählen</p>
 </header>
 <div class="panel">
+<div class="grp hv hvg"><span class="lab">Maße anzeigen</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Beim Überfahren: Ein</button><button id="hvOff" title="Beim Überfahren nichts anzeigen (Klick und Auswahl unten funktionieren weiter)">Aus</button></div></div>
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
@@ -543,11 +545,9 @@ var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
 CATS.forEach(function(c){var b=document.createElement('button');b.textContent=c[1];b.dataset.k=c[0];b.onclick=function(){pinned[c[0]]=!pinned[c[0]];sync();};catsEl.appendChild(b);});
 [['Alle',true],['Keine',false]].forEach(function(a){var b=document.createElement('button');b.textContent=a[0];b.onclick=function(){CATS.forEach(function(c){pinned[c[0]]=a[1];});sync();};catsEl.appendChild(b);});
-var sep=document.createElement('span');sep.className='lab';sep.textContent='Maße beim Überfahren mit der Maus:';catsEl.appendChild(sep);
-var hBtn={};
-[['Ein',true],['Aus',false]].forEach(function(a){var b=document.createElement('button');b.textContent=a[0];b.title=a[1]?'Maße beim Überfahren mit der Maus zeigen':'Beim Überfahren nichts anzeigen (Klick und Leiste funktionieren weiter)';
-  b.onclick=function(){hoverOn=a[1];if(!hoverOn){hoverCat=null;canvas.style.cursor='grab';}hBtn.Ein.classList.toggle('on',hoverOn);hBtn.Aus.classList.toggle('on',!hoverOn);};hBtn[a[0]]=b;catsEl.appendChild(b);});
-hBtn.Ein.classList.add('on');
+var hBtn={Ein:document.getElementById('hvOn'),Aus:document.getElementById('hvOff')};
+hBtn.Ein.onclick=function(){hoverOn=true;hBtn.Ein.classList.add('on');hBtn.Aus.classList.remove('on');};
+hBtn.Aus.onclick=function(){hoverOn=false;hoverCat=null;canvas.style.cursor='grab';hBtn.Ein.classList.remove('on');hBtn.Aus.classList.add('on');};
 var bedBtn=document.getElementById('bed'),bedOff=document.getElementById('bedoff');
 function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
 bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
