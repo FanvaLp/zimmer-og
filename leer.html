@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zimmer OG – leere 3D-Ansicht</title>
+<style>
+:root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--fg:#ececec;--muted:#a0a0a0;--panel:#232427;--line:#3a3b3f;--accent:#7fb2ee;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17181a;--fg:#ececec;--muted:#a0a0a0;--panel:#232427;--line:#3a3b3f;--accent:#7fb2ee;color-scheme:dark}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column}
+header{padding:12px 16px 6px}
+h1{font-size:18px;margin:0 0 2px}
+header p{margin:0;color:var(--muted);font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;padding:6px 16px}
+button{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font:inherit;font-size:13px;cursor:pointer}
+button.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+#stage{position:relative;flex:1;min-height:320px;margin:0 16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.lbl{position:absolute;transform:translate(-50%,-50%);font-size:11px;font-weight:600;color:var(--accent);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1px 5px;white-space:nowrap;pointer-events:none}
+#legend{position:absolute;left:10px;bottom:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;display:none}
+#legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+footer{padding:8px 16px 12px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+<h1>Zimmer Obergeschoss – leere 3D-Ansicht</h1>
+<p>Ziehen = drehen · Mausrad / zwei Finger = zoomen · ohne Möbel</p>
+</header>
+<div class="bar">
+<button id="v1" class="on">Übersicht</button>
+<button id="v2">Draufsicht</button>
+<button id="v3">Schräge im Profil</button>
+<button id="v4">Von der Tür</button>
+<button id="tz">Kopfhöhen-Zonen</button>
+<button id="tl" class="on">Maße</button>
+</div>
+<div id="stage"><canvas id="c"></canvas>
+<div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
+<footer>* geschätzt: Raumhöhe 2,30 m, Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</footer>
+<script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
+<script>
+(function(){
+var W=4.76,D=4.09,H=2.30,K=0.62,SD=1.90,SX=2.0,BX=1.5,YS=D-SD;
+var canvas=document.getElementById('c'),stage=document.getElementById('stage');
+var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(40,1,0.1,100);
+scene.add(new THREE.HemisphereLight(0xffffff,0x9a8f80,0.95));
+var dl=new THREE.DirectionalLight(0xffffff,0.45);dl.position.set(3,6,-4);scene.add(dl);
+function P(x,y,z){return new THREE.Vector3(x,z,y);}
+var center=P(W/2,D/2,H/2);
+var room=new THREE.Group();scene.add(room);
+function edgeColor(){return matchMedia('(prefers-color-scheme: dark)').matches?0xcfcfcf:0x333333;}
+var edgeMats=[];
+function addTris(tris,color,opts){
+  opts=opts||{};
+  var pos=[];
+  tris.forEach(function(t){
+    var a=P.apply(null,t[0]),b=P.apply(null,t[1]),c=P.apply(null,t[2]);
+    var n=new THREE.Vector3().subVectors(b,a).cross(new THREE.Vector3().subVectors(c,a));
+    var cen=new THREE.Vector3().add(a).add(b).add(c).multiplyScalar(1/3);
+    if(n.dot(new THREE.Vector3().subVectors(center,cen))<0){var tmp=b;b=c;c=tmp;}
+    [a,b,c].forEach(function(v){pos.push(v.x,v.y,v.z);});
+  });
+  var g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  g.computeVertexNormals();
+  var m=new THREE.MeshLambertMaterial({color:color,side:opts.double?THREE.DoubleSide:THREE.FrontSide,transparent:!!opts.opacity,opacity:opts.opacity||1,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+  var mesh=new THREE.Mesh(g,m);
+  var grp=opts.group||room;grp.add(mesh);
+  if(!opts.noEdges){var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(g,20),em));}
+  return mesh;
+}
+function shapeTris(contour,holes,map){
+  var c=contour.map(function(p){return new THREE.Vector2(p[0],p[1]);});
+  var hs=(holes||[]).map(function(h){return h.map(function(p){return new THREE.Vector2(p[0],p[1]);});});
+  var all=c.slice();hs.forEach(function(h){all=all.concat(h);});
+  var faces=THREE.ShapeUtils.triangulateShape(c,hs);
+  return faces.map(function(f){return f.map(function(i){return map(all[i].x,all[i].y);});});
+}
+function rect(u0,v0,u1,v1){return [[u0,v0],[u1,v0],[u1,v1],[u0,v1]];}
+// Wände
+var CW=0xf3f0e8,CS=0xe2dfd6;
+var doorTop=2.01;
+addTris(shapeTris([[0,0],[0.125,0],[0.125,doorTop],[1.075,doorTop],[1.075,0],[W,0],[W,H],[0,H]],null,function(u,v){return [u,0,v];}),CW);               // Türwand
+var sWin={u0:0.20,u1:1.08,v0:0.90,v1:1.90};
+addTris(shapeTris([[0,0],[W,0],[W,K],[SX,K],[BX,H],[0,H]],[rect(sWin.u0,sWin.v0,sWin.u1,sWin.v1)],function(u,v){return [u,D,v];}),CW);  // Schrägenwand
+addTris(shapeTris([[0,0],[D,0],[D,H],[0,H]],null,function(u,v){return [0,u,v];}),CW);                                                       // linke Wand
+var eWin={u0:YS-1.48,u1:YS,v0:0.855,v1:2.05};
+addTris(shapeTris([[0,0],[D,0],[D,K],[YS,H],[0,H]],[rect(eWin.u0,eWin.v0,eWin.u1,eWin.v1)],function(u,v){return [W,u,v];}),CW);           // Fensterwand
+// Schräge
+var A=[SX,D,K],Dp=[W,D,K],E=[W,YS,H],B=[BX,YS,H],C=[BX,D,H];
+addTris([[A,Dp,E],[A,E,B]],CS);   // Hauptschräge
+addTris([[A,B,C]],CS);            // Übergang (Diagonale)
+// Decke (L-Form) und Boden
+addTris(shapeTris([[0,0],[W,0],[W,YS],[BX,YS],[BX,D],[0,D]],null,function(u,v){return [u,v,H];}),0xfbfbf8);
+var floor=addTris(shapeTris([[0,0],[W,0],[W,D],[0,D]],null,function(u,v){return [u,v,0];}),0xb08455);
+// Zonen
+var zones=new THREE.Group();zones.visible=false;scene.add(zones);
+function dAt(h){return (h-K)*SD/(H-K);}
+function hx(d){return SX-(SX-BX)*d/SD;}
+var d15=dAt(1.5),d20=dAt(2.0);
+[[0,d15,0xf4a261],[d15,d20,0xffe08a],[d20,SD,0xcfe8c0]].forEach(function(z){
+  var p=[[hx(z[0]),D-z[0]],[W,D-z[0]],[W,D-z[1]],[hx(z[1]),D-z[1]]];
+  addTris([[[p[0][0],p[0][1],0.01],[p[1][0],p[1][1],0.01],[p[2][0],p[2][1],0.01]],[[p[0][0],p[0][1],0.01],[p[2][0],p[2][1],0.01],[p[3][0],p[3][1],0.01]]],z[2],{group:zones,double:true,opacity:0.85,noEdges:true});
+});
+// Fenster (Glas + Rahmen)
+function glass(pts){
+  var tris=[[pts[0],pts[1],pts[2]],[pts[0],pts[2],pts[3]]];
+  addTris(tris,0x9fd0f0,{double:true,opacity:0.35,noEdges:true});
+}
+function frame(pts,mid){
+  var v=[];function seg(a,b){v.push.apply(v,P.apply(null,a).toArray());v.push.apply(v,P.apply(null,b).toArray());}
+  for(var i=0;i<4;i++)seg(pts[i],pts[(i+1)%4]);
+  seg(mid[0],mid[1]);
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+  room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x4a90c2})));
+}
+var ew=[[W,eWin.u0,eWin.v0],[W,eWin.u1,eWin.v0],[W,eWin.u1,eWin.v1],[W,eWin.u0,eWin.v1]];
+glass(ew);frame(ew,[[W,(eWin.u0+eWin.u1)/2,eWin.v0],[W,(eWin.u0+eWin.u1)/2,eWin.v1]]);
+var sw=[[sWin.u0,D,sWin.v0],[sWin.u1,D,sWin.v0],[sWin.u1,D,sWin.v1],[sWin.u0,D,sWin.v1]];
+glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D,sWin.v0],[(sWin.u0+sWin.u1)/2,D,sWin.v1]]);
+// Mauervorsprung & Heizkörper
+function box(x0,y0,z0,x1,y1,z1,color){
+  var m=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,z1-z0,y1-y0),new THREE.MeshLambertMaterial({color:color}));
+  m.position.copy(P((x0+x1)/2,(y0+y1)/2,(z0+z1)/2));room.add(m);
+  var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);
+  var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
+}
+box(1.20,0,0,1.733,0.35,H,0xe9e6de);        // Mauervorsprung (Tiefe geschätzt 0,35 m)
+box(W-0.15,YS-1.48+0.24,0.10,W,YS-0.24,0.70,0xffffff); // Heizkörper
+// Beschriftungen
+var labels=[
+ ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
+ ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
+ ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 m',1.47,-0.2,H+0.08]
+].map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3])};});
+// Maßlinien (eingezeichnet)
+(function(){
+  var v=[];
+  function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
+  [-0.25,W+0.25].forEach(function(x){s([x,0,0.01],[x,D,0.01]);s([x-0.08,0,0.01],[x+0.08,0,0.01]);s([x-0.08,D,0.01],[x+0.08,D,0.01]);});
+  s([0,-0.25,0.01],[W,-0.25,0.01]);s([0,-0.33,0.01],[0,-0.17,0.01]);s([W,-0.33,0.01],[W,-0.17,0.01]);
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+  room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x1f6fd0})));
+})();
+var showLbl=true;
+// Kamera
+var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40;
+var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[2.55,0.30,9.5,40]};
+function setView(k){var v=views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();
+  ['v1','v2','v3','v4'].forEach(function(i){document.getElementById(i).classList.toggle('on',i===k);});}
+function place(){
+  cam.position.set(tgt.x+dist*Math.cos(el)*Math.sin(az),tgt.y+dist*Math.sin(el),tgt.z+dist*Math.cos(el)*Math.cos(az));
+  cam.up.set(0,1,0);cam.lookAt(tgt);
+}
+function resize(){var w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+window.addEventListener('resize',resize);
+// Steuerung
+var ptrs={},lastPinch=0;
+canvas.addEventListener('pointerdown',function(e){canvas.setPointerCapture(e.pointerId);ptrs[e.pointerId]=[e.clientX,e.clientY];canvas.style.cursor='grabbing';});
+canvas.addEventListener('pointerup',function(e){delete ptrs[e.pointerId];lastPinch=0;canvas.style.cursor='grab';});
+canvas.addEventListener('pointercancel',function(e){delete ptrs[e.pointerId];lastPinch=0;});
+canvas.addEventListener('pointermove',function(e){
+  var ids=Object.keys(ptrs);if(!ptrs[e.pointerId])return;
+  if(ids.length===1){var p=ptrs[e.pointerId];az-=(e.clientX-p[0])*0.008;el=Math.max(-0.1,Math.min(1.55,el+(e.clientY-p[1])*0.006));ptrs[e.pointerId]=[e.clientX,e.clientY];}
+  else if(ids.length===2){ptrs[e.pointerId]=[e.clientX,e.clientY];var a=ptrs[ids[0]],b=ptrs[ids[1]];var d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastPinch)dist=Math.max(3,Math.min(25,dist*lastPinch/d));lastPinch=d;}
+});
+canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
+['v1','v2','v3','v4'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);};});
+document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
+document.getElementById('tl').onclick=function(){showLbl=!showLbl;this.classList.toggle('on',showLbl);};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){edgeMats.forEach(function(m){m.color.setHex(edgeColor());});});
+function loop(){
+  place();renderer.render(scene,cam);
+  var w=stage.clientWidth,h=stage.clientHeight;
+  labels.forEach(function(l){
+    if(!showLbl){l.el.style.display='none';return;}
+    var v=l.p.clone().project(cam);
+    l.el.style.display=(v.z<1)?'block':'none';
+    l.el.style.left=((v.x+1)/2*w)+'px';l.el.style.top=((1-v.y)/2*h)+'px';
+  });
+  requestAnimationFrame(loop);
+}
+resize();loop();
+})();
+</script>
+</body>
+</html>
