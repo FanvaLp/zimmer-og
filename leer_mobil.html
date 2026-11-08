@@ -149,13 +149,13 @@ function box(x0,y0,z0,x1,y1,z1,color){
   var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
 }
-box(1.20,0,0,1.733,0.35,H,0xe9e6de);        // Mauervorsprung (Tiefe geschätzt 0,35 m)
+box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
 box(W-0.15,YS-1.48+0.24,0.10,W,YS-0.24,0.70,0xffffff); // Heizkörper
 // Beschriftungen
 var labels=[
  ['4,76 m',W/2,-0.25,0],['4,09 m',W+0.25,D/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
  ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
- ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 m',1.47,-0.2,H+0.08]
+ ['Fensterbreite 1,48 m',W+0.12,YS-0.74,2.15],['Mauervorsprung 0,533 × 0,465 m',1.47,-0.2,H+0.08]
 ].map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2],l[3])};});
 // Maßlinien (eingezeichnet)
 (function(){
