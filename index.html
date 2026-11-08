@@ -9,12 +9,14 @@
 @media (prefers-color-scheme:dark){:root{--bg:#17181a;--fg:#ececec;--muted:#a0a0a0;--panel:#232427;--line:#3a3b3f;--accent:#7fb2ee;--hl:#1e2a3a;color-scheme:dark}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
-main{max-width:760px;margin:0 auto}
+main{max-width:960px;margin:0 auto}
 h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .banner{display:block;width:100%;height:auto;border-radius:14px;margin:4px 0 14px;box-shadow:0 2px 12px rgba(90,56,37,.15)}
 .sub{color:var(--muted);margin:0 0 20px;font-size:14px}
 h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
 .grid{display:grid;gap:10px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;align-items:start}
+@media (max-width:700px){.cols{grid-template-columns:1fr}}
 a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;transition:border-color .15s}
 a.card:hover,a.card:focus-visible{border-color:var(--accent);outline:none}
 a.card.rec{border-color:var(--accent);background:var(--hl)}
@@ -41,18 +43,24 @@ footer{margin-top:28px;color:var(--muted);font-size:13px}
 <a class="card" href="grundriss.html"><b>Grundriss 2D</b><span>Draufsicht mit allen Maßen, leer und eingerichtet (inkl. Sofa mit Récamiere links, Couchtisch und Teppich).</span></a>
 </div>
 
+<div class="cols">
+<section>
 <h2>Am Handy</h2>
 <div class="grid" id="mob">
 <a class="card" href="leer_mobil.html"><b>Zimmer leer</b><span>Nur der Raum: Wände, Schräge, Fenster, Tür.</span><div class="tag">Empfohlen für dein Gerät</div></a>
 <a class="card" href="eingerichtet_mobil.html"><b>Zimmer eingerichtet</b><span>Mit Schreibtisch, Schrank, Sideboard, Fernseher, Sofa, Couchtisch, Teppich (An/Aus, drei Varianten und Ausrichtung wählbar), Nanoleaf-Wandlicht (An/Aus) und Stuhl. Maße per Antippen oder Auswahlleiste. Die eigene Auswahl lässt sich als Link teilen.</span><div class="tag">Empfohlen für dein Gerät</div></a>
 <a class="card" href="interaktiv_mobil.html"><b>Zimmer interaktiv</b><span>Wie „eingerichtet“, Maße erscheinen erst beim Antippen oder über die Leiste.</span><div class="tag">Empfohlen für dein Gerät</div></a>
 </div>
+</section>
 
+<section>
 <h2>Am PC / Tablet</h2>
 <div class="grid" id="web">
 <a class="card" href="leer.html"><b>Zimmer leer</b><span>Nur der Raum: Wände, Schräge, Fenster, Tür.</span><div class="tag">Empfohlen für dein Gerät</div></a>
 <a class="card" href="eingerichtet.html"><b>Zimmer eingerichtet</b><span>Mit allen Möbeln. Maße beim Überfahren mit der Maus oder per Auswahlleiste.</span><div class="tag">Empfohlen für dein Gerät</div></a>
 <a class="card" href="interaktiv.html"><b>Zimmer interaktiv</b><span>Wie „eingerichtet“, Maße erscheinen beim Überfahren, Anklicken oder per Leiste.</span><div class="tag">Empfohlen für dein Gerät</div></a>
+</div>
+</section>
 </div>
 
 <footer>Die 3D-Ansichten laden die Bibliothek three.js aus dem Internet, eine Verbindung wird also benötigt. Einige Maße (Raumhöhe, Aufteilung des Schreibtischs, Stuhl) sind geschätzt und in den Ansichten unter „Hinweise“ vermerkt.</footer>
