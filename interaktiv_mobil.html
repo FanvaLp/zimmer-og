@@ -60,7 +60,7 @@ footer summary{cursor:pointer;color:var(--muted)}
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher steht ohne Fußhöhe direkt auf dem Sideboard, Gesamthöhe 121,12 cm), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
+<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -193,17 +193,17 @@ var SB0=PX0+PW,SBW=1.80,SBD=0.42,SBH=0.38;
 box(SB0,0,0,SB0+SBW,SBD,SBH,0xe6d3b0);
 [1,2].forEach(function(i){box(SB0+SBW*i/3-0.002,SBD,0.01,SB0+SBW*i/3+0.002,SBD+0.002,SBH-0.01,0x9a8760);});
 cat='tv';
-// Fernseher (Samsung Mini LED M70H, 65 Zoll) nach Datenblatt: Panel 144,41 x 83,12 x 7,68 cm, mit Fuß 88,22 cm hoch und 22,2 cm tief,
-// Fußabstand außen 100,46 cm. Dünnes Panel (ca. 1,2 cm), Rückgehäuse unten in der Mitte, zwei schmale Füße.
-var TVW=1.4441,TVH=0.8312,TVD=0.0768,TVFH=0.0510,TVCX=SB0+SBW/2,TVYB=0.10,TVBD=0.222,TVZ0=SBH;
-var TVF=TVYB+0.150,TVYC=TVYB+TVBD/2;   // TVF = Vorderkante Panel, TVYC = Mitte Fußplatte
+// Fernseher (Samsung Mini LED M70H, 75 Zoll) nach Amazon-Datenblatt: Panel 166,81 x 95,78 x 7,7 cm, mit Fuß 100,79 cm hoch, Fuß 28 cm tief,
+// Fußabstand 125 cm. Dünnes Panel (ca. 1,2 cm), Rückgehäuse unten in der Mitte, zwei schmale Füße.
+var TVW=1.6681,TVH=0.9578,TVD=0.077,TVFH=0.0501,TVCX=SB0+SBW/2,TVYB=0.10,TVBD=0.280,TVZ0=SBH+TVFH;
+var TVF=TVYB+0.190,TVYC=TVYB+TVBD/2;   // TVF = Vorderkante Panel, TVYC = Mitte Fußplatte
 box(TVCX-TVW/2,TVF-0.012,TVZ0,TVCX+TVW/2,TVF,TVZ0+TVH,0x161618);                           // Panel mit Rahmen (dünn)
 box(TVCX-TVW/2+0.006,TVF,TVZ0+0.010,TVCX+TVW/2-0.006,TVF+0.0012,TVZ0+TVH-0.006,0x07080c);   // Bildschirm
 box(TVCX-TVW*0.325,TVF-TVD,TVZ0,TVCX+TVW*0.325,TVF-0.012,TVZ0+TVH*0.46,0x1b1b1e);         // Rückgehäuse (7,7 cm tief)
 [-1,1].forEach(function(sg){
-  var fx=TVCX+sg*(1.0046/2-0.0205);
+  var fx=TVCX+sg*(1.250/2-0.0205);
   box(fx-0.0205,TVYB,SBH,fx+0.0205,TVYB+TVBD,SBH+0.008,0x1c1c1e);                         // Fußplatte (22,2 cm tief, 4,1 cm breit)
-  // kein Hals: Panel steht direkt auf dem Sideboard (38 cm + 83,12 cm = 121,12 cm)            // schmaler Hals
+  box(fx-0.0205,TVF-0.07,SBH+0.008,fx+0.0205,TVF-0.012,TVZ0,0x1c1c1e);   // Standfuß (5 cm): 38 + 5 + 95,78 = 138,8 cm
 });
 (function(){   // Höhen-Maßlinien: Schrank, Sideboard, Fernseher
   function mk(c,fn){cat=c;var v=[];
@@ -444,7 +444,7 @@ cat='raum';
 var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch','Wand bis Tisch 49 cm':'tisch','Tisch 2,40 m':'tisch','Tisch bis Türwand 1,20 m':'tisch',
  'Schrank 99,8 × 60,4 × 201,2 cm':'schrank','201,2 cm':'schrank','99,8 cm':'schrank',
  'Sideboard 180 × 42 × 38 cm':'sideboard','38 cm':'sideboard','180 cm':'sideboard','Rest bis Fensterwand ≈ 0,23 m':'sideboard',
- 'Fernseher 65" · Panel 144,4 × 83,1 × 7,7 cm':'tv','Bilddiagonale ≈ 164 cm (65 Zoll)':'tv','83,12 cm':'tv','121,12 cm gesamt':'tv',
+ 'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
  'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','35 cm Abstand zur Schrägenwand':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 93 cm: 5 cm Luft über Rücken (88 cm)':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 1,39 m':'bett',
  'Unterlage 120 cm':'stuhl','23 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
  'Tisch bis Sofa 97 cm':'abstand','Stuhl–Sofa 42 cm':'abstand'};
@@ -455,8 +455,8 @@ var labels=[
  ['Schreibtisch 2,40 m',0.4,(Y0+Y2)/2,0.98],['Höhe 72 cm',0.82,Y2-0.4,0.36],['Tiefe 80 cm',0.82,Y0+0.4,0.84],
  ['Wand bis Tisch 49 cm',1.05,D-0.245,0.02],['Tisch 2,40 m',1.05,(Y0+Y2)/2,0.02],['Tisch bis Türwand 1,20 m',1.05,Y0/2,0.02],
  ['Schrank 99,8 × 60,4 × 201,2 cm',PX0+PW/2,PD/2,PH+0.1],['Sideboard 180 × 42 × 38 cm',SB0+SBW/2,SBD/2,SBH+0.12],
- ['Fernseher 65" · Panel 144,4 × 83,1 × 7,7 cm',TVCX,TVYC,TVZ0+TVH+0.12],['Bilddiagonale ≈ 164 cm (65 Zoll)',TVCX,TVF+0.004,TVZ0+TVH/2],
- ['201,2 cm',PX0+PW/2,PD+0.08,PH/2],['38 cm',SB0+SBW+0.06,SBD,SBH/2],['83,12 cm',SB0+SBW+0.06,SBD,SBH+TVH/2],['121,12 cm gesamt',SB0+SBW+0.14,SBD,(TVZ0+TVH)/2],
+ ['Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm',TVCX,TVYC,TVZ0+TVH+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVZ0+TVH/2],
+ ['201,2 cm',PX0+PW/2,PD+0.08,PH/2],['38 cm',SB0+SBW+0.06,SBD,SBH/2],['100,8 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TVH/2],['138,8 cm gesamt',SB0+SBW+0.14,SBD,(TVZ0+TVH)/2],
  ['Sofa SÖRVALLEN 284 × 193 × 88 cm',SX0+SWD/2,D-SGAP-0.6,1.0],['284 cm',SX0+SWD/2,D-SGAP/2,0.02],
  ['35 cm Abstand zur Schrägenwand',SX0-0.08,D-SGAP/2,0.02],['Tiefe 102 cm',SX0-0.08,D-SGAP-0.51,0.02],['193 cm',SX0+SWD+0.08,D-SGAP-0.965,0.02],
  ['Decke 93 cm: 5 cm Luft über Rücken (88 cm)',SX0+SWD/2,D-SGAP,0.95],
