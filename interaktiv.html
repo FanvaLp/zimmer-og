@@ -51,7 +51,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="panel">
 <div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt oder angeklickt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen">Nichts zeigen</button></div></div>
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="v5" title="Blick gerade auf die Schreibtischwand, Dachschräge wird ausgeblendet">Schreibtischwand</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
-<div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,15 m, Blick auf den Fernseher">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,15 m, Blick auf den Fernseher">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,15 m, Blick auf den Fernseher">L-Stück</button></div></div>
+<div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,15 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am linken Ende">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,15 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, in der Mitte">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,15 m, Blick auf den Fernseher. Bei ausgeklapptem Bett: liegend, Kopf am rechten Ende">L-Stück</button></div></div>
 <div class="grp"><span class="lab">Dachschräge</span><div class="seg"><button id="slopeOn" class="on" title="Dachschräge anzeigen">Anzeigen</button><button id="slopeOff" title="Dachschräge ausblenden, z. B. für den freien Blick auf die Schreibtischwand">Ausblenden</button></div></div>
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="grp"><span class="lab">Nanoleaf (Wand)</span><div class="seg"><button id="ledOn" class="on" title="Neun Nanoleaf-Hexagons an der Wand über den Bildschirmen anzeigen">An</button><button id="ledOff" title="Nanoleaf-Hexagons ausblenden">Aus</button></div></div>
@@ -62,7 +62,7 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 <div id="stage"><canvas id="c"></canvas>
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
-<footer>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Amazon-Datenblatt: 24,6 cm Breite für 2 Stück = je 12,3 cm, Tiefe 13,3 cm, Höhe 13,3 cm; Position), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</footer>
+<footer>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Hersteller-Datenblatt: je 12,3 × 12,3 × 11,8 cm; Position), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -485,13 +485,13 @@ cat='tisch';
   var fr=cv(256,300,function(g,w,h){g.fillStyle='#0b0b0d';g.fillRect(0,0,w,h);g.fillStyle='#17171b';for(var i=0;i<h;i+=8){g.fillRect(0,i,w,3);}g.fillStyle='#ff1a1a';g.fillRect(w-10,0,6,h);g.fillRect(0,0,4,h);});
   var fm=new THREE.Mesh(new THREE.PlaneGeometry(2*hx,cz1-cz0),new THREE.MeshBasicMaterial({map:fr}));fm.rotation.y=Math.PI;fm.position.set(0,(cz0+cz1)/2,-hy-0.001);pg.add(fm);
 })();
-// Lautsprecher Creative Pebble Pro (2 Stück) nach Amazon-Datenblatt: 13,3 T x 24,6 B x 13,3 H cm für 2 Stück = je 12,3 cm breit (entlang Tisch), 13,3 cm tief (zum Nutzer), 13,3 cm hoch; rote LED im Fußring. Links hinter der Headset-Ladestation, rechts zwischen PC und rechtem Bildschirm.
+// Lautsprecher Creative Pebble Pro (2 Stück) nach Hersteller-Datenblatt: je 123 x 123 x 118 mm (L x B x H); rote LED im Fußring. Links hinter der Headset-Ladestation, rechts zwischen PC und rechtem Bildschirm.
 (function(){
-  var DZ=0.72,RS=0.0615,RF=0.0665,SK=RF/RS;   // RS = halbe Breite (12,3 cm), RF = halbe Tiefe/Höhe (13,3 cm)
+  var DZ=0.72,RS=0.0615,RF=0.0605,HY=0.059;   // RS = halbe Breite/Tiefe (12,3 cm), HY = halbe Höhe (11,8 cm), RF = Abstand der Front (45° geneigt) vom Zentrum
   function spk(x,y){
     var g=new THREE.Group();
-    var body=new THREE.Mesh(new THREE.SphereGeometry(RS,24,16),new THREE.MeshLambertMaterial({color:0x121214}));body.scale.set(SK,SK,1);body.position.y=RF;g.add(body);
-    var ax=new THREE.Group();ax.position.y=RF;ax.rotation.z=-Math.PI/4;g.add(ax);   // Blickrichtung: zum Nutzer, schräg nach oben
+    var body=new THREE.Mesh(new THREE.SphereGeometry(RS,24,16),new THREE.MeshLambertMaterial({color:0x121214}));body.scale.set(1,HY/RS,1);body.position.y=HY;g.add(body);
+    var ax=new THREE.Group();ax.position.y=HY;ax.rotation.z=-Math.PI/4;g.add(ax);   // Blickrichtung: zum Nutzer, schräg nach oben
     function part(geo,col,h){var m=new THREE.Mesh(geo,new THREE.MeshLambertMaterial({color:col}));m.position.y=h;ax.add(m);}
     part(new THREE.CylinderGeometry(0.044,0.047,0.006,28),0x26262a,RF-0.003);   // Blende
     part(new THREE.CylinderGeometry(0.030,0.026,0.004,28),0xc98f6a,RF+0.0005);   // Membran (kupferfarben)
@@ -565,7 +565,8 @@ var showLbl=true;
 // Kamera
 var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40;
 var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[-2.356,0.222,3.41,81,[2.6,2.6,0.9]],v5:[Math.PI/2,0.04,6.0,40,[0,2.40,1.15]],v6:[-0.390,0.073,3.296,55,[3.631,0.15,0.91]],v7:[-0.144,0.078,3.081,55,[3.631,0.15,0.91]],v8:[0.121,0.078,3.072,55,[3.631,0.15,0.91]]};
-function setView(k){var v=views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
+var viewsBed={v6:[-0.522,-0.058,2.774,55,[3.631,0.15,0.91]],v7:[-0.182,-0.065,2.445,55,[3.631,0.15,0.91]],v8:[0.213,-0.065,2.461,55,[3.631,0.15,0.91]]};   // Bett ausgeklappt: liegend/angelehnt, Augenhöhe 0,75 m, Kopf am linken Ende / Mitte / rechten Ende der Schlaffläche
+function setView(k){var v=(bedOn&&viewsBed[k])||views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
   if(k==='v4'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(75,Math.min(125,2*Math.atan(Math.tan(0.9425)/asp)*180/Math.PI));cam.updateProjectionMatrix();}
   if(k==='v6'||k==='v7'||k==='v8'){var asp6=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(55,Math.min(125,2*Math.atan(Math.tan(0.698)/asp6)*180/Math.PI));cam.updateProjectionMatrix();}
   if(k==='v5'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);dist=Math.max(6,Math.min(25,6.04/asp));}
@@ -599,7 +600,7 @@ var hBtn={Ein:document.getElementById('hvOn'),Aus:document.getElementById('hvOff
 hBtn.Ein.onclick=function(){hoverOn=true;hBtn.Ein.classList.add('on');hBtn.Aus.classList.remove('on');};
 hBtn.Aus.onclick=function(){hoverOn=false;hoverCat=null;canvas.style.cursor='grab';hBtn.Ein.classList.remove('on');hBtn.Aus.classList.add('on');};
 var bedBtn=document.getElementById('bed'),bedOff=document.getElementById('bedoff');
-function setBed(on){bedOn=on;bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
+function setBed(on){bedOn=on;if(/^v[678]$/.test(lastView))setView(lastView);bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});ctN.forEach(function(o){o.visible=!on;});ctB.forEach(function(o){o.visible=on;});pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
 bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
 var ledOn=true,ledB1=document.getElementById('ledOn'),ledB0=document.getElementById('ledOff');
 function setLed(on){ledOn=on;ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
