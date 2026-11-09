@@ -159,8 +159,9 @@ var ew=ew0.map(function(p){return [p[0]+WD,p[1],p[2]];});
 glass(ew);frame(ew,[[W+WD,(eWin.u0+eWin.u1)/2,eWin.v0],[W+WD,(eWin.u0+eWin.u1)/2,eWin.v1]]);
 var sw0=[[sWin.u0,D,sWin.v0],[sWin.u1,D,sWin.v0],[sWin.u1,D,sWin.v1],[sWin.u0,D,sWin.v1]];
 revealBox(sw0[0],sw0[1],sw0[2],sw0[3],function(p){return [p[0],p[1]+WD,p[2]];});
-var sw=sw0.map(function(p){return [p[0],p[1]+WD,p[2]];});
-glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D+WD,sWin.v0],[(sWin.u0+sWin.u1)/2,D+WD,sWin.v1]]);
+var RK=0.22;   // Rollladenkasten über dem kleinen Fenster (Höhe nach Foto geschätzt 22 cm), Fenster darunter
+var sw=sw0.map(function(p,i){return [p[0],p[1]+WD,(i>1)?p[2]-RK:p[2]];});
+glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D+WD,sWin.v0],[(sWin.u0+sWin.u1)/2,D+WD,sWin.v1-RK]]);
 // Mauervorsprung & Heizkörper
 function box(x0,y0,z0,x1,y1,z1,color){
   var m=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,z1-z0,y1-y0),new THREE.MeshLambertMaterial({color:color}));
@@ -172,6 +173,8 @@ box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tief
 // Fensterbänke (weiß, 3 cm Überstand in den Raum, 2 cm Überstand seitlich)
 box(W-0.03,eWin.u0-0.02,eWin.v0-0.025,W+WD,eWin.u1+0.02,eWin.v0,0xffffff);
 box(sWin.u0-0.02,D-0.03,sWin.v0-0.025,sWin.u1+0.02,D+WD,sWin.v0,0xffffff);
+box(sWin.u0,D+0.01,sWin.v1-RK,sWin.u1,D+WD,sWin.v1,0xf3f1ea);   // Rollladenkasten
+box(sWin.u0+0.02,D+0.005,sWin.v1-RK-0.012,sWin.u1-0.02,D+0.012,sWin.v1-RK,0x8d8d85);   // Kastenunterkante / Rollladenschlitz
 // Heizkörper (Flachheizkörper mit Rippen-Frontblech nach Foto: ca. 100 × 54 cm, Unterkante 12 cm, Gitter oben, Thermostat rechts)
 (function(){var RX=W-0.15,RU0=YS-1.48+0.24,RU1=YS-0.24,RZ0=0.12,RZ1=0.66;
   box(RX,RU0,RZ0,W,RU1,RZ1,0xffffff);
