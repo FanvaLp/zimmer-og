@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet Mobil · Stand v7</title>
+<title>Zimmer Eingerichtet Mobil · Stand v8</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -1135,9 +1135,9 @@ function picUpdate(){
   var s=tvSize,cx=(s==='85')?TVCX85:TVCX,zz=(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2);
   picLight.position.copy(P(cx,TVF+0.35-NY,zz+sbDz));picLight.intensity=act?LMI.pic:0;
   if(nightOn){   // sichtbares Leuchten der LEDs folgt dem Regler
-    var hk=0.2+0.8*LMR,nf=0.25+0.75*Math.min(1,LMRN/0.5);
+    var hk=0.2+0.8*LMR,nf=0.10+0.90*Math.min(1,LMRN/0.5);
     [tvHalo,tvHalo65,tvHalo85].forEach(function(h){if(h)h.material.opacity=hk;});sofaHalos.forEach(function(h){h.material.opacity=hk;});
-    if(!window.__ledM)window.__ledM=room.children.filter(function(o){return o.userData&&o.userData.cat==='led'&&o.isMesh&&o.material&&o.material.color&&o.material.color.clone;}).map(function(o){return {o:o,c:o.material.color.clone()};});
+    if(!window.__ledM)window.__ledM=ledObjs.filter(function(o){return o.isMesh;}).map(function(o){var mt=Array.isArray(o.material)?o.material[o.material.length-1]:o.material;return {o:{material:mt},c:mt.color.clone()};});
     window.__ledM.forEach(function(m){m.o.material.color.copy(m.c).multiplyScalar(nf);});
   }else if(window.__ledM){window.__ledM.forEach(function(m){m.o.material.color.copy(m.c);});}}
 /* Lichtberechnung (Nachtlicht): Leuchtdichte/Lichtstrom -> Beleuchtungsstärke am Sofa-Platz; Darstellung skaliert mit der Lichtstärke (cd) der Quellen */
