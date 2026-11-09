@@ -88,7 +88,7 @@ footer{grid-column:1/-1;grid-row:2}
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
 <div id="ctl"><div class="panel">
 <div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt oder angeklickt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen">Nichts zeigen</button></div></div>
-<div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="ceilB" class="on" title="Deckenlicht An/Aus (Aus = Raum dunkel, wie bei Nacht)">Deckenlicht</button><button id="nightB" title="Raum dunkel: nur Nanoleaf, TV-LED, Schreibtischlicht (PC und Lautsprecher-LEDs) leuchten, alles einzeln schaltbar">Nacht</button><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Sofa-Licht</button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher">Schreibtischlicht</button></div></div>
+<div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="ceilB" class="on" title="Deckenlicht An/Aus (Aus = Raum dunkel, wie bei Nacht)">Deckenlicht</button><button id="nightB" title="Raum dunkel: nur Nanoleaf, TV-LED, Schreibtischlicht (PC und Lautsprecher-LEDs) leuchten, alles einzeln schaltbar">Nacht</button><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="picB" class="on" title="Nachtmodus: Fernseher zeigt ein simuliertes Testbild und beleuchtet den Raum (nur zur Einschätzung des Lichts, kein echtes Bild)">TV-Bild</button><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Sofa-Licht</button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher">Schreibtischlicht</button></div></div>
 <div class="grp"><span class="lab">Möbel ein / aus</span><div class="seg"><button id="hSofa" class="on" title="Sofa (auch ausgeklappt) ein- oder ausblenden">Sofa</button><button id="hTisch" class="on" title="Schreibtisch mit PC, Bildschirmen, Lautsprechern usw. ein- oder ausblenden">Schreibtisch</button><button id="hSchrank" class="on" title="PAX-Schrank ein- oder ausblenden">Schrank</button><button id="hSide" class="on" title="BESTÅ-Sideboard ein- oder ausblenden">Sideboard</button><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Fernseher</button><button id="hStuhl" class="on" title="Bürostuhl und Unterlage ein- oder ausblenden">Stuhl</button><button id="hCouch" class="on" title="Couchtisch ein- oder ausblenden">Couchtisch</button><button id="hRug" class="on" title="Teppich ein- oder ausblenden (gewählter Teppich bleibt gemerkt)">Teppich</button><button id="hNano" class="on" title="Nanoleaf-Panele an der Schreibtischwand ein- oder ausblenden">Nanoleaf</button><button id="hAll" title="Alle diese Möbel auf einmal ein- oder ausblenden">Alle</button></div></div>
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="v5" title="Blick gerade auf die Schreibtischwand, Dachschräge wird ausgeblendet">Schreibtischwand</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
 <div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett (Haltung wählbar): liegend, Kopf am linken Ende">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett (Haltung wählbar): liegend, in der Mitte">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett (Haltung wählbar): liegend, Kopf am rechten Ende">L-Stück</button></div></div>
@@ -275,7 +275,7 @@ cat='tv';
 var TVW=1.6681,TVH=0.9578,TVD=0.077,TVFH=0.0501,TVCX=SB0+SBW/2,TVYB=0.10,TVBD=0.280,TVZ0=SBH+TVFH;
 var TVF=TVYB+0.190,TVYC=TVYB+TVBD/2;   // TVF = Vorderkante Panel, TVYC = Mitte Fußplatte
 box(TVCX-TVW/2,TVF-0.012,TVZ0,TVCX+TVW/2,TVF,TVZ0+TVH,0x161618);                           // Panel mit Rahmen (dünn)
-box(TVCX-TVW/2+0.006,TVF,TVZ0+0.010,TVCX+TVW/2-0.006,TVF+0.0012,TVZ0+TVH-0.006,0x07080c);   // Bildschirm
+var scrM=[];box(TVCX-TVW/2+0.006,TVF,TVZ0+0.010,TVCX+TVW/2-0.006,TVF+0.0012,TVZ0+TVH-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});   // Bildschirm
 box(TVCX-TVW*0.325,TVF-TVD,TVZ0,TVCX+TVW*0.325,TVF-0.012,TVZ0+TVH*0.46,0x1b1b1e);         // Rückgehäuse (7,7 cm tief)
 [-1,1].forEach(function(sg){
   var fx=TVCX+sg*(1.250/2-0.0205);
@@ -288,7 +288,7 @@ var sbV='B',sbDz=0,dimB={};var altHide={sideboardT:true,tv65:true,tvled65:true,t
 var TVLBL65=[['Fernseher 65" · Panel 144,4 × 83,1 × 7,7 cm',TVCX,TV65.YC,TV65.Z0+TV65.H+0.12],['Bilddiagonale ≈ 165 cm (65 Zoll)',TVCX,TVF+0.004,TV65.Z0+TV65.H/2],['88,2 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TV65.H/2],['126,2 cm gesamt',SB0+SBW+0.14,SBD,(TV65.Z0+TV65.H)/2]];
 cat='tv65';
 box(TVCX-TV65.W/2,TVF-0.012,TV65.Z0,TVCX+TV65.W/2,TVF,TV65.Z0+TV65.H,0x161618);
-box(TVCX-TV65.W/2+0.006,TVF,TV65.Z0+0.010,TVCX+TV65.W/2-0.006,TVF+0.0012,TV65.Z0+TV65.H-0.006,0x07080c);
+box(TVCX-TV65.W/2+0.006,TVF,TV65.Z0+0.010,TVCX+TV65.W/2-0.006,TVF+0.0012,TV65.Z0+TV65.H-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});
 box(TVCX-TV65.W*0.325,TVF-TV65.D,TV65.Z0,TVCX+TV65.W*0.325,TVF-0.012,TV65.Z0+TV65.H*0.46,0x1b1b1e);
 [-1,1].forEach(function(sg){var fx=TVCX+sg*(TV65.FS/2-0.0205);
   box(fx-0.0205,TVYB,SBH,fx+0.0205,TVYB+TV65.BD,SBH+0.008,0x1c1c1e);
@@ -300,7 +300,7 @@ var TV85={W:1.8899,H:1.0835,D:0.0768,FH:0.0493,BD:0.320,FS:1.416};TV85.Z0=SBH+TV
 var TVLBL85=[['Fernseher 85" · Panel 189,0 × 108,4 × 7,7 cm',TVCX85,TV85.YC,TV85.Z0+TV85.H+0.12],['Bilddiagonale ≈ 216 cm (85 Zoll)',TVCX85,TVF+0.004,TV85.Z0+TV85.H/2],['113,3 cm (mit Füßen)',SB0+SBW+DX85+0.06,SBD,SBH+TV85.H/2],['151,3 cm gesamt',SB0+SBW+DX85+0.14,SBD,(TV85.Z0+TV85.H)/2]];
 cat='tv85';
 box(TVCX85-TV85.W/2,TVF-0.012,TV85.Z0,TVCX85+TV85.W/2,TVF,TV85.Z0+TV85.H,0x161618);
-box(TVCX85-TV85.W/2+0.006,TVF,TV85.Z0+0.010,TVCX85+TV85.W/2-0.006,TVF+0.0012,TV85.Z0+TV85.H-0.006,0x07080c);
+box(TVCX85-TV85.W/2+0.006,TVF,TV85.Z0+0.010,TVCX85+TV85.W/2-0.006,TVF+0.0012,TV85.Z0+TV85.H-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});
 box(TVCX85-TV85.W*0.325,TVF-TV85.D,TV85.Z0,TVCX85+TV85.W*0.325,TVF-0.012,TV85.Z0+TV85.H*0.46,0x1b1b1e);
 [-1,1].forEach(function(sg){var fx=TVCX85+sg*(TV85.FS/2-0.0205);
   box(fx-0.0205,TVYB,SBH,fx+0.0205,TVYB+TV85.BD,SBH+0.008,0x1c1c1e);
@@ -864,6 +864,22 @@ var tvLight=new THREE.PointLight(0xff4fa8,0,3.8,1.2);tvLight.position.copy(P(TVC
 var slLight=new THREE.PointLight(0xffa24d,0,3.2,1.3);slLight.position.copy(P(SX0+SWD/2,D-SGAP+0.05,1.0));scene.add(slLight);
 var pcLight=new THREE.PointLight(0xff2a2a,0,2.4,1.5);pcLight.position.copy(P(0.55,1.75,0.55));scene.add(pcLight);
 var nightB=document.getElementById('nightB'),cmpB=document.getElementById('cmpB'),measB=document.getElementById('measB'),measClr=document.getElementById('measClr'),tvledB=document.getElementById('tvledB'),tv75B=document.getElementById('tv75B'),tv65B=document.getElementById('tv65B'),tv85B=document.getElementById('tv85B'),sofaledB=document.getElementById('sofaledB'),ceilB=document.getElementById('ceilB'),pcledB=document.getElementById('pcledB'),cmpBar=document.getElementById('cmpBar');
+/* Simuliertes TV-Bild (nur Nachtmodus): Testbild als Textur + Punktlicht vor dem Fernseher, nur zur Einschätzung des Lichts */
+var picOn=true,picState=null,picLight=new THREE.PointLight(0x9fb4ff,0,4.6,1.1);scene.add(picLight);
+var picTexV=(function(){var c=document.createElement('canvas');c.width=512;c.height=288;var g=c.getContext('2d');
+  var sky=g.createLinearGradient(0,0,0,200);sky.addColorStop(0,'#1b2a6b');sky.addColorStop(0.55,'#7a4fa8');sky.addColorStop(1,'#ffb36b');g.fillStyle=sky;g.fillRect(0,0,512,288);
+  g.fillStyle='#fff3c4';g.beginPath();g.arc(330,150,38,0,7);g.fill();
+  g.fillStyle='#10122a';g.beginPath();g.moveTo(0,288);g.lineTo(0,190);g.lineTo(90,140);g.lineTo(170,200);g.lineTo(260,120);g.lineTo(380,205);g.lineTo(450,150);g.lineTo(512,195);g.lineTo(512,288);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.75)';g.font='bold 16px sans-serif';g.textAlign='center';g.fillText('TESTBILD · simuliert',256,274);
+  return new THREE.CanvasTexture(c);})();
+var picMat=new THREE.MeshBasicMaterial({map:picTexV,color:0xdddddd});
+scrM.forEach(function(s){s.orig=s.mesh.material;s.arr=[s.orig,s.orig,s.orig,s.orig,picMat,s.orig];});
+function picUpdate(){
+  var act=nightOn&&picOn&&!hideCats.tv;
+  if(act!==picState){picState=act;scrM.forEach(function(s){s.mesh.material=act?s.arr:s.orig;});}
+  var s=tvSize,cx=(s==='85')?TVCX85:TVCX,zz=(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2),f=(s==='65')?0.75:(s==='85')?1.28:1;
+  picLight.position.copy(P(cx,TVF+0.35-NY,zz+sbDz));picLight.intensity=act?0.9*f:0;}
+var picB=document.getElementById('picB');picB.onclick=function(){picOn=!picOn;picB.classList.toggle('on',picOn);};
 function applyLights(){if(!nlLight||!tvLight)return;nlLight.intensity=(nightOn&&ledOn)?0.9:0;tvLight.intensity=(nightOn&&tvLedOn&&!hideCats.tvled)?1.0:0;pcLight.intensity=(nightOn&&pcLedOn)?0.8:0;slLight.intensity=(nightOn&&sofaLedOn&&!hideCats.sofaled)?0.9:0;}
 function setNight(on){nightOn=on;hemi.intensity=on?0.10:0.95;dl.intensity=on?0:0.45;stage.style.background=on?'#07070b':'';
   edgeMats.forEach(function(m){m.color.setHex(edgeColor());});
@@ -929,9 +945,9 @@ function furnHide(){var st=[];room.children.forEach(function(o){var c=o.userData
 function renderScene(){
   if(!cmpOn){renderer.render(scene,cam);return;}
   var w=stage.clientWidth,h=stage.clientHeight,sx=Math.round(w*cmpX);
-  var hidden=furnHide(),li=[nlLight.intensity,tvLight.intensity,slLight.intensity];nlLight.intensity=0;tvLight.intensity=0;slLight.intensity=0;
+  var hidden=furnHide(),li=[nlLight.intensity,tvLight.intensity,slLight.intensity],pli_=picLight.intensity;nlLight.intensity=0;tvLight.intensity=0;slLight.intensity=0;picLight.intensity=0;
   renderer.setScissorTest(true);renderer.setScissor(0,0,sx,h);renderer.render(scene,cam);
-  hidden.forEach(function(o){o.visible=true;});nlLight.intensity=li[0];tvLight.intensity=li[1];slLight.intensity=li[2];
+  hidden.forEach(function(o){o.visible=true;});nlLight.intensity=li[0];tvLight.intensity=li[1];slLight.intensity=li[2];picLight.intensity=pli_;
   renderer.setScissor(sx,0,w-sx,h);renderer.render(scene,cam);renderer.setScissorTest(false);}
 // Messen
 var measG=new THREE.Group();scene.add(measG);
@@ -961,7 +977,7 @@ canvas.addEventListener('pointerup',function(e){
   measLbl.textContent=measText;});
 function loop(){
   Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k)&&!cmpOn;dimG[k].position.y=((rugOn&&k!=='led')?0.02:0)+((k==='tv'||k==='tv65'||k==='tv85')?sbDz:0);});
-  applyHide();if(sbV==='T')paxG.forEach(function(o){o.visible=false;});place();renderScene();
+  applyHide();if(sbV==='T')paxG.forEach(function(o){o.visible=false;});picUpdate();place();renderScene();
   var w=stage.clientWidth,h=stage.clientHeight;
   labels.forEach(function(l){
     if(cmpOn||!isVis(l.cat)){l.el.style.display='none';return;}
