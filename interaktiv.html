@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv · Stand v22</title>
+<title>Zimmer Interaktiv · Stand v23</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -597,10 +597,10 @@ sb(8,112,9.5,62,170,21,0xb7a899);             // Decke im Stauraum (Beispiel-Inh
 sb(66,118,9.5,92,160,26,0xc9bfb3);            // Bettzeug im Stauraum (Beispiel-Inhalt)
 sb(22.5,10,30,101.5,39,45,FR);sb(101.5,10,30,261.5,41,45,FR);              // Füllung hinter den Sitzkissen (Rückenzone)
 sb(22.5,0,30,261.5,10,74,FR);               // Rückwand (Rückenstütze 74 cm)
-sb(0,0,30,22.5,102,58,CU);                  // Armlehne Récamiere-Seite (58 cm hoch, 22,5 cm breit)
+sb(0,0,30,22.5,135,58,CU);                  // Armlehne Récamiere-Seite (58 cm hoch, 22,5 cm breit, ca. 135 cm lang laut IKEA-Seitenansicht)
 sb(261.5,0,30,284,102,58,CU);               // Armlehne Gegenseite
 sb(22.5,39,30,101.5,102,45,CU);             // Sitzkissen Récamiere (hinterer Teil; Récamiere-Sitztiefe 154 cm laut IKEA-Planer)
-var lidM=sb(0,102,30,101.5,193,45,CU),lidE=room.children[room.children.length-1];   // Récamiere vorne = Deckel
+var lidM=sb(22.5,102,30,101.5,193,45,CU),lidE=room.children[room.children.length-1];   // Récamiere vorne = Deckel
 sb(101.8,41,30,181.2,102,45,CU);            // Sitzkissen 1
 sb(181.8,41,30,261.2,102,45,CU);            // Sitzkissen 2
 // 3 Rückenkissen (je 81 cm breit, 41,5 cm hoch, 24 cm dick, ca. 11° nach hinten geneigt, Oberkante 88 cm)
@@ -613,14 +613,14 @@ sb(181.8,41,30,261.2,102,45,CU);            // Sitzkissen 2
     m.position.copy(P(xc,D-SGAP-0.28+(h/200)*Math.sin(ang),0.45+(h/200)*Math.cos(ang)));
     room.add(m);var em_=sofaEdges(m);if(i>0)backObjs.push(m,em_);});   // erstes Rückenkissen (Récamiere-Ende) bleibt auch im Bettmodus
 })();
-// Eichenbeine wie im IKEA-Konfigurator: helle Holzfüße (ca. 10 x 10 cm, 6 cm hoch, nach unten verjüngt) fast bündig an der Vorderkante; rechter vorderer Fuß schwarz
-[[8,186,0],[94,186,0],[8,97,0],[96,97,0],[200,97,0],[8,12,0],[140,12,0],[276,12,0],[276,97,1]].forEach(function(p){
-  var lg=new THREE.Mesh(new THREE.CylinderGeometry(0.0707,0.0495,0.06,4),new THREE.MeshLambertMaterial({color:p[2]?0x161616:LEGC}));
+// Holzfüße nach IKEA-Konfigurator-Bildern (Front-, Seiten- und Rückansicht): ca. 16 x 17 cm, 6 cm hoch, nach unten verjüngt, Mitte (u,v) in cm; Armlehnen-Fuß rechts schwarz
+[[13,14,0],[13,180,0],[90,180,0],[13,120,0],[90,120,0],[111,90,0],[111,14,0],[252,90,0],[252,14,0],[270,90,1],[270,14,1]].forEach(function(p){
+  var lg=new THREE.Mesh(new THREE.CylinderGeometry(0.117,0.092,0.06,4),new THREE.MeshLambertMaterial({color:p[2]?0x161616:LEGC}));
   lg.rotation.y=Math.PI/4;lg.position.copy(P(SX0+(284-p[0])/100,D-SGAP-p[1]/100,0.03));room.add(lg);});
 var tws={};function tw(key,get,set,to,ms){var tk=(tws[key]=(tws[key]||0)+1),f=get(),t0=performance.now();(function st(){if(tws[key]!==tk)return;var k=Math.min(1,(performance.now()-t0)/ms);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;set(f+(to-f)*k);if(typeof renderScene==='function')renderScene();if(k<1)requestAnimationFrame(st);})();}
 // Récamiere-Deckel: Scharnier an der Hinterkante (Oberkante), öffnet ca. 80°
 var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.30);g.position.copy(pv);room.add(g);
-  var n0=room.children.length;sb(4,103,29.4,97.5,189.5,30,0xb9a37f);sb(4,104,24,7,128,29.4,0xb9bdc4);sb(95.5,104,24,98.5,128,29.4,0xb9bdc4);   // Deckel-Unterseite (beige) und Gasdruckfedern
+  var n0=room.children.length;sb(0,135,30,22.5,193,45,CU);sb(4,103,29.4,97.5,189.5,30,0xb9a37f);sb(4,104,24,7,128,29.4,0xb9bdc4);sb(95.5,104,24,98.5,128,29.4,0xb9bdc4);   // Deckel-Unterseite (beige) und Gasdruckfedern
   var lidX=room.children.slice(n0).filter(function(o){return o.type!=='Group';});
   [lidM,lidE].concat(lidX).forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
 sb(4,103,12,7,108,29.4,0xb9bdc4);sb(95.5,103,12,98.5,108,29.4,0xb9bdc4);   // Scharnier-Konsolen am Korpus
