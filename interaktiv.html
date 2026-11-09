@@ -652,9 +652,9 @@ cat='tvled65';
   TVLB65.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,27 m (3,5 cm vom Rand)',TVCX,TVF-0.02,TV65.Z0+TV65.H+0.30]);
 })();
 cat='tvled85';
-// LED-Streifen 5 m am 85er: der Streifen reicht nur bei 12 cm Abstand vom Rand rundherum (Umfang ca. 4,99 m)
+// LED-Streifen am 85er: Hue Flux 10 m, auf ca. 5,7 m zugeschnitten (3,5 cm vom Rand, Umfang ca. 5,67 m)
 (function(){
-  var ins=0.12,x0=TVCX85-TV85.W/2+ins,x1=TVCX85+TV85.W/2-ins,z0=TV85.Z0+ins,z1=TV85.Z0+TV85.H-ins,yb=TVF-0.012-0.006,tk=0.012;
+  var ins=0.035,x0=TVCX85-TV85.W/2+ins,x1=TVCX85+TV85.W/2-ins,z0=TV85.Z0+ins,z1=TV85.Z0+TV85.H-ins,yb=TVF-0.012-0.006,tk=0.012;
   var mat=new THREE.MeshBasicMaterial({color:0xff4fa8});
   function strip(a0,b0,a1,b1){var m=new THREE.Mesh(new THREE.BoxGeometry(a1-a0,b1-b0,0.006),mat);m.position.copy(P((a0+a1)/2,yb+0.003,(b0+b1)/2));room.add(m);tvLedObjs.push(m);}
   strip(x0,z1-tk,x1,z1);strip(x0,z0,x1,z0+tk);strip(x0,z0,x0+tk,z1);strip(x1-tk,z0,x1,z1);
@@ -663,7 +663,7 @@ cat='tvled85';
   g.shadowBlur=34;g.fillRect(31,29,194,102);g.shadowBlur=18;g.fillRect(31,29,194,102);
   var hm=new THREE.Mesh(new THREE.PlaneGeometry(2.45,1.65),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cvw),transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false}));
   hm.userData.noPick=true;hm.position.copy(P(TVCX85,0.006,TV85.Z0+TV85.H/2));room.add(hm);tvLedObjs.push(hm);tvHalo85=hm;
-  TVLB85.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,99 m (12 cm vom Rand, sonst zu kurz)',TVCX85,TVF-0.02,TV85.Z0+TV85.H+0.30]);
+  TVLB85.push(['LED-Streifen Philips Hue Flux 10 m (zugeschnitten) · Umfang ≈ 5,67 m (3,5 cm vom Rand)',TVCX85,TVF-0.02,TV85.Z0+TV85.H+0.30]);
 })();
 cat='sofaled';
 // Philips Hue Play Lightbar 2er Pack (Amazon B07FYDGD7R) auf dem Boden dicht hinter dem Sofa, leuchten nach oben und beleuchten die Schraege indirekt (Laenge ca. 25 cm, Querschnitt 44 x 36 mm)
