@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v10</title>
+<title>Zimmer Interaktiv Mobil · Stand v11</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -417,7 +417,7 @@ var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxH
   var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
   var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(-sd*(dw-0.02),1.0,0.021);g.add(hm);paxG.push(hm);   // BILLSBRO 120 mm: je Tür ein schwarzer Griff an der Mittelfuge
   room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
-var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=a>0.7;if(window.zPax)zPax.forEach(function(z){z.visible=a>0.7;});}
+var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=false;if(window.zPax)zPax.forEach(function(z){z.visible=a>0.7;});}
 (function(){var b=document.getElementById('paxB');if(!b)return;
   window.paxToggle=function(){var on=paxAng<0.1;tw('pax',function(){return paxAng;},paxSet,on?1.5708:0,700);b.classList.toggle('on',on);};b.onclick=paxToggle;
   hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});
@@ -447,7 +447,7 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     var dw=SBW/3-0.002,g=new THREE.Group();g.position.copy(P(SB0+SBW*i/3-0.001,SBD-0.01,0));
     var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,SBH-0.004,0.02),sdm);dm.position.set(-dw/2,SBH/2,0);g.add(dm);
     room.add(g);sbDoors.push(g);});
-  window.sbAng=0;window.sbSet=function(a){sbAng=a;sbDoors.forEach(function(g){g.rotation.y=a;});if(window.hotSb)hotSb.visible=a>0.7;if(window.zSb)zSb.forEach(function(z){z.visible=a>0.7;});};
+  window.sbAng=0;window.sbSet=function(a){sbAng=a;sbDoors.forEach(function(g){g.rotation.y=a;});if(window.hotSb)hotSb.visible=false;if(window.zSb)zSb.forEach(function(z){z.visible=a>0.7;});};
   var b=document.getElementById('sbB');
   window.sbToggle=function(){if(typeof sbV!=='undefined'&&sbV==='T')return;var on=sbAng<0.1;tw('sb',function(){return sbAng;},sbSet,on?1.75:0,700);if(b)b.classList.toggle('on',on);};
   if(b)b.onclick=sbToggle;
@@ -602,7 +602,7 @@ var tws={};function tw(key,get,set,to,ms){var tk=(tws[key]=(tws[key]||0)+1),f=ge
 // Récamiere-Deckel: Scharnier an der Hinterkante (Oberkante), öffnet ca. 80°
 var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.30);g.position.copy(pv);room.add(g);
   [lidM,lidE].forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
-var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=a>0.5;if(window.zLid)zLid.forEach(function(z){z.visible=a>0.5;});}
+var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=false;if(window.zLid)zLid.forEach(function(z){z.visible=a>0.5;});}
 window.lidClose=function(){var b=document.getElementById('lidB');tw('lid',function(){return lidAng;},lidSet,0,300);if(b)b.classList.remove('on');};
 (function(){var b=document.getElementById('lidB');if(!b)return;
   window.lidToggle=function(){if(bedOn){return;}var on=lidAng<0.1;tw('lid',function(){return lidAng;},lidSet,on?1.6:0,650);b.classList.toggle('on',on);};b.onclick=lidToggle;
