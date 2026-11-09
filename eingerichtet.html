@@ -354,15 +354,18 @@ var PT=0.02,PDK=PD-0.024,KC=0xcbb799;   // Korpus (Eicheneffekt weiß lasiert) m
 box(PX0,0,0.04,PX0+PT,PDK,PH,KC);box(PX0+PW-PT,0,0.04,PX0+PW,PDK,PH,KC);          // Seiten
 box(PX0,0,PH-PT,PX0+PW,PDK,PH,KC);box(PX0,0,0.04,PX0+PW,PDK,0.04+PT,KC);          // Deckel, Boden
 box(PX0,0,0.04,PX0+PW,0.012,PH,0xb9a483);                                          // Rückwand
-box(PX0+PT,0.012,0.62,PX0+PW-PT,PDK-0.02,0.638,KC);   // Boden über den Auszügen (Höhen nach IKEA-Planer-Bild geschätzt)
-[[0.44,0.60],[0.265,0.425]].forEach(function(r){   // 2 ausziehbare Böden mit Front
-  box(PX0+PT+0.01,PDK-0.05,r[0],PX0+PW-PT-0.01,PDK-0.02,r[1],0xc9b693);
-  box(PX0+PT+0.02,0.10,r[0],PX0+PW-PT-0.02,PDK-0.05,r[0]+0.018,KC);});
+box(PX0+PT,0.012,0.64,PX0+PW-PT,PDK-0.02,0.658,KC);   // 1 Boden über den Schubladen (Höhen nach IKEA-Planer-Bild geschätzt)
+[[0.455,0.625],[0.28,0.44]].forEach(function(r){   // 2 Schubladen: Front, Boden, Seiten, Rückwand
+  var xa=PX0+PT+0.012,xb=PX0+PW-PT-0.012,yf=PDK-0.02;
+  box(xa,yf-0.022,r[0],xb,yf,r[1],0xc9b693);                                  // Front
+  box(xa+0.02,0.10,r[0]+0.03,xb-0.02,yf-0.022,r[0]+0.045,KC);                 // Boden
+  box(xa+0.02,0.10,r[0]+0.045,xa+0.032,yf-0.022,r[1]-0.03,KC);box(xb-0.032,0.10,r[0]+0.045,xb-0.02,yf-0.022,r[1]-0.03,KC);   // Seiten
+  box(xa+0.02,0.10,r[0]+0.045,xb-0.02,0.112,r[1]-0.03,KC);});                 // Rückwand
 box(PX0+PT,0.012,0.06,PX0+PW-PT,PDK-0.02,0.075,KC);   // unterer Boden
 // Beispiel-Inhalt wie im Planer-Bild: Kleidung an der Stange, Hut und Stapel auf dem Boden
 [[0xc99a98,0.70],[0x9db4d6,0.74],[0x3a3a3e,0.55],[0x93acd0,0.74],[0x56565a,0.68],[0x7a7a80,0.74]].forEach(function(c,i){var cx=PX0+0.105+i*0.157;box(cx-0.055,0.25,1.93-c[1],cx+0.055,0.30,1.93,c[0]);});
-box(PX0+0.07,0.20,0.638,PX0+0.35,0.45,0.67,0xb4b4b4);box(PX0+0.14,0.26,0.67,PX0+0.28,0.39,0.72,0xa8a8a8);   // Hut
-box(PX0+0.40,0.22,0.638,PX0+0.62,0.42,0.69,0x8a9a8a);box(PX0+0.66,0.22,0.638,PX0+0.88,0.42,0.69,0xc7a5a5);   // Stapel
+box(PX0+0.07,0.22,0.658,PX0+0.29,0.42,0.690,0xb9b9b4);box(PX0+0.08,0.23,0.690,PX0+0.28,0.41,0.720,0x6f7f93);box(PX0+0.07,0.22,0.720,PX0+0.29,0.42,0.745,0xd2c9bd);   // Kleiderstapel statt Hut
+box(PX0+0.40,0.22,0.658,PX0+0.62,0.42,0.71,0x8a9a8a);box(PX0+0.66,0.22,0.658,PX0+0.88,0.42,0.71,0xc7a5a5);   // Stapel
 (function(){var rd=new THREE.Mesh(new THREE.CylinderGeometry(0.0125,0.0125,PW-2*PT,12),new THREE.MeshLambertMaterial({color:0xb9bcc0}));rd.rotation.z=Math.PI/2;rd.position.copy(P(PX0+PW/2,0.29,1.95));room.add(rd);})();   // Kleiderstange (oben)
 box(PX0+0.01,0.01,0,PX0+PW-0.01,PD-0.03,0.04,0xb09a7a);             // Sockel
 var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxHM=new THREE.MeshLambertMaterial({color:0x1b1b1b}),paxG=[],paxDoors=[],paxM;
