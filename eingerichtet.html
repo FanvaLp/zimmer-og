@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet · Stand v11</title>
+<title>Zimmer Eingerichtet · Stand v12</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -393,7 +393,14 @@ box(PX0+PT,0.012,0.64,PX0+PW-PT,PDK-0.02,0.658,KC);   // 1 Boden über den Schub
   box(xa+0.02,0.10,r[0]+0.045,xb-0.02,0.112,r[1]-0.03,KC);});                 // Rückwand
 box(PX0+PT,0.012,0.06,PX0+PW-PT,PDK-0.02,0.075,KC);   // unterer Boden
 // Beispiel-Inhalt wie im Planer-Bild: Kleidung an der Stange, Hut und Stapel auf dem Boden
-[[0xc99a98,0.70],[0x9db4d6,0.74],[0x3a3a3e,0.55],[0x93acd0,0.74],[0x56565a,0.68],[0x7a7a80,0.74]].forEach(function(c,i){var cx=PX0+0.105+i*0.157;box(cx-0.055,0.25,1.93-c[1],cx+0.055,0.30,1.93,c[0]);});
+// Kleidung auf der Stange: Hemden/Shirts (dünn) und Jacken (dicker) auf Bügeln, Breitseite zur Schrankvorderseite
+[[0xf0f0ec,0.72,0.045,0.40],[0x9db4d6,0.74,0.045,0.40],[0x2b2b2e,0.82,0.08,0.46],[0xb7c2b0,0.72,0.045,0.40],[0x2f3f66,0.74,0.045,0.40],[0x4a6280,0.80,0.08,0.46],[0xa5524f,0.72,0.045,0.40],[0xb8a98a,0.80,0.08,0.46]].forEach(function(c,i){
+  var cx=PX0+0.10+i*0.115,t=c[2],w=c[3],L=c[1],zt=1.93;
+  box(cx-t/2,0.29-w/2,zt-L,cx+t/2,0.29+w/2,zt-0.07,c[0]);                         // Körper
+  box(cx-t*0.4,0.29-w*0.36,zt-0.07,cx+t*0.4,0.29+w*0.36,zt-0.015,c[0]);           // Schulterpartie
+  box(cx-0.004,0.29-w*0.46,zt-0.018,cx+0.004,0.29+w*0.46,zt-0.010,0xc9b48a);      // Bügel
+  box(cx-0.003,0.285,zt-0.012,cx+0.003,0.295,zt+0.025,0x9a9a9e);                  // Haken zur Stange
+});
 box(PX0+0.07,0.22,0.658,PX0+0.29,0.42,0.690,0xb9b9b4);box(PX0+0.08,0.23,0.690,PX0+0.28,0.41,0.720,0x6f7f93);box(PX0+0.07,0.22,0.720,PX0+0.29,0.42,0.745,0xd2c9bd);   // Kleiderstapel statt Hut
 box(PX0+0.40,0.22,0.658,PX0+0.62,0.42,0.71,0x8a9a8a);box(PX0+0.66,0.22,0.658,PX0+0.88,0.42,0.71,0xc7a5a5);   // Stapel
 (function(){var rd=new THREE.Mesh(new THREE.CylinderGeometry(0.0125,0.0125,PW-2*PT,12),new THREE.MeshLambertMaterial({color:0xb9bcc0}));rd.rotation.z=Math.PI/2;rd.position.copy(P(PX0+PW/2,0.29,1.95));room.add(rd);})();   // Kleiderstange (oben)
