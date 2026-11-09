@@ -287,7 +287,16 @@ box(sWin.u0+0.02,D+0.003,sWin.v1,sWin.u1-0.02,D+0.008,sWin.v1+0.012,0x8d8d85);  
   bx(W-0.05,SY-0.018,0.29,W-0.014,SY+0.018,0.33,0xffffff);     // USB-Netzteil im Stecker
   bx(W-0.017,SY-0.013,0.04,W,SY+0.013,0.27,CW_);               // Kanal senkrecht
   bx(W-0.017,3.30,0.03,W,SY+0.013,0.056,CW_);                  // Kanal an der Fußleiste bis hinter das Sofa-Ende (Armlehne y 2,22–3,24)
-  cy([W-0.012,3.30,0.043],[4.50,3.12,0.006],0.0035,0x202022);  // Kabel über den Boden zum Sofa-Ende
+  // weiße 3er-Steckdosenleiste liegt versteckt hinter dem Sofa (zwischen Sofa-Rückseite und Wand); weißes Kabel zum Kanal/zur Wand, schwarzes Ladekabel zur Armlehne
+  bx(4.15,3.42,0.0,4.37,3.475,0.033,CW_);                      // Leiste ca. 22 x 5,5 x 3,3 cm
+  bx(4.17,3.425,0.033,4.35,3.47,0.0345,0xdadad6);              // Steckplatz-Streifen
+  [4.19,4.26,4.33].forEach(function(x){bx(x-0.012,3.425,0.0335,x+0.012,3.447,0.036,0x9a9a96);});   // 3 Steckdosen
+  bx(4.37,3.435,0.008,4.42,3.465,0.026,CW_);                   // Kabelaustritt
+  cy([4.42,3.45,0.017],[4.62,3.40,0.006],0.0035,0xf4f4f0);     // weißes Kabel Richtung Wand
+  cy([4.62,3.40,0.006],[W-0.025,3.30,0.043],0.0035,0xf4f4f0);  // weiß in den Kabelkanal
+  bx(4.22,3.395,0.005,4.27,3.42,0.032,0xffffff);               // USB-Netzteil in der Leiste
+  cy([4.245,3.395,0.02],[4.50,3.26,0.006],0.0035,0x202022);    // schwarzes Ladekabel um das Sofa-Ende herum
+  cy([4.50,3.26,0.006],[4.50,3.12,0.006],0.0035,0x202022);     // weiter zur Armlehne
   cy([4.50,3.12,0.006],[4.463,3.12,0.556],0.0032,0x202022);    // Kabel liegt an der Armlehnen-Außenseite an
   cy([4.463,3.12,0.556],[4.452,3.12,0.586],0.0032,0x202022);   // über die Kante
   cy([4.452,3.12,0.586],[4.405,3.05,0.586],0.0032,0x202022);   // liegt auf der Armlehne (Oberkante 0,58 m)
