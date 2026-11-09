@@ -344,38 +344,44 @@ cat='schrank';
 var PX0=1.733,PW=0.998,PD=0.604,PH=2.012;
 var hots=[];
 function hotMk(parent,x,y,z,fn){var m=new THREE.Mesh(new THREE.SphereGeometry(0.026,14,10),new THREE.MeshBasicMaterial({color:0x2f8cff}));m.position.set(x,y,z);m.userData.noPick=true;m.userData.hot=fn;parent.add(m);hots.push(m);return m;}
-var PT=0.02,PDK=PD-0.02,KC=0xefe6d2;   // Korpus (Eicheneffekt weiß lasiert) mit offenem Innenraum, Türen 2 cm davor
+function woodTex(vert){var c=document.createElement('canvas');c.width=c.height=256;var g=c.getContext('2d');g.fillStyle='#f3efe8';g.fillRect(0,0,256,256);
+  var seed=vert?11:23;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+  for(var i=0;i<90;i++){var p=rnd()*256,w=0.6+rnd()*1.8;g.fillStyle=rnd()<0.6?'rgba(120,98,64,'+(0.06+rnd()*0.10)+')':'rgba(255,255,255,'+(0.18+rnd()*0.2)+')';
+    if(vert)g.fillRect(p,0,w,256);else g.fillRect(0,p,256,w);}
+  for(var j=0;j<4;j++){var q=rnd()*256,ww=18+rnd()*30;g.fillStyle='rgba(110,92,64,0.05)';if(vert)g.fillRect(q,0,ww,256);else g.fillRect(0,q,256,ww);}
+  var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;}
+var PT=0.02,PDK=PD-0.024,KC=0xcbb799;   // Korpus (Eicheneffekt weiß lasiert) mit offenem Innenraum, Türen 2 cm davor
 box(PX0,0,0.04,PX0+PT,PDK,PH,KC);box(PX0+PW-PT,0,0.04,PX0+PW,PDK,PH,KC);          // Seiten
 box(PX0,0,PH-PT,PX0+PW,PDK,PH,KC);box(PX0,0,0.04,PX0+PW,PDK,0.04+PT,KC);          // Deckel, Boden
-box(PX0,0,0.04,PX0+PW,0.012,PH,0xd9ceb8);                                          // Rückwand
+box(PX0,0,0.04,PX0+PW,0.012,PH,0xb9a483);                                          // Rückwand
 [0.55,1.05].forEach(function(z){box(PX0+PT,0.012,z,PX0+PW-PT,PDK-0.02,z+0.018,KC);});   // 2 Böden (Höhe geschätzt)
 (function(){var rd=new THREE.Mesh(new THREE.CylinderGeometry(0.0125,0.0125,PW-2*PT,12),new THREE.MeshLambertMaterial({color:0xb9bcc0}));rd.rotation.z=Math.PI/2;rd.position.copy(P(PX0+PW/2,0.30,1.80));room.add(rd);})();   // Kleiderstange
-box(PX0+0.01,0.01,0,PX0+PW-0.01,PD-0.03,0.04,0x8d8d85);             // Sockel
-var paxDM=new THREE.MeshLambertMaterial({color:0xe6d3b0}),paxHM=new THREE.MeshLambertMaterial({color:0x1b1b1b}),paxG=[],paxDoors=[],paxM;
+box(PX0+0.01,0.01,0,PX0+PW-0.01,PD-0.03,0.04,0xb09a7a);             // Sockel
+var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxHM=new THREE.MeshLambertMaterial({color:0x1b1b1b}),paxG=[],paxDoors=[],paxM;
 [-1,1].forEach(function(sd){   // sd=-1: linke Tür (Scharnier links), 1: rechte Tür
-  var dw=PW/2-0.001,g=new THREE.Group();g.position.copy(P(sd<0?PX0:PX0+PW,PD-0.01,0));
-  var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.02),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
-  var hm=new THREE.Mesh(new THREE.BoxGeometry(0.012,0.30,0.025),paxHM);hm.position.set(-sd*(dw-0.04),1.10,0.0225);g.add(hm);
-  room.add(g);paxDoors.push({g:g,sd:sd});paxG.push(hm);if(!paxM)paxM=dm;});
+  var dw=PW/2-0.001,g=new THREE.Group();g.position.copy(P(sd<0?PX0:PX0+PW,PD-0.012,0));
+  var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
+  if(sd<0){var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(dw-0.02,1.0,0.021);g.add(hm);paxG.push(hm);}   // ein schwarzer Griff an der Mittelfuge (Planer-Bild)
+  room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
 var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});}
 (function(){var b=document.getElementById('paxB');if(!b)return;
   window.paxToggle=function(){var on=paxAng<0.1;tw('pax',function(){return paxAng;},paxSet,on?1.75:0,700);b.classList.toggle('on',on);};b.onclick=paxToggle;
-  hotMk(paxDoors[0].g,PW/2-0.035,1.0,0.03,function(){paxToggle();});})();
+  hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});})();
 cat='sideboard';
 // Sideboard (IKEA BESTÅ, 180 x 42 x 38 cm) direkt neben dem Schrank, auf dem Boden
 var SB0=PX0+PW,SBW=1.80,SBD=0.42,SBH=0.38;
 var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2;   // Alternative: IKEA TONSTAD TV-Bank 178,4 x 37,2 x 54,9 cm (Eichenfurnier)
 (function(){   // BESTÅ TV-Bank mit 3 Türen (je 60 x 38 cm, LAPPVIKEN), offener Korpus mit je 1 Boden pro Fach
-  var KT=0.018,DD=SBD-0.02,KC2=0xefe6d2;
+  var KT=0.018,DD=SBD-0.02,KC2=0xd8c4a2;
   box(SB0,0,0,SB0+KT,DD,SBH,KC2);box(SB0+SBW-KT,0,0,SB0+SBW,DD,SBH,KC2);        // Seiten
   box(SB0,0,SBH-KT,SB0+SBW,DD,SBH,KC2);box(SB0,0,0,SB0+SBW,DD,KT,KC2);            // Deckel, Boden
-  box(SB0,0,0,SB0+SBW,0.01,SBH,0xd9ceb8);                                         // Rückwand
+  box(SB0,0,0,SB0+SBW,0.01,SBH,0xbfab8a);                                         // Rückwand
   [1,2].forEach(function(i){box(SB0+SBW*i/3-KT/2,0.01,KT,SB0+SBW*i/3+KT/2,DD,SBH-KT,KC2);});   // Trennwände
   [0,1,2].forEach(function(i){box(SB0+SBW*i/3+KT/2,0.01,0.19-0.009,SB0+SBW*(i+1)/3-KT/2,DD-0.01,0.19+0.009,KC2);});   // Böden
   var cx=function(i){return SB0+SBW*i/3;};
   box(cx(2)+0.05,0.10,0.2,cx(2)+0.27,0.34,0.30,0x4a4a50);box(cx(2)+0.31,0.10,0.2,cx(2)+0.53,0.34,0.30,0x4a4a50);box(cx(2)+0.08,0.10,0.02,cx(2)+0.50,0.34,0.17,0x55555b);   // Boxen (Beispiel-Inhalt)
   box(cx(1)+0.06,0.10,0.2,cx(1)+0.52,0.32,0.235,0x6a5a4a);box(cx(1)+0.08,0.10,0.235,cx(1)+0.45,0.30,0.265,0x3a5a7a);   // Bücher/Zeitschriften (Beispiel-Inhalt)
-  var sdm=new THREE.MeshLambertMaterial({color:0xe6d3b0});window.sbDoors=[];
+  var sdm=new THREE.MeshLambertMaterial({map:woodTex(false),color:0xd8c4a2});window.sbDoors=[];
   [1,2,3].forEach(function(i){   // Türen: Scharnier jeweils rechts (Anschlag geschätzt), öffnen nach vorn
     var dw=SBW/3-0.002,g=new THREE.Group();g.position.copy(P(SB0+SBW*i/3-0.001,SBD-0.01,0));
     var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,SBH-0.004,0.02),sdm);dm.position.set(-dw/2,SBH/2,0);g.add(dm);
@@ -1089,7 +1095,7 @@ function setSb(v){sbV=v;var T=(v==='T');if(T&&window.sbSet&&sbAng>0){sbSet(0);va
   labels.forEach(function(l){if(TC[l.cat]){if(l.by0===undefined)l.by0=l.p.y;l.p.y=l.by0+sbDz;}
     if(l.t0===undefined)l.t0=l.el.textContent;if(SBTT[l.t0])l.el.textContent=T?SBTT[l.t0]:l.t0;});
   Object.keys(dimB).forEach(function(k){var b=dimB[k][0],top=dimB[k][1];b.position.y=-sbDz;b.scale.y=(top+sbDz)/top;});
-  paxM.material.color.setHex(T?0xdcbf8c:0xe6d3b0);paxG.forEach(function(o){o.visible=!T&&!hideCats.schrank;});
+  paxM.material.color.setHex(T?0xdcbf8c:0xcdb898);paxG.forEach(function(o){o.visible=!T&&!hideCats.schrank;});
   sbBB.classList.toggle('on',!T);sbTB.classList.toggle('on',T);setTvSize(tvSize);if(/^v[678]$/.test(lastView))setView(lastView);}
 sbBB.onclick=function(){setSb('B');};sbTB.onclick=function(){setSb('T');};
 
