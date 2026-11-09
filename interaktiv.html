@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv · Stand v5</title>
+<title>Zimmer Interaktiv · Stand v6</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -314,7 +314,7 @@ box(sWin.u0+0.02,D+0.003,sWin.v1,sWin.u1-0.02,D+0.008,sWin.v1+0.012,0x8d8d85);  
   bx(4.368,2.90,0.580,4.382,2.95,0.596,0x3a3a40);              // Stecker liegt auf der Armlehne, neben dem Tablett
   room.add(g);
   var cb=document.getElementById('cableB');
-  if(cb)cb.onclick=function(){g.visible=!g.visible;cb.classList.toggle('on',g.visible);};
+  if(cb)cb.onclick=function(){accState.kabel=!accState.kabel;accApply();cb.classList.toggle('on',accState.kabel);};
 })();
 // Sofa-Tablett aus Bambus (Relaxdays-ähnlich, Maße geschätzt: Platte ca. 50 × 33,5 cm, 2 Untersetzer, Fach außen für Handy/Fernbedienung)
 // liegt auf der Armlehne am Fensterende des Sofas (Armlehne x 4,235–4,46, y 2,22–3,24, Oberkante 0,58 m), Fach hängt auf der Fensterseite (30 cm bis zur Wand)
@@ -333,7 +333,7 @@ box(sWin.u0+0.02,D+0.003,sWin.v1,sWin.u1-0.02,D+0.008,sWin.v1+0.012,0x8d8d85);  
   bx(AX1+0.075,2.64,TZ-0.10,AX1+0.095,2.68,TZ+0.07,0x1b1b1f);   // Fernbedienung im Fach
   room.add(t);
   var tb=document.getElementById('trayB');
-  if(tb)tb.onclick=function(){t.visible=!t.visible;tb.classList.toggle('on',t.visible);};
+  if(tb)tb.onclick=function(){accState.tablett=!accState.tablett;accApply();tb.classList.toggle('on',accState.tablett);};
 })();
 // Heizkörper (Flachheizkörper mit Rippen-Frontblech nach Foto: ca. 100 × 54 cm, Unterkante 12 cm, Gitter oben, Thermostat rechts)
 (function(){var RX=W-0.15,RU0=YS-1.48+0.24,RU1=YS-0.24,RZ0=0.12,RZ1=0.66;
@@ -623,7 +623,7 @@ var bedOn=false;
 // Couchtisch IKEA LACK, Eicheneff wlas, 90 x 55 x 45 cm (Maße laut IKEA). Plattendicke 5 cm, Beine 5 x 5 cm, Ablage bei ca. 20 cm = geschätzt.
 // Normal: vor dem Sofa (Abstand 40 cm zu den Sitzkissen). Sofa ausgeklappt: vor dem ausgeklappten Sofa (20 cm Abstand zur Bettkante, 64 cm bis zum Sideboard).
 var CTN=[2.18,1.27,3.08,1.82],CTB=[2.60,D-SGAP+0.10,3.50,D-SGAP+0.65];   // bei ausgeklapptem Bett: weggestellt hinter dem Sofa (10 cm hinter der Sofarückseite, Schräge dort über 0,8 m hoch)
-var ctOn=true,hideCats={};
+var ctOn=true,hideCats={};var accState={kabel:true,tablett:true};function accApply(){room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='kabel'||c==='tablett')o.visible=!!accState[c]&&!hideCats[c]&&!(c==='tablett'&&hideCats.sofa);});}
 function lackTable(r){var x0=r[0],y0=r[1],x1=r[2],y1=r[3],C=0xe6d3b0;
   box(x0,y0,0.40,x1,y1,0.45,C);
   box(x0+0.005,y0+0.005,0.19,x1-0.005,y1-0.005,0.21,C);
@@ -1198,10 +1198,10 @@ function applyHide(){room.children.forEach(function(o){var c=o.userData&&o.userD
 function setHide(id,hide){HG[id].forEach(function(c){hideCats[c]=hide;});document.getElementById(id).classList.toggle('on',!hide);
   if(hide){applyHide();}else{room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c&&HG[id].indexOf(c)>=0)o.visible=true;});
     if(id==='hSofa'){backObjs.forEach(function(o){o.visible=!bedOn;});bedObjs.forEach(function(o){o.visible=bedOn;});}if(id==='hTv')setTvLed(tvLedOn);if(id==='hSofa')setSofaLed(sofaLedOn);}
-  applyLights();sync();}
+  accApply();applyLights();sync();}
 Object.keys(HG).forEach(function(id){document.getElementById(id).onclick=function(){setHide(id,!hideCats[HG[id][0]]);};});
 document.getElementById('hCouch').onclick=function(){setCt(!ctOn);};document.getElementById('hRug').onclick=function(){setRug(!rugOn);};document.getElementById('hNano').onclick=function(){setLed(!ledOn);};
-document.getElementById('hAll').onclick=function(){var anyOn=Object.keys(HG).some(function(id){return !hideCats[HG[id][0]];})||ctOn||rugOn||ledOn;Object.keys(HG).forEach(function(id){setHide(id,anyOn);});setCt(!anyOn);setRug(!anyOn);setLed(!anyOn);};
+document.getElementById('hAll').onclick=function(){var anyOn=Object.keys(HG).some(function(id){return !hideCats[HG[id][0]];})||ctOn||rugOn||ledOn;Object.keys(HG).forEach(function(id){setHide(id,anyOn);});hideCats.kabel=anyOn;hideCats.tablett=anyOn;accApply();setCt(!anyOn);setRug(!anyOn);setLed(!anyOn);};
 
 function setPcLed(on){pcLedOn=on;pcLedMats.forEach(function(m){m.color.setHex(on?0xffffff:0x2a2a2a);});monScrMats.forEach(function(o){o.m.map=on?o.map:null;o.m.color.setHex(on?0xffffff:0x050507);o.m.needsUpdate=true;});pcledB.classList.toggle('on',on);setSpkLed(on);applyLights();}
 function setSpkLed(on){spkLedOn=on;spkLedObjs.forEach(function(o){o.visible=on;});}
