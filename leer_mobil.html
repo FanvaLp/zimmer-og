@@ -178,8 +178,8 @@ function frame(pts,mid){
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x4a90c2})));
 }
-// Fenster sitzen in einer Nische (Laibung, Tiefe geschätzt 15 cm; Fenster und Rahmen am Ende der Nische) + Fensterbank (3 cm Überstand)
-var WD=0.15;
+// Fenster sitzen in einer Nische (Laibung, gemessen: großes Fenster 23 cm, kleines 19 cm; Fenster und Rahmen am Ende der Nische) + Fensterbank (Stein, weiß; groß 28,5 cm tief = 5,5 cm Überstand, klein 22 cm = 3 cm Überstand)
+var WD=0.23,WS=0.19;
 function reveal(a,b,c,d){addTris([[a,b,c],[a,c,d]],0xf3f1ea,{double:true});}
 function revealBox(p0,p1,p2,p3,dir){ // Laibung: 4 Flächen vom Wandrand bis zur Fensterebene
   for(var i=0;i<4;i++){var q=[p0,p1,p2,p3][i],r=[p0,p1,p2,p3][(i+1)%4];
@@ -190,10 +190,10 @@ revealBox(ew0[0],ew0[1],ew0[2],ew0[3],function(p){return [p[0]+WD,p[1],p[2]];});
 var ew=ew0.map(function(p){return [p[0]+WD,p[1],p[2]];});
 glass(ew);frame(ew,[[W+WD,(eWin.u0+eWin.u1)/2,eWin.v0],[W+WD,(eWin.u0+eWin.u1)/2,eWin.v1]]);
 var sw0=[[sWin.u0,D,sWin.v0],[sWin.u1,D,sWin.v0],[sWin.u1,D,sWin.v1],[sWin.u0,D,sWin.v1]];
-revealBox(sw0[0],sw0[1],[sWin.u1,D,sWin.v1+0.24],[sWin.u0,D,sWin.v1+0.24],function(p){return [p[0],p[1]+WD,p[2]];});
+revealBox(sw0[0],sw0[1],[sWin.u1,D,sWin.v1+0.24],[sWin.u0,D,sWin.v1+0.24],function(p){return [p[0],p[1]+WS,p[2]];});
 var RK=0.24;   // Rollladenkasten über dem kleinen Fenster (Höhe nach Foto geschätzt 24 cm), sitzt in der Nische oberhalb des Fensters
-var sw=sw0.map(function(p){return [p[0],p[1]+WD,p[2]];});
-glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D+WD,sWin.v0],[(sWin.u0+sWin.u1)/2,D+WD,sWin.v1]]);
+var sw=sw0.map(function(p){return [p[0],p[1]+WS,p[2]];});
+glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D+WS,sWin.v0],[(sWin.u0+sWin.u1)/2,D+WS,sWin.v1]]);
 // Mauervorsprung & Heizkörper
 function box(x0,y0,z0,x1,y1,z1,color){
   var m=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,z1-z0,y1-y0),new THREE.MeshLambertMaterial({color:color}));
@@ -214,9 +214,9 @@ box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tief
   box(0,D-ST,0,W,D,SH,SKC);                            // Schrägenwand-Seite
 })();
 // Fensterbänke (weiß, 3 cm Überstand in den Raum, 2 cm Überstand seitlich)
-box(W-0.03,eWin.u0-0.02,eWin.v0-0.025,W+WD,eWin.u1+0.02,eWin.v0,0xffffff);
-box(sWin.u0-0.02,D-0.03,sWin.v0-0.025,sWin.u1+0.02,D+WD,sWin.v0,0xffffff);
-box(sWin.u0,D+0.005,sWin.v1,sWin.u1,D+WD,sWin.v1+RK,0xf3f1ea);   // Rollladenkasten
+box(W-0.055,eWin.u0-0.02,eWin.v0-0.025,W+WD,eWin.u1+0.02,eWin.v0,0xffffff);
+box(sWin.u0-0.02,D-0.03,sWin.v0-0.025,sWin.u1+0.02,D+WS,sWin.v0,0xffffff);
+box(sWin.u0,D+0.005,sWin.v1,sWin.u1,D+WS,sWin.v1+RK,0xf3f1ea);   // Rollladenkasten
 box(sWin.u0+0.02,D+0.003,sWin.v1,sWin.u1-0.02,D+0.008,sWin.v1+0.012,0x8d8d85);   // Kastenunterkante / Rollladenschlitz
 // Gardinen nach Handyfotos: dunkelgrau mit hellgrauen Querstreifen, Unterkante knapp unter der Fensterbank, an Stange über dem Fenster
 (function(){
