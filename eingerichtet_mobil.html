@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet Mobil · Stand v17</title>
+<title>Zimmer Eingerichtet Mobil · Stand v18</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -499,7 +499,7 @@ box(TVCX-TVW*0.325,TVF-TVD,TVZ0,TVCX+TVW*0.325,TVF-0.012,TVZ0+TVH*0.46,0x1b1b1e)
 });
 // 65 Zoll (Umschalter): Samsung Mini LED M70H 65" nach Coolblue/Geizhals: Panel 144,41 x 83,12 x 7,68 cm, mit Fuss 88,22 cm hoch, Fusstiefe 22,2 cm; Fussabstand geschaetzt (75er skaliert)
 var TV65={W:1.4441,H:0.8312,D:0.0768,FH:0.0510,BD:0.222,FS:1.082};TV65.Z0=SBH+TV65.FH;TV65.YC=TVYB+TV65.BD/2;
-var sbV='B',sbDz=0,dimB={};var altHide={sideboardT:true,tv65:true,tvled65:true,tv85:true,tvled85:true},tvSize='75',tvHalo65=null,TVLB65=[],tvHalo85=null,TVLB85=[];
+var sbV='B',sbDz=0,tvDy=0,dimB={};var altHide={sideboardT:true,tv65:true,tvled65:true,tv85:true,tvled85:true},tvSize='75',tvHalo65=null,TVLB65=[],tvHalo85=null,TVLB85=[];
 var TVLBL65=[['Fernseher 65" · Panel 144,4 × 83,1 × 7,7 cm · 14,5 kg (BESTÅ trägt 30 kg)',TVCX,TV65.YC,TV65.Z0+TV65.H+0.12],['Bilddiagonale ≈ 165 cm (65 Zoll)',TVCX,TVF+0.004,TV65.Z0+TV65.H/2],['88,2 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TV65.H/2],['126,2 cm gesamt',SB0+SBW+0.14,SBD,(TV65.Z0+TV65.H)/2]];
 cat='tv65';
 box(TVCX-TV65.W/2,TVF-0.012,TV65.Z0,TVCX+TV65.W/2,TVF,TV65.Z0+TV65.H,0x161618);
@@ -1231,11 +1231,11 @@ var SBTT={'138,8 cm gesamt':'155,7 cm gesamt','126,2 cm gesamt':'143,1 cm gesamt
 function sbRefresh(){var T=(sbV==='T'),dx=(tvSize==='85')?DX85:0,rest=W-(SBT.X0+SBT.W+dx);
   labels.forEach(function(l){if(l.cat==='sideboardT'&&l.el.textContent.indexOf('Rest bis Fensterwand')===0)l.el.textContent='Rest bis Fensterwand ≈ '+rest.toFixed(2).replace('.',',')+' m';});
   if(sbHint){sbHint.style.display=T?'block':'none';sbHint.textContent='Hinweis: Mit TONSTAD bekommt der Schrank die passenden TONSTAD-Türen (Eichenfurnier, 2 × 95 € + Scharniere); Farbton geschätzt, im Laden prüfen. Nicht an die Wand hängen, gegen Kippen sichern.'+((T&&tvSize==='85')?' Der 85-Zoll-Fernseher (189 cm) ist breiter als das Sideboard (178 cm).':'');}}
-function setSb(v){sbV=v;var T=(v==='T');if(T&&window.sbSet&&sbAng>0){sbSet(0);var sbb=document.getElementById('sbB');if(sbb)sbb.classList.remove('on');}sbDz=T?DZT:0;altHide.sideboard=T;altHide.sideboardT=!T;
+function setSb(v){sbV=v;var T=(v==='T');if(T&&window.sbSet&&sbAng>0){sbSet(0);var sbb=document.getElementById('sbB');if(sbb)sbb.classList.remove('on');}sbDz=T?DZT:0;tvDy=T?-0.05:0;altHide.sideboard=T;altHide.sideboardT=!T;
   var TC={tv:1,tv65:1,tv85:1,tvled:1,tvled65:1,tvled85:1};
   room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='sideboard'||c==='sideboardT')o.visible=!altHide[c]&&!hideCats[c];
-    if(c&&TC[c]){if(o.userData.by0===undefined)o.userData.by0=o.position.y;o.position.y=o.userData.by0+sbDz;}});
-  labels.forEach(function(l){if(TC[l.cat]){if(l.by0===undefined)l.by0=l.p.y;l.p.y=l.by0+sbDz;}
+    if(c&&TC[c]){if(o.userData.by0===undefined)o.userData.by0=o.position.y;o.position.y=o.userData.by0+sbDz;if(o.userData.bz0===undefined)o.userData.bz0=o.position.z;o.position.z=o.userData.bz0+tvDy;}});
+  labels.forEach(function(l){if(TC[l.cat]){if(l.by0===undefined)l.by0=l.p.y;l.p.y=l.by0+sbDz;if(l.bz0===undefined)l.bz0=l.p.z;l.p.z=l.bz0+tvDy;}
     if(l.t0===undefined)l.t0=l.el.textContent;if(SBTT[l.t0])l.el.textContent=T?SBTT[l.t0]:l.t0;});
   Object.keys(dimB).forEach(function(k){var b=dimB[k][0],top=dimB[k][1];b.position.y=-sbDz;b.scale.y=(top+sbDz)/top;});
   paxM.material.color.setHex(T?0xdcbc88:0xcdb898);paxG.forEach(function(o){o.visible=!T&&!hideCats.schrank;});
@@ -1308,7 +1308,7 @@ canvas.addEventListener('pointerup',function(e){
     measAnchor=a.clone().add(b).multiplyScalar(0.5);measText=fmtL(tot)+'  (waagerecht '+fmtL(hor)+' · Höhe '+fmtL(ver)+')';}
   measLbl.textContent=measText;});
 function loop(){
-  Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k)&&!cmpOn;dimG[k].position.y=((rugOn&&k!=='led')?0.02:0)+((k==='tv'||k==='tv65'||k==='tv85')?sbDz:0);});
+  Object.keys(dimG).forEach(function(k){dimG[k].visible=isVis(k)&&!cmpOn;dimG[k].position.y=((rugOn&&k!=='led')?0.02:0)+((k==='tv'||k==='tv65'||k==='tv85')?sbDz:0);if(k==='tv'||k==='tv65'||k==='tv85'){var g_=dimG[k];if(g_.userData.bz0===undefined)g_.userData.bz0=g_.position.z;g_.position.z=g_.userData.bz0+tvDy;}});
   applyHide();if(sbV==='T')paxG.forEach(function(o){o.visible=false;});picUpdate();place();renderScene();
   var w=stage.clientWidth,h=stage.clientHeight;
   labels.forEach(function(l){
