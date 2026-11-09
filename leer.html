@@ -185,6 +185,7 @@ function box(x0,y0,z0,x1,y1,z1,color){
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
+(function(){var m=room.children[room.children.length-2],dx=0.533,dy=0.465,mk=function(a,b){var t=STW.clone();t.needsUpdate=true;t.repeat.set(a*2,b*2);return new THREE.MeshLambertMaterial({map:t,color:0xffffff});};m.material=[mk(dy,H),mk(dy,H),mk(dx,dy),mk(dx,dy),mk(dx,H),mk(dx,H)];})();   // Rauputz wie die Wände, rundum
 // Fußleisten rundum (laut Fotos: Holzleiste in Bodenfarbe, ca. 5 cm hoch, 2,5 cm stark; nicht an der Tür)
 (function(){var SKC=0xa87c50,SH=0.05,ST=0.025;
   box(0,0,0,ST,D,SH,SKC);                              // Schreibtischwand

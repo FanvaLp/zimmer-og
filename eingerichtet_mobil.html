@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet Mobil · Stand v18</title>
+<title>Zimmer Eingerichtet Mobil · Stand v19</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -273,6 +273,7 @@ function box(x0,y0,z0,x1,y1,z1,color){
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
+(function(){var m=room.children[room.children.length-2],dx=0.533,dy=0.465,mk=function(a,b){var t=STW.clone();t.needsUpdate=true;t.repeat.set(a*2,b*2);return new THREE.MeshLambertMaterial({map:t,color:0xffffff});};m.material=[mk(dy,H),mk(dy,H),mk(dx,dy),mk(dx,dy),mk(dx,H),mk(dx,H)];})();   // Rauputz wie die Wände, rundum
 // Fußleisten rundum (laut Fotos: Holzleiste in Bodenfarbe, ca. 5 cm hoch, 2,5 cm stark; nicht an der Tür)
 (function(){var SKC=0xa87c50,SH=0.05,ST=0.025;
   box(0,0,0,ST,D,SH,SKC);                              // Schreibtischwand
