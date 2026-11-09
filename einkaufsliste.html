@@ -50,7 +50,7 @@ h2 span{font-weight:500;color:var(--muted);font-size:13px}
 
 <section class="sum" id="sum">
 <h2>Gesamtpreis</h2>
-<div class="pick" id="pick"><button data-r="a" class="on">IKEA 200 × 300 (Haupt)</button><button data-r="b">IKEA 170 × 240</button><button data-r="c">Kaufland 250 × 300</button></div>
+<div class="pick" id="pick"><button data-r="a" class="on">IKEA 200 × 300 (Haupt)</button><button data-r="b">IKEA 170 × 240</button><button data-r="c">Kaufland 250 × 300</button><button data-r="n">Kein Teppich</button></div>
 <div id="rows"></div>
 <div class="tot"><span>Summe</span><span id="tot">–</span></div>
 <div class="open" id="open"></div>
@@ -60,7 +60,7 @@ h2 span{font-weight:500;color:var(--muted);font-size:13px}
 var RUG={a:['STOENSE Teppich 200 × 300',139.00,'IKEA'],b:['STOENSE Teppich 170 × 240',89.99,'IKEA'],c:['ETON Teppich 250 × 300',130.19,'Kaufland']};
 /* fest: Preis laut Shop; null = Preis hängt von deiner Konfiguration ab, hier selbst eintragen */
 var ITEMS=[['pax','PAX Kleiderschrank 100 × 60 × 201 cm','IKEA – Planung: Korpus, 2 STORKLINTA-Türen (Eiche), Griffe, Stange, 2 Böden',221.00],['besta','BESTÅ TV-Bank mit Türen (Sideboard)','IKEA – Preis laut Seite (zuvor 199 €)',145.00],['soer','SÖRVALLEN 3er-Bettsofa mit Récamiere','IKEA – Tallmyra mittelgrau, Récamiere links',1599.00],['lack','LACK Couchtisch','IKEA',19.99],['tv','Samsung Mini LED 75 Zoll M70H','Amazon – Preis laut Seite (UVP 1.249 €)',699.00],['hue','Philips Hue Flux LED-Lightstrip 5 m','Amazon – Preis laut Seite (UVP 99,99 €)',82.95],['hueplay','Philips Hue Play Lightbar 2er Pack (Sofa)','Amazon – Preis laut Seite (UVP 139,99 €)',100.95]];
-var st={r:'a',v:{}};try{var x=JSON.parse(localStorage.getItem('einkauf_summe')||'null');if(x){st.r=RUG[x.r]?x.r:'a';st.v=x.v||{};}}catch(e){}
+var st={r:'a',v:{}};try{var x=JSON.parse(localStorage.getItem('einkauf_summe')||'null');if(x){st.r=(RUG[x.r]||x.r==='n')?x.r:'a';st.v=x.v||{};}}catch(e){}
 function save(){try{localStorage.setItem('einkauf_summe',JSON.stringify(st));}catch(e){}}
 function eur(n){return n.toLocaleString('de-DE',{style:'currency',currency:'EUR'});}
 function num(t){var n=parseFloat(String(t||'').replace(/\./g,'').replace(',','.'));return isNaN(n)?null:n;}
@@ -76,8 +76,8 @@ function draw(){
  [].forEach.call(document.querySelectorAll('#pick button'),function(b){b.classList.toggle('on',b.dataset.r===st.r);});
  var tot=0,miss=[];
  ITEMS.forEach(function(it){if(it[3]===null){var v=num(st.v[it[0]]);if(v===null)miss.push(it[1].split(' ')[0]);else tot+=v;}else tot+=it[3];});
- var r=RUG[st.r];tot+=r[1];
- document.getElementById('rugrow').innerHTML='<span>'+r[0]+'<small>'+r[2]+' – gewählter Teppich</small></span><b>'+eur(r[1])+'</b>';
+ if(st.r==='n'){document.getElementById('rugrow').innerHTML='<span>Teppich<small>nicht gekauft – nicht in der Summe</small></span><b>–</b>';}else{var r=RUG[st.r];tot+=r[1];
+ document.getElementById('rugrow').innerHTML='<span>'+r[0]+'<small>'+r[2]+' – gewählter Teppich</small></span><b>'+eur(r[1])+'</b>';}
  document.getElementById('tot').textContent=eur(tot);
  document.getElementById('open').textContent=miss.length?('Noch ohne Preis (nicht in der Summe): '+miss.join(', ')+'. Trage sie oben ein, die Summe rechnet sich neu.'):'Alle Posten sind enthalten.';
 }
