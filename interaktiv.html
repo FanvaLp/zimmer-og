@@ -406,7 +406,7 @@ box(TVCX-TVW*0.325,TVF-TVD,TVZ0,TVCX+TVW*0.325,TVF-0.012,TVZ0+TVH*0.46,0x1b1b1e)
 // 65 Zoll (Umschalter): Samsung Mini LED M70H 65" nach Coolblue/Geizhals: Panel 144,41 x 83,12 x 7,68 cm, mit Fuss 88,22 cm hoch, Fusstiefe 22,2 cm; Fussabstand geschaetzt (75er skaliert)
 var TV65={W:1.4441,H:0.8312,D:0.0768,FH:0.0510,BD:0.222,FS:1.082};TV65.Z0=SBH+TV65.FH;TV65.YC=TVYB+TV65.BD/2;
 var sbV='B',sbDz=0,dimB={};var altHide={sideboardT:true,tv65:true,tvled65:true,tv85:true,tvled85:true},tvSize='75',tvHalo65=null,TVLB65=[],tvHalo85=null,TVLB85=[];
-var TVLBL65=[['Fernseher 65" · Panel 144,4 × 83,1 × 7,7 cm',TVCX,TV65.YC,TV65.Z0+TV65.H+0.12],['Bilddiagonale ≈ 165 cm (65 Zoll)',TVCX,TVF+0.004,TV65.Z0+TV65.H/2],['88,2 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TV65.H/2],['126,2 cm gesamt',SB0+SBW+0.14,SBD,(TV65.Z0+TV65.H)/2]];
+var TVLBL65=[['Fernseher 65" · Panel 144,4 × 83,1 × 7,7 cm · 14,5 kg (BESTÅ trägt 30 kg)',TVCX,TV65.YC,TV65.Z0+TV65.H+0.12],['Bilddiagonale ≈ 165 cm (65 Zoll)',TVCX,TVF+0.004,TV65.Z0+TV65.H/2],['88,2 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TV65.H/2],['126,2 cm gesamt',SB0+SBW+0.14,SBD,(TV65.Z0+TV65.H)/2]];
 cat='tv65';
 box(TVCX-TV65.W/2,TVF-0.012,TV65.Z0,TVCX+TV65.W/2,TVF,TV65.Z0+TV65.H,0x161618);
 box(TVCX-TV65.W/2+0.006,TVF,TV65.Z0+0.010,TVCX+TV65.W/2-0.006,TVF+0.0012,TV65.Z0+TV65.H-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});
@@ -418,7 +418,7 @@ box(TVCX-TV65.W*0.325,TVF-TV65.D,TV65.Z0,TVCX+TV65.W*0.325,TVF-0.012,TV65.Z0+TV6
 // Das Sideboard rueckt bei 85" um 11,5 cm nach rechts: Schrank-Kante bis Fensterwand 2,03 m, TV 1,89 m -> TV und Sideboard mittig (je ca. 11 cm Luft)
 var DX85=0.115,TVCX85=TVCX+DX85;
 var TV85={W:1.8899,H:1.0835,D:0.0768,FH:0.0493,BD:0.320,FS:1.416};TV85.Z0=SBH+TV85.FH;TV85.YC=TVYB+TV85.BD/2;
-var TVLBL85=[['Fernseher 85" · Panel 189,0 × 108,4 × 7,7 cm',TVCX85,TV85.YC,TV85.Z0+TV85.H+0.12],['Bilddiagonale ≈ 216 cm (85 Zoll)',TVCX85,TVF+0.004,TV85.Z0+TV85.H/2],['113,3 cm (mit Füßen)',SB0+SBW+DX85+0.06,SBD,SBH+TV85.H/2],['151,3 cm gesamt',SB0+SBW+DX85+0.14,SBD,(TV85.Z0+TV85.H)/2]];
+var TVLBL85=[['Fernseher 85" · Panel 189,0 × 108,4 × 7,7 cm · 29,2 kg (BESTÅ-Limit 30 kg: knapp)',TVCX85,TV85.YC,TV85.Z0+TV85.H+0.12],['Bilddiagonale ≈ 216 cm (85 Zoll)',TVCX85,TVF+0.004,TV85.Z0+TV85.H/2],['113,3 cm (mit Füßen)',SB0+SBW+DX85+0.06,SBD,SBH+TV85.H/2],['151,3 cm gesamt',SB0+SBW+DX85+0.14,SBD,(TV85.Z0+TV85.H)/2]];
 cat='tv85';
 box(TVCX85-TV85.W/2,TVF-0.012,TV85.Z0,TVCX85+TV85.W/2,TVF,TV85.Z0+TV85.H,0x161618);
 box(TVCX85-TV85.W/2+0.006,TVF,TV85.Z0+0.010,TVCX85+TV85.W/2-0.006,TVF+0.0012,TV85.Z0+TV85.H-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});
@@ -848,7 +848,7 @@ cat='raum';
 var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch','Wand bis Tisch 49 cm':'tisch','Tisch 2,40 m':'tisch','Tisch bis Türwand 1,20 m':'tisch',
  'Schrank 99,8 × 60,4 × 201,2 cm':'schrank','201,2 cm':'schrank','99,8 cm':'schrank',
  'Sideboard 180 × 42 × 38 cm':'sideboard','Sideboard TONSTAD 178,4 × 37,2 × 54,9 cm':'sideboardT','54,9 cm':'sideboardT','178,4 cm':'sideboardT','Rest bis Fensterwand ≈ 0,24 m (TONSTAD)':'sideboardT','38 cm':'sideboard','180 cm':'sideboard','Rest bis Fensterwand ≈ 0,23 m':'sideboard',
- 'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
+ 'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm · 22 kg (BESTÅ trägt 30 kg)':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
  'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','85 cm Platz hinter dem Sofa (Schräge dort 62–137 cm hoch)':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 137 cm: 49 cm Luft über Rücken (88 cm)':'sofa','15 cm bis Heizkörper':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 89 cm':'bett','Couchtisch LACK 90 × 55 × 45 cm':'ctn','Breite 90 cm':'ctn','Tiefe 55 cm':'ctn','bis Sofa 40 cm':'ctn','bis Récamiere 36 cm':'ctn','bis Sideboard 85 cm':'ctn','Höhe 45 cm':'ctn','Couchtisch LACK 90 × 55 × 45 cm (hinter dem Sofa)':'ctb','Breite 90 cm (hinter dem Sofa)':'ctb','Tiefe 55 cm (hinter dem Sofa)':'ctb','bis Sofa 10 cm':'ctb','bis Schrägenwand 20 cm':'ctb','Tischhöhe 45 cm':'ctb',
  'Unterlage 120 cm':'stuhl','38 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
  'Tisch bis Sofa 82 cm':'abstand','Stuhl–Sofa 27 cm':'abstand'};Object.assign(LC,RUGLC);LEDLB.forEach(function(l){LC[l[0]]='led';});TVLB.forEach(function(l){LC[l[0]]='tvled';});TVLB65.forEach(function(l){LC[l[0]]='tvled65';});TVLBL65.forEach(function(l){LC[l[0]]='tv65';});TVLB85.forEach(function(l){LC[l[0]]='tvled85';});TVLBL85.forEach(function(l){LC[l[0]]='tv85';});SFLB.forEach(function(l){LC[l[0]]='sofaled';});
@@ -859,7 +859,7 @@ var labels=[
  ['Schreibtisch 2,40 m',0.4,(Y0+Y2)/2,0.98],['Höhe 72 cm',0.82,Y2-0.4,0.36],['Tiefe 80 cm',0.82,Y0+0.4,0.84],
  ['Wand bis Tisch 49 cm',1.05,D-0.245,0.02],['Tisch 2,40 m',1.05,(Y0+Y2)/2,0.02],['Tisch bis Türwand 1,20 m',1.05,Y0/2,0.02],
  ['Schrank 99,8 × 60,4 × 201,2 cm',PX0+PW/2,PD/2,PH+0.1],['Sideboard 180 × 42 × 38 cm',SB0+SBW/2,SBD/2,SBH+0.12],['Sideboard TONSTAD 178,4 × 37,2 × 54,9 cm',SBT.X0+SBT.W/2,SBT.D/2,SBT.H+0.12],
- ['Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm',TVCX,TVYC,TVZ0+TVH+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVZ0+TVH/2],
+ ['Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm · 22 kg (BESTÅ trägt 30 kg)',TVCX,TVYC,TVZ0+TVH+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVZ0+TVH/2],
  ['201,2 cm',PX0+PW/2,PD+0.08,PH/2],['38 cm',SB0+SBW+0.06,SBD,SBH/2],['54,9 cm',SBT.X0+SBT.W+0.06,SBT.D,SBT.H/2],['100,8 cm (mit Füßen)',SB0+SBW+0.06,SBD,SBH+TVH/2],['138,8 cm gesamt',SB0+SBW+0.14,SBD,(TVZ0+TVH)/2],
  ['Sofa SÖRVALLEN 284 × 193 × 88 cm',SX0+SWD/2,D-SGAP-0.6,1.0],['284 cm',SX0+SWD/2,D-SGAP/2,0.02],
  ['85 cm Platz hinter dem Sofa (Schräge dort 62–137 cm hoch)',SX0-0.08,D-SGAP/2,0.02],['Tiefe 102 cm',SX0-0.08,D-SGAP-0.51,0.02],['193 cm',SX0+SWD+0.08,D-SGAP-0.965,0.02],
