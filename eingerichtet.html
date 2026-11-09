@@ -235,6 +235,17 @@ function box(x0,y0,z0,x1,y1,z1,color){
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
+// Fußleisten rundum (laut Fotos: Holzleiste in Bodenfarbe, ca. 6,5 cm hoch, 1,5 cm stark; nicht an der Tür)
+(function(){var SKC=0xa87c50,SH=0.065,ST=0.015;
+  box(0,0,0,ST,D,SH,SKC);                              // Schreibtischwand
+  box(0,0,0,0.125,ST,SH,SKC);box(1.075,0,0,1.20,ST,SH,SKC);   // Türwand (ohne Türöffnung 0,125–1,075)
+  box(1.20-ST,0,0,1.20,0.465,SH,SKC);                  // Mauervorsprung, Seite zur Tür
+  box(1.20-ST,0.465,0,1.733+ST,0.465+ST,SH,SKC);       // Mauervorsprung, Front
+  box(1.733,-NY,0,1.733+ST,0.465,SH,SKC);              // Mauervorsprung, Seite zur Nische
+  box(1.733,-NY,0,W,-NY+ST,SH,SKC);                    // Nischenrückwand
+  box(W-ST,-NY,0,W,D,SH,SKC);                          // Fensterwand
+  box(0,D-ST,0,W,D,SH,SKC);                            // Schrägenwand-Seite
+})();
 // Fensterbänke (weiß, 3 cm Überstand in den Raum, 2 cm Überstand seitlich)
 box(W-0.03,eWin.u0-0.02,eWin.v0-0.025,W+WD,eWin.u1+0.02,eWin.v0,0xffffff);
 box(sWin.u0-0.02,D-0.03,sWin.v0-0.025,sWin.u1+0.02,D+WD,sWin.v0,0xffffff);
@@ -325,11 +336,11 @@ cat='tisch';
 // Schreibtisch an der linken Wand (aus zwei Tischen, zusammen 2,40 m, je 80 cm tief, 72 cm hoch)
 // 49 cm Abstand zur Schrägenwand, 1,20 m Abstand zur Türwand. Aufteilung 1,60 m + 0,80 m geschätzt.
 var DT=0.025,DHT=0.72,DEP=0.80,Y0=1.20,Y1=Y0+0.80,Y2=D-0.49,BEECH=0xd9a066,BLK=0x2b2b2b;
-box(0,Y1,DHT-DT,DEP,Y2,DHT,BEECH);   // Tisch links (1,60 m, Fensterseite)
-box(0,Y0,DHT-DT,DEP,Y1,DHT,BEECH);   // Tisch rechts (0,80 m, Türseite)
-[Y1+0.15,Y2-0.15,Y0+0.15,Y1-0.15].forEach(function(yc){
-  box(0.37,yc-0.03,0.04,0.43,yc+0.03,DHT-DT,BLK);   // Standbein
-  box(0.10,yc-0.03,0,0.70,yc+0.03,0.04,BLK);        // Fuß
+box(0.05,Y1,DHT-DT,DEP+0.05,Y2,DHT,BEECH);   // Tisch links (1,60 m, Fensterseite): steht 5 cm von der Wand ab
+box(0,Y0,DHT-DT,DEP,Y1,DHT,BEECH);   // Tisch rechts (0,80 m, Türseite): steht an der Wand/Fußleiste
+[[Y1+0.15,0.05],[Y2-0.15,0.05],[Y0+0.15,0],[Y1-0.15,0]].forEach(function(q){var yc=q[0],dx=q[1];
+  box(0.37+dx,yc-0.03,0.04,0.43+dx,yc+0.03,DHT-DT,BLK);   // Standbein
+  box(0.10+dx,yc-0.03,0,0.70+dx,yc+0.03,0.04,BLK);        // Fuß
 });
 (function(){
   var v=[],x=1.05;
