@@ -384,12 +384,12 @@ resize();loop();
     if(has('resetBtn'))h+=li('Zurücksetzen:','im Bereich „Hilfe &amp; Zurücksetzen“ in der Leiste.');
     return h+'</ul>';}
   var ov=null;
-  function showHelp(force){try{if(!force&&localStorage.getItem(KEY))return;}catch(e){}
+  function showHelp(force){
     if(ov)return;ov=document.createElement('div');ov.id='welcome';
     ov.style.cssText='position:fixed;left:0;right:0;top:0;bottom:0;z-index:100;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:14px';
     ov.innerHTML='<div role="dialog" aria-modal="true" style="max-width:460px;width:100%;max-height:88vh;overflow:auto;background:#fff;color:#1d1d22;border-radius:14px;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.5);font:14px system-ui,sans-serif"><div style="font-size:18px;font-weight:700">So bedienst du die Skizze</div><div style="opacity:.75;margin-top:3px">Das kannst du hier tun:</div>'+build()+'<button id="welcomeOk" style="margin-top:14px;width:100%;min-height:44px;font:600 15px system-ui,sans-serif;border-radius:10px;border:0;background:#1f6fd1;color:#fff;cursor:pointer">Los geht’s</button><div style="margin-top:8px;font-size:12px;opacity:.65;text-align:center">Später wieder aufrufen: Knopf „?“ oben rechts im Bild.</div></div>';
     document.body.appendChild(ov);
-    function close(){try{localStorage.setItem(KEY,'1');}catch(e){}if(ov){ov.remove();ov=null;}}
+    function close(){if(ov){ov.remove();ov=null;}}
     document.getElementById('welcomeOk').onclick=close;ov.addEventListener('click',function(e){if(e.target===ov)close();});
     document.addEventListener('keydown',function esc(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',esc);}});}
   var hb=document.getElementById('helpOpen');if(hb){hb.addEventListener('pointerdown',function(e){e.stopPropagation();});hb.onclick=function(e){e.stopPropagation();showHelp(true);};}
