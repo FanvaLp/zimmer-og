@@ -951,6 +951,9 @@ function setSlope(on){slopeOn=on;slopeObjs.forEach(function(o){o.visible=on;});s
 slB1.onclick=function(){setSlope(true);};slB0.onclick=function(){setSlope(false);};
 var rugBtn=document.getElementById('rug'),rugBA=document.getElementById('rugA'),rugBB=document.getElementById('rugB'),rugBC=document.getElementById('rugC'),rugQ=document.getElementById('rugQ'),rugL=document.getElementById('rugL'),orGrp=document.getElementById('orgrp');
 function applyRug(){syncM();var key=rugKey();Object.keys(rugGroups).forEach(function(k){rugGroups[k].forEach(function(o){o.visible=rugOn&&k===key;});});
+  var RTH={tp1:0.018,tp1l:0.018,tp3:0.018,tp2:0.011},rz_=rugOn?(RTH[key]||0):0;   // Couchtisch steht auf dem Teppich, Hue-Play-Leuchten bei Teppich 200 x 300 längs ebenfalls
+  if(typeof ctN!=='undefined')ctN.forEach(function(o){if(o.userData.cz0===undefined)o.userData.cz0=o.position.y;o.position.y=o.userData.cz0+rz_;});
+  if(typeof sofaLedObjs!=='undefined')sofaLedObjs.forEach(function(o){if(o.userData.noPick)return;if(o.userData.cz0===undefined)o.userData.cz0=o.position.y;o.position.y=o.userData.cz0+(key==='tp1l'&&rugOn?0.018:0);});
   rugBtn.classList.toggle('on',!rugOn);rugBA.classList.toggle('on',rugOn&&rugV==='a');rugBB.classList.toggle('on',rugOn&&rugV==='b');rugBC.classList.toggle('on',rugOn&&rugV==='c');
   rugQ.classList.toggle('on',rugOr==='q');rugL.classList.toggle('on',rugOr==='l');orGrp.style.display=(rugOn&&rugV==='a')?'':'none';}
 function setRug(on){rugOn=on;applyRug();}
