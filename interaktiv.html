@@ -363,7 +363,7 @@ var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxH
   var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
   if(sd<0){var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(dw-0.02,1.0,0.021);g.add(hm);paxG.push(hm);}   // ein schwarzer Griff an der Mittelfuge (Planer-Bild)
   room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
-var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});}
+var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-Math.min(a,1.45):a;});}
 (function(){var b=document.getElementById('paxB');if(!b)return;
   window.paxToggle=function(){var on=paxAng<0.1;tw('pax',function(){return paxAng;},paxSet,on?1.75:0,700);b.classList.toggle('on',on);};b.onclick=paxToggle;
   hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});})();
