@@ -533,7 +533,8 @@ sb(0,102,6,101.5,193,9,FR);                 // Boden Stauraum
 sb(0,102,9,3,193,30,FR);                    // Wand Fensterseite
 sb(98.5,102,9,101.5,193,30,FR);             // Wand zum Raum
 sb(3,190,9,98.5,193,30,FR);                 // Frontwand
-sb(8,112,9,62,170,21,0xb7a899);             // Decke im Stauraum (Beispiel-Inhalt)
+sb(3,105,9,98.5,190,9.5,0xe8e1d3);sb(3,105,9.5,4,190,30,0xe8e1d3);sb(97.5,105,9.5,98.5,190,30,0xe8e1d3);sb(4,189,9.5,97.5,190,30,0xe8e1d3);sb(4,102,9.5,97.5,103,30,0xe8e1d3);   // heller Innenraum wie bei IKEA (Boden + Wände)
+sb(8,112,9.5,62,170,21,0xb7a899);             // Decke im Stauraum (Beispiel-Inhalt)
 sb(66,118,9,92,160,26,0xc9bfb3);            // Bettzeug im Stauraum (Beispiel-Inhalt)
 sb(22.5,10,30,261.5,41,45,FR);              // Füllung hinter den Sitzkissen (Rückenzone)
 sb(22.5,0,30,261.5,10,74,FR);               // Rückwand (Rückenstütze 74 cm)
@@ -559,13 +560,13 @@ sb(181.8,41,30,261.2,102,45,CU);            // Sitzkissen 2
   lg.rotation.y=Math.PI/4;lg.position.copy(P(SX0+(284-p[0])/100,D-SGAP-p[1]/100,0.03));room.add(lg);});
 var tws={};function tw(key,get,set,to,ms){var tk=(tws[key]=(tws[key]||0)+1),f=get(),t0=performance.now();(function st(){if(tws[key]!==tk)return;var k=Math.min(1,(performance.now()-t0)/ms);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;set(f+(to-f)*k);if(typeof renderScene==='function')renderScene();if(k<1)requestAnimationFrame(st);})();}
 // Récamiere-Deckel: Scharnier an der Hinterkante (Oberkante), öffnet ca. 80°
-var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.45);g.position.copy(pv);room.add(g);
+var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.30);g.position.copy(pv);room.add(g);
   [lidM,lidE].forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
 var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=a>0.5;}
 window.lidClose=function(){var b=document.getElementById('lidB');tw('lid',function(){return lidAng;},lidSet,0,300);if(b)b.classList.remove('on');};
 (function(){var b=document.getElementById('lidB');if(!b)return;
-  window.lidToggle=function(){if(bedOn){return;}var on=lidAng<0.1;tw('lid',function(){return lidAng;},lidSet,on?1.4:0,650);b.classList.toggle('on',on);};b.onclick=lidToggle;
-  hotMk(lidG,0,0.012,-0.455,function(){lidToggle();});
+  window.lidToggle=function(){if(bedOn){return;}var on=lidAng<0.1;tw('lid',function(){return lidAng;},lidSet,on?1.6:0,650);b.classList.toggle('on',on);};b.onclick=lidToggle;
+  hotMk(lidG,0,0.162,-0.455,function(){lidToggle();});
   window.hotLid=hotMk(room,0,0,0,function(){lidToggle();});hotLid.position.copy(P(SX0+(284-50.75)/100,D-SGAP-1.475,0.32));hotLid.visible=false;   // Schließen-Punkt im geöffneten Stauraum
 })();
 (function(){   // Maßlinien Sofa
