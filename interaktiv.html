@@ -394,7 +394,7 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
 })();
 cat='sideboardT';
 // Sideboard-Alternative IKEA TONSTAD (178,4 x 37,2 x 54,9 cm, Eichenfurnier, zwei Schiebetüren), mittig unter dem Fernseher
-box(SBT.X0,0,0,SBT.X0+SBT.W,SBT.D,SBT.H,0xdcbf8c);
+box(SBT.X0,0,0,SBT.X0+SBT.W,SBT.D,SBT.H,0xdcbc88);room.children[room.children.length-2].material=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xdcbc88});   // Eichenfurnier mit klarem Lack (naturfarben)
 box(SBT.X0+SBT.W/2-0.002,SBT.D,0.01,SBT.X0+SBT.W/2+0.002,SBT.D+0.002,SBT.H-0.01,0x9a8760);
 cat='tv';
 // Fernseher (Samsung Mini LED M70H, 75 Zoll) nach Amazon-Datenblatt: Panel 166,81 x 95,78 x 7,7 cm, mit Fuß 100,79 cm hoch, Fuß 28 cm tief,
@@ -1095,7 +1095,7 @@ function setSb(v){sbV=v;var T=(v==='T');if(T&&window.sbSet&&sbAng>0){sbSet(0);va
   labels.forEach(function(l){if(TC[l.cat]){if(l.by0===undefined)l.by0=l.p.y;l.p.y=l.by0+sbDz;}
     if(l.t0===undefined)l.t0=l.el.textContent;if(SBTT[l.t0])l.el.textContent=T?SBTT[l.t0]:l.t0;});
   Object.keys(dimB).forEach(function(k){var b=dimB[k][0],top=dimB[k][1];b.position.y=-sbDz;b.scale.y=(top+sbDz)/top;});
-  paxM.material.color.setHex(T?0xdcbf8c:0xcdb898);paxG.forEach(function(o){o.visible=!T&&!hideCats.schrank;});
+  paxM.material.color.setHex(T?0xdcbc88:0xcdb898);paxG.forEach(function(o){o.visible=!T&&!hideCats.schrank;});
   sbBB.classList.toggle('on',!T);sbTB.classList.toggle('on',T);setTvSize(tvSize);if(/^v[678]$/.test(lastView))setView(lastView);}
 sbBB.onclick=function(){setSb('B');};sbTB.onclick=function(){setSb('T');};
 
