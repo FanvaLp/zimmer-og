@@ -855,12 +855,13 @@ var pcLight=new THREE.PointLight(0xff2a2a,0,2.4,1.5);pcLight.position.copy(P(0.5
 var nightB=document.getElementById('nightB'),cmpB=document.getElementById('cmpB'),measB=document.getElementById('measB'),measClr=document.getElementById('measClr'),tvledB=document.getElementById('tvledB'),tv75B=document.getElementById('tv75B'),tv65B=document.getElementById('tv65B'),tv85B=document.getElementById('tv85B'),sofaledB=document.getElementById('sofaledB'),ceilB=document.getElementById('ceilB'),pcledB=document.getElementById('pcledB'),cmpBar=document.getElementById('cmpBar');
 /* Simuliertes TV-Bild (nur Nachtmodus): Testbild als Textur + Punktlicht vor dem Fernseher, nur zur Einschätzung des Lichts */
 var picOn=true,picState=null,picLight=new THREE.PointLight(0x9fb4ff,0,4.6,1.1);scene.add(picLight);
-var picTexV=(function(){var c=document.createElement('canvas');c.width=512;c.height=288;var g=c.getContext('2d');
+function picMk(b){var c=document.createElement('canvas');c.width=512;c.height=288;var g=c.getContext('2d');
   var sky=g.createLinearGradient(0,0,0,200);sky.addColorStop(0,'#1b2a6b');sky.addColorStop(0.55,'#7a4fa8');sky.addColorStop(1,'#ffb36b');g.fillStyle=sky;g.fillRect(0,0,512,288);
   g.fillStyle='#fff3c4';g.beginPath();g.arc(330,150,38,0,7);g.fill();
   g.fillStyle='#10122a';g.beginPath();g.moveTo(0,288);g.lineTo(0,190);g.lineTo(90,140);g.lineTo(170,200);g.lineTo(260,120);g.lineTo(380,205);g.lineTo(450,150);g.lineTo(512,195);g.lineTo(512,288);g.closePath();g.fill();
   g.fillStyle='rgba(255,255,255,.75)';g.font='bold 16px sans-serif';g.textAlign='center';g.fillText('TESTBILD · simuliert',256,274);
-  return new THREE.CanvasTexture(c);})();
+  g.fillStyle='rgba(0,0,0,'+(1-b)+')';g.fillRect(0,0,512,288);return new THREE.CanvasTexture(c);}
+var PICT={D:picMk(0.3),N:picMk(0.65),H:picMk(1)},picTexV=PICT.N;   // Bild je Szene unterschiedlich hell
 var picMat=new THREE.MeshBasicMaterial({map:picTexV,color:0xdddddd});
 scrM.forEach(function(s){s.orig=s.mesh.material;s.arr=[s.orig,s.orig,s.orig,s.orig,picMat,s.orig];});
 function picUpdate(){
@@ -891,7 +892,7 @@ function lmCalc(){
   var fpc=120*0.231,fOut=PI*L*A+RHO*ETA*fs+fn+RHO*ETA*fb+fpc,eInd=fOut*RM/(SURF*(1-RM)),eTot=eTv+eSt+eInd,K=0.9/(100*1.598);
   LMI.pic=K*L*A;LMI.pc=0.9*0.35*((fpc/PI/0.64)/17.4)/0.54;   /* PC-RGB: 120 lm weiß-äquivalent x 0,231 (Rot), Lambert, bezogen auf 0,8 m Abstand wie der TV auf 2,8 m */LMI.tv=K*RHO*ETA*fs/PI;LMI.nl=K*fn/PI;LMI.sl=K*RHO*ETA*fb/PI;
   var pc=function(x){return Math.round(100*x/eTot);},v=Math.round(255*Math.min(0.98,0.28+0.72*L/250));
-  picMat.color.setHex((v<<16)|(v<<8)|v);
+  picMat.map=PICT[LMS];picMat.color.setHex(0xffffff);picMat.needsUpdate=true;
   var el=document.getElementById('lmInfo');
   if(el)el.textContent='Am Sofa-Platz (Blick zum TV): ≈ '+eTot.toFixed(0)+' lx · TV '+pc(eTv)+' %, LED-Streifen '+pc(eSt)+' %, Raumreflexion '+pc(eInd)+' %. Lichtstrom bei '+Math.round(LMR*100)+' %: Streifen '+Math.round(fs)+' lm, Sofa-Licht '+Math.round(fb)+' lm, Nanoleaf '+Math.round(fn)+' lm, PC '+Math.round(fpc)+' lm.'+(nightOn?'':' Nur im Nachtmodus wirksam: oben bei Werkzeuge „Nacht“ einschalten.');
   window.__lm={eTv:eTv,eSt:eSt,eInd:eInd,eTot:eTot,fs:fs,fb:fb,fn:fn,I:LMI};
