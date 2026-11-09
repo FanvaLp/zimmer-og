@@ -888,6 +888,25 @@ var labels=[
  ['Stuhl–Sofa 27 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage 3 cm unterm Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['Lücke 4 cm (Türen 90°)',(1.733+PX0)/2,0.30,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,09 m',(SB0+SBW+W)/2,0.75,0.02],['178,4 cm',SBT.X0+SBT.W/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,10 m (TONSTAD)',SBT.X0+SBT.W+0.115,0.75,0.02]
 ].concat(RUGLB).concat(LEDLB).concat(TVLB).concat(TVLB65).concat(TVLBL65).concat(TVLB85).concat(TVLBL85).concat(SFLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2]-(({schrank:1,sideboard:1,sideboardT:1,tv:1,tv65:1,tv85:1,tvled:1,tvled65:1,tvled85:1})[LC[l[0]]]?NY:0),l[3]),cat:LC[l[0]]||'raum'};});
 // Nische: Schrank, Sideboard, Fernseher und TV-LED stehen an der neuen Rückwand (NY weiter hinten)
+// Texturen für Möbel, die bisher nur eine Grundfarbe hatten (Lambert-Farbe wirkt als Tönung auf die helle Textur)
+(function(){try{
+  function pileTex(){var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');g.fillStyle='#d9d9dc';g.fillRect(0,0,128,128);
+    var s=7;function r(){s=(s*16807)%2147483647;return s/2147483647;}
+    for(var i=0;i<2600;i++){var x=r()*128,y=r()*128,a=r();g.fillStyle=a<0.5?'rgba(70,72,78,'+(0.10+r()*0.18)+')':'rgba(255,255,255,'+(0.16+r()*0.22)+')';g.fillRect(x,y,1.4,1.4);}
+    var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(14,14);return t;}   // Kurzflor: feines, meliertes Pünktchen-Gewebe
+  var W1=woodTex(true),W2=woodTex(false),PL=pileTex();
+  var RUGC={tp1:1,tp1l:1,tp2:1,tp3:1};
+  room.children.forEach(function(o){
+    if(!o.isMesh||!o.material||!o.material.color||o.material.map)return;
+    var c=o.userData&&o.userData.cat,h=o.material.color.getHex(),m=null;
+    if(RUGC[c])m=PL;
+    else if(c==='tisch'&&h===0xd9a066)m=W2;                    // Buchen-Tischplatten
+    else if((c==='ctn'||c==='ctb'))m=W2;                       // LACK Eicheneffekt weiß lasiert
+    else if(c==='sideboard'&&(h===0xd8c4a2||h===0xbfab8a))m=W2; // BESTÅ-Korpus
+    else if(c==='schrank'&&(h===0xcbb799||h===0xd9ceb8))m=W1;   // PAX-Korpus
+    if(m){var mt=new THREE.MeshLambertMaterial({map:m,color:h});o.material=mt;}
+  });
+}catch(e){}})();
 room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='schrank'||c==='sideboard'||c==='sideboardT'||c==='tv'||c==='tv65'||c==='tv85'||c==='tvled'||c==='tvled65'||c==='tvled85')o.position.z-=NY;});
 ['schrank','sideboard','sideboardT','tv','tv65','tv85'].forEach(function(k){if(dimG[k])dimG[k].position.z-=NY;});
 // Maßlinien (eingezeichnet)
