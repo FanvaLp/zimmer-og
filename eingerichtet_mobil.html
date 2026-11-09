@@ -112,7 +112,7 @@ footer{grid-column:1/-1;grid-row:2}
 </div>
 <div class="bar" id="cats"><span class="lab">Maße zeigen für:</span></div>
 </div>
-<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Hersteller-Datenblatt: je 12,3 × 12,3 × 11,8 cm; Position), LED-Streifen hinter dem Fernseher (Philips Hue Flux 5 m: Umfang ≈ 4,97 m bei 3,5 cm Abstand zum Rand; Farbe und Lichtschein beispielhaft), Heizkörper-Anschlussrohre (Lage nach Foto geschätzt), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
+<footer><details><summary>Hinweise</summary>* geschätzt: Raumhöhe 2,30 m, Aufteilung des Schreibtischs (1,60 m + 0,80 m), Form der Tischbeine, Sideboard steht auf dem Boden (nicht aufgehängt), Breite des Fernseher-Rückgehäuses (Fernseher 75" steht auf seinen Standfüßen (5 cm), Gesamthöhe 138,8 cm, Lage des Panels auf den Füßen), Maße von Stuhl und Position der Unterlage, Aufbau des Sofas (Récamiere-Breite ≈ 1,02 m, Polster vereinfacht; bei ausgeklapptem Sofa Lage und Höhe der Schlaffläche), Teppiche (Lage und Größe, Ausrichtung des 200-×-300-cm-Teppichs), Lautsprecher (Maße nach Hersteller-Datenblatt: je 12,3 × 12,3 × 11,8 cm; Position), LED-Streifen hinter dem Fernseher (Philips Hue Flux 5 m: Umfang ≈ 4,97 m bei 3,5 cm Abstand zum Rand; Farbe und Lichtschein beispielhaft), Fensternischen-Tiefe (15 cm) und Fensterbänke, Heizkörper-Maße und -Details (nach Foto), Heizkörper-Anschlussrohre (Lage nach Foto geschätzt), Nanoleaf-Hexagons (Muster nach deiner Vorlage, Farben nur beispielhaft, Fugen zwischen den Panels vereinfacht), Couchtisch (Plattendicke 5 cm, Beinquerschnitt 5 cm, Höhe der Ablage; Standort vor dem Sofa bzw. vor dem ausgeklappten Sofa), Fensterhöhen, Verlauf der Diagonale an der Schräge. Wände ohne Wandstärke (Innenmaße). Von außen sind Wände und Decke durchsichtig (Schnittmodell).</details></footer>
 <script src="three.min.js"></script><script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script>
 (function(){
@@ -224,10 +224,21 @@ function frame(pts,mid){
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x4a90c2})));
 }
-var ew=[[W,eWin.u0,eWin.v0],[W,eWin.u1,eWin.v0],[W,eWin.u1,eWin.v1],[W,eWin.u0,eWin.v1]];
-glass(ew);frame(ew,[[W,(eWin.u0+eWin.u1)/2,eWin.v0],[W,(eWin.u0+eWin.u1)/2,eWin.v1]]);
-var sw=[[sWin.u0,D,sWin.v0],[sWin.u1,D,sWin.v0],[sWin.u1,D,sWin.v1],[sWin.u0,D,sWin.v1]];
-glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D,sWin.v0],[(sWin.u0+sWin.u1)/2,D,sWin.v1]]);
+// Fenster sitzen in einer Nische (Laibung, Tiefe geschätzt 15 cm; Fenster und Rahmen am Ende der Nische) + Fensterbank (3 cm Überstand)
+var WD=0.15;
+function reveal(a,b,c,d){addTris([[a,b,c],[a,c,d]],0xf3f1ea,{double:true});}
+function revealBox(p0,p1,p2,p3,dir){ // Laibung: 4 Flächen vom Wandrand bis zur Fensterebene
+  for(var i=0;i<4;i++){var q=[p0,p1,p2,p3][i],r=[p0,p1,p2,p3][(i+1)%4];
+    var qd=dir(q),rd=dir(r);reveal(q,r,rd,qd);}
+}
+var ew0=[[W,eWin.u0,eWin.v0],[W,eWin.u1,eWin.v0],[W,eWin.u1,eWin.v1],[W,eWin.u0,eWin.v1]];
+revealBox(ew0[0],ew0[1],ew0[2],ew0[3],function(p){return [p[0]+WD,p[1],p[2]];});
+var ew=ew0.map(function(p){return [p[0]+WD,p[1],p[2]];});
+glass(ew);frame(ew,[[W+WD,(eWin.u0+eWin.u1)/2,eWin.v0],[W+WD,(eWin.u0+eWin.u1)/2,eWin.v1]]);
+var sw0=[[sWin.u0,D,sWin.v0],[sWin.u1,D,sWin.v0],[sWin.u1,D,sWin.v1],[sWin.u0,D,sWin.v1]];
+revealBox(sw0[0],sw0[1],sw0[2],sw0[3],function(p){return [p[0],p[1]+WD,p[2]];});
+var sw=sw0.map(function(p){return [p[0],p[1]+WD,p[2]];});
+glass(sw);frame(sw,[[(sWin.u0+sWin.u1)/2,D+WD,sWin.v0],[(sWin.u0+sWin.u1)/2,D+WD,sWin.v1]]);
 // Mauervorsprung & Heizkörper
 function box(x0,y0,z0,x1,y1,z1,color){
   var m=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,z1-z0,y1-y0),new THREE.MeshLambertMaterial({color:color}));
@@ -236,7 +247,23 @@ function box(x0,y0,z0,x1,y1,z1,color){
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
-box(W-0.15,YS-1.48+0.24,0.10,W,YS-0.24,0.70,0xffffff); // Heizkörper
+// Fensterbänke (weiß, 3 cm Überstand in den Raum, 2 cm Überstand seitlich)
+box(W-0.03,eWin.u0-0.02,eWin.v0-0.025,W+WD,eWin.u1+0.02,eWin.v0,0xffffff);
+box(sWin.u0-0.02,D-0.03,sWin.v0-0.025,sWin.u1+0.02,D+WD,sWin.v0,0xffffff);
+// Heizkörper (Flachheizkörper mit Rippen-Frontblech nach Foto: ca. 100 × 54 cm, Unterkante 12 cm, Gitter oben, Thermostat rechts)
+(function(){var RX=W-0.15,RU0=YS-1.48+0.24,RU1=YS-0.24,RZ0=0.12,RZ1=0.66;
+  box(RX,RU0,RZ0,W,RU1,RZ1,0xffffff);
+  box(RX+0.02,RU0+0.005,RZ1,W-0.02,RU1-0.005,RZ1+0.006,0xd6d6d0);   // Lüftungsgitter oben
+  var v=[],n=26,ribs=RU1-RU0-0.08;
+  function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
+  for(var i=0;i<=n;i++){var u=RU0+0.04+ribs*i/n;s([RX-0.002,u,RZ0+0.03],[RX-0.002,u,RZ1-0.04]);}   // Rippen der Frontplatte
+  s([RX-0.002,RU0+0.04,RZ0+0.03],[RX-0.002,RU1-0.04,RZ0+0.03]);s([RX-0.002,RU0+0.04,RZ1-0.04],[RX-0.002,RU1-0.04,RZ1-0.04]);
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+  room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xb4b4ac})));
+  var tm=new THREE.MeshLambertMaterial({color:0xf0f0f0});
+  var vb=new THREE.Mesh(new THREE.CylinderGeometry(0.016,0.016,0.05,14),tm);vb.rotation.x=Math.PI/2;vb.position.copy(P(W-0.085,RU1+0.025,RZ1-0.035));room.add(vb);   // Ventilstück
+  var th=new THREE.Mesh(new THREE.CylinderGeometry(0.024,0.024,0.045,18),tm);th.rotation.x=Math.PI/2;th.position.copy(P(W-0.085,RU1+0.072,RZ1-0.035));room.add(th);   // Thermostatkopf
+})();
 // Heizkörper-Anschlussrohre zum Boden (nach Foto geschätzt: rechts am Heizkörper laut Foto, ca. 8 cm Wandabstand)
 [1.87,1.92].forEach(function(py){var pm=new THREE.Mesh(new THREE.CylinderGeometry(0.009,0.009,0.10,10),new THREE.MeshLambertMaterial({color:0xc9ccd0}));pm.position.copy(P(W-0.08,py,0.05));room.add(pm);var rs=new THREE.Mesh(new THREE.CylinderGeometry(0.022,0.022,0.004,16),new THREE.MeshLambertMaterial({color:0xf2f2f2}));rs.position.copy(P(W-0.08,py,0.002));room.add(rs);});
 cat='tisch';
