@@ -290,10 +290,11 @@ box(sWin.u0+0.02,D+0.003,sWin.v1,sWin.u1-0.02,D+0.008,sWin.v1+0.012,0x8d8d85);  
   bx(W-0.017,SY-0.013,0.04,W,SY+0.013,0.27,CW_);               // Kanal senkrecht
   bx(W-0.017,2.06,0.03,W,SY+0.013,0.056,CW_);                  // Kanal an der Fußleiste bis vor den Heizkörper (y ≥ 1,95)
   cy([W-0.012,2.06,0.043],[4.50,2.00,0.006],0.0035,0x202022);  // Kabel über den Boden zum Sofa
-  cy([4.50,2.00,0.006],[4.466,2.00,0.57],0.0025,0x202022);     // Kabel an der Armlehnen-Außenseite hoch
-  bx(4.461,1.992,0.54,4.468,2.008,0.56,0x55555a);              // kleiner Kabelclip
-  cy([4.466,2.00,0.57],[4.40,2.00,0.627],0.0025,0x202022);     // Kabel führt über die Armlehne
-  bx(4.34,1.994,0.620,4.38,2.006,0.628,0x3a3a40);              // Stecker liegt auf der Armlehne
+  cy([4.50,2.00,0.006],[4.463,2.00,0.60],0.0032,0x202022);     // Kabel liegt an der Armlehnen-Außenseite an
+  cy([4.463,2.00,0.60],[4.452,2.00,0.626],0.0032,0x202022);    // über die Kante
+  cy([4.452,2.00,0.626],[4.405,1.95,0.626],0.0032,0x202022);   // liegt auf der Armlehne
+  cy([4.405,1.95,0.626],[4.375,1.86,0.626],0.0032,0x202022);
+  bx(4.368,1.80,0.620,4.382,1.86,0.636,0x3a3a40);              // Stecker liegt auf der Armlehne
   room.add(g);
   var cb=document.getElementById('cableB');
   if(cb)cb.onclick=function(){g.visible=!g.visible;cb.classList.toggle('on',g.visible);};
