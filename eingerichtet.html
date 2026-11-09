@@ -864,7 +864,7 @@ var picTexV=(function(){var c=document.createElement('canvas');c.width=512;c.hei
 var picMat=new THREE.MeshBasicMaterial({map:picTexV,color:0xdddddd});
 scrM.forEach(function(s){s.orig=s.mesh.material;s.arr=[s.orig,s.orig,s.orig,s.orig,picMat,s.orig];});
 function picUpdate(){
-  lmCalc();
+  lmGate();lmCalc();
   var act=nightOn&&picOn&&!hideCats.tv;
   if(act!==picState){picState=act;scrM.forEach(function(s){s.mesh.material=act?s.arr:s.orig;});}
   var s=tvSize,cx=(s==='85')?TVCX85:TVCX,zz=(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2);
@@ -893,10 +893,13 @@ function lmCalc(){
   var pc=function(x){return Math.round(100*x/eTot);},v=Math.round(255*Math.min(0.98,0.28+0.72*L/250));
   picMat.color.setHex((v<<16)|(v<<8)|v);
   var el=document.getElementById('lmInfo');
-  if(el)el.textContent='Am Sofa-Platz (Blick zum TV): ≈ '+eTot.toFixed(0)+' lx · TV '+pc(eTv)+' %, LED-Streifen '+pc(eSt)+' %, Raumreflexion '+pc(eInd)+' %. Lichtstrom bei '+Math.round(LMR*100)+' %: Streifen '+Math.round(fs)+' lm, Sofa-Licht '+Math.round(fb)+' lm, Nanoleaf '+Math.round(fn)+' lm, PC '+Math.round(fpc)+' lm.'+(nightOn?'':' (wirkt im Nachtmodus)');
+  if(el)el.textContent='Am Sofa-Platz (Blick zum TV): ≈ '+eTot.toFixed(0)+' lx · TV '+pc(eTv)+' %, LED-Streifen '+pc(eSt)+' %, Raumreflexion '+pc(eInd)+' %. Lichtstrom bei '+Math.round(LMR*100)+' %: Streifen '+Math.round(fs)+' lm, Sofa-Licht '+Math.round(fb)+' lm, Nanoleaf '+Math.round(fn)+' lm, PC '+Math.round(fpc)+' lm.'+(nightOn?'':' Nur im Nachtmodus wirksam: oben bei Werkzeuge „Nacht“ einschalten.');
   window.__lm={eTv:eTv,eSt:eSt,eInd:eInd,eTot:eTot,fs:fs,fb:fb,fn:fn,I:LMI};
   applyLights();}
-function lmNight(){if(!nightOn)setNight(true);}
+function lmNight(){}
+var lmGateState=null;
+function lmGate(){var n=!!nightOn;if(n===lmGateState)return;lmGateState=n;lmKey='';
+  ['lmD','lmN','lmH','lmR'].forEach(function(id){var e=document.getElementById(id);if(e){e.disabled=!n;var g=e.closest('.grp');if(g){g.style.opacity=n?'':'0.45';}}});}
 function lmSync(){['D','N','H'].forEach(function(k){var b=document.getElementById('lm'+k);if(b)b.classList.toggle('on',LMS===k);});var t=document.getElementById('lmV');if(t)t.textContent=Math.round(LMR*100)+' %';lmKey='';lmCalc();}
 var picB=document.getElementById('picB');picB.onclick=function(){picOn=!picOn;picB.classList.toggle('on',picOn);};
 ['D','N','H'].forEach(function(k){document.getElementById('lm'+k).onclick=function(){LMS=k;lmNight();lmSync();};});
