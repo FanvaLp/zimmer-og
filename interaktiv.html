@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv · Stand v6</title>
+<title>Zimmer Interaktiv · Stand v7</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -86,10 +86,10 @@ footer{grid-column:1/-1;grid-row:3}
 <div class="grp"><span class="lab">Werkzeuge</span><div class="seg"><button id="cmpB" title="Schieberegler: links der leere Raum, rechts eingerichtet. Regler ziehen.">Vorher / Nachher</button><button id="measB" title="Zwei Punkte im Raum anklicken, dann steht der Abstand da. Ein dritter Klick startet neu.">Messen</button></div></div>
 <div class="sec">Licht</div>
 <div class="grp"><span class="lab">Raumlicht</span><div class="seg"><button id="ceilB" class="on" title="Deckenlicht An/Aus (Aus = Raum dunkel, wie bei Nacht)">Deckenlicht</button><button id="nightB" title="Raum dunkel: nur Nanoleaf, TV-LED, Schreibtischlicht (PC und Lautsprecher-LEDs) leuchten, alles einzeln schaltbar">Nacht</button></div></div>
-<div class="grp"><span class="lab">Einzelne Lichter</span><div class="seg"><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Sofa-Licht</button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher Schaltet auch die beiden Monitore (Bildschirme) aus bzw. an.">Schreibtisch &amp; Monitore</button><button id="picB" class="on" title="Nachtmodus: Fernseher zeigt ein simuliertes Testbild und beleuchtet den Raum (nur zur Einschätzung des Lichts, kein echtes Bild)">TV-Bild</button></div></div>
-<div class="grp"><span class="lab">Nanoleaf (Wand)</span><div class="seg"><button id="ledOn" class="on" title="Neun Nanoleaf-Hexagons an der Wand über den Bildschirmen anzeigen">An</button><button id="ledOff" title="Nanoleaf-Hexagons ausblenden">Aus</button></div></div>
+<div class="grp"><span class="lab">Einzelne Lichter</span><div class="seg"><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">TV-LED</button><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Sofa-Licht</button><button id="ledOn" class="on" title="Neun Nanoleaf-Hexagons an der Wand über den Bildschirmen anzeigen">Nanoleaf</button><button id="ledOff" style="display:none" tabindex="-1" aria-hidden="true"></button><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher Schaltet auch die beiden Monitore (Bildschirme) aus bzw. an.">Schreibtisch &amp; Monitore</button><button id="picB" class="on" title="Nachtmodus: Fernseher zeigt ein simuliertes Testbild und beleuchtet den Raum (nur zur Einschätzung des Lichts, kein echtes Bild)">TV-Bild</button></div></div>
+<div class="grp"><span class="lab">Nanoleaf-Helligkeit</span><div style="display:flex;align-items:center;gap:8px;width:100%;max-width:300px"><input id="lmRN" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit der Nanoleaf-Hexagons an der Wand" style="flex:1 1 auto;min-width:120px;margin:0;accent-color:var(--accent,#1f4e8c)"><span id="lmVN" style="min-width:42px;font-size:13px">50 %</span></div></div>
 <div class="grp"><span class="lab">Bildhelligkeit</span><div class="seg"><button id="lmD" title="Dunkle Filmszene: ca. 30 cd/m² mittlere Bildhelligkeit">Dunkle Szene</button><button id="lmN" class="on" title="Normale Szene: ca. 100 cd/m² mittlere Bildhelligkeit">Normal</button><button id="lmH" title="Helle Szene (z. B. Sport): ca. 250 cd/m² mittlere Bildhelligkeit">Helle Szene</button></div></div>
-<div class="grp"><span class="lab">LED-Licht</span><div style="display:flex;align-items:center;gap:8px;width:100%;max-width:300px"><input id="lmR" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit LED-Streifen hinter dem Fernseher, Sofa-Licht und Nanoleaf" style="flex:1 1 auto;min-width:120px;margin:0;accent-color:var(--accent,#1f4e8c)"><span id="lmV" style="min-width:42px;font-size:13px">50 %</span></div></div>
+<div class="grp"><span class="lab">LED-Streifen &amp; Sofa-Licht</span><div style="display:flex;align-items:center;gap:8px;width:100%;max-width:300px"><input id="lmR" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit LED-Streifen hinter dem Fernseher, Sofa-Licht und Nanoleaf" style="flex:1 1 auto;min-width:120px;margin:0;accent-color:var(--accent,#1f4e8c)"><span id="lmV" style="min-width:42px;font-size:13px">50 %</span></div></div>
 <div id="lmInfo" style="font-size:11px;line-height:1.4;color:var(--muted,#666);margin:-2px 0 2px"></div>
 <details style="font-size:11px;line-height:1.4;color:var(--muted,#666);margin:0 0 6px"><summary style="cursor:pointer">Annahmen der Lichtberechnung</summary>Mittlere Bildhelligkeit 30 / 100 / 250 cd/m² (für den Samsung M70H habe ich keine Messwerte gefunden, typischer Wert). Hue Flux 5 m: 2000 lm (≈ 400 lm/m), Hue Play Bar: 490 lm je Stück, Nanoleaf: ca. 100 lm je Panel (Herstellerangaben bzw. Tests, jeweils weiß bei voller Helligkeit). Farbiges Licht nach Helligkeitsanteil der Farbe (Pink 30 %, Orange 48 %, Violett 21 %). PC-RGB-Licht: ca. 28 lm (rot, geschätzt, nicht regelbar). Wand 60 % reflektierend, 80 % des LED-Lichts treffen die Wand, Raum im Mittel 40 % bei ca. 90 m² Fläche. Lux sind gerechnet (Fläche senkrecht zum TV am mittleren Sofa-Platz, Augenhöhe 1,25 m), nicht gemessen; die Darstellung am Bildschirm ist skaliert.</details>
 <div class="sec">Möbel</div>
@@ -1028,7 +1028,7 @@ function setBed(on){bedOn=on;if(on&&window.lidClose)lidClose();var pg_=document.
 bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
 var ledOn=true,ledB1=document.getElementById('ledOn'),ledB0=document.getElementById('ledOff');
 function setLed(on){ledOn=on;syncM();applyLights();ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
-ledB1.onclick=function(){setLed(true);};ledB0.onclick=function(){setLed(false);};
+ledB1.onclick=function(){setLed(!ledOn);};ledB0.onclick=function(){setLed(false);};
 var slopeOn=true,slB1=document.getElementById('slopeOn'),slB0=document.getElementById('slopeOff');
 function setSlope(on){slopeOn=on;slopeObjs.forEach(function(o){o.visible=on;});slB1.classList.toggle('on',on);slB0.classList.toggle('on',!on);}
 slB1.onclick=function(){setSlope(true);};slB0.onclick=function(){setSlope(false);};
@@ -1119,20 +1119,20 @@ function picUpdate(){
   var s=tvSize,cx=(s==='85')?TVCX85:TVCX,zz=(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2);
   picLight.position.copy(P(cx,TVF+0.35-NY,zz+sbDz));picLight.intensity=act?LMI.pic:0;
   if(nightOn){   // sichtbares Leuchten der LEDs folgt dem Regler
-    var hk=0.2+0.8*LMR,nf=0.25+0.75*Math.min(1,LMR/0.5);
+    var hk=0.2+0.8*LMR,nf=0.25+0.75*Math.min(1,LMRN/0.5);
     [tvHalo,tvHalo65,tvHalo85].forEach(function(h){if(h)h.material.opacity=hk;});sofaHalos.forEach(function(h){h.material.opacity=hk;});
     if(!window.__ledM)window.__ledM=room.children.filter(function(o){return o.userData&&o.userData.cat==='led'&&o.isMesh&&o.material&&o.material.color&&o.material.color.clone;}).map(function(o){return {o:o,c:o.material.color.clone()};});
     window.__ledM.forEach(function(m){m.o.material.color.copy(m.c).multiplyScalar(nf);});
   }else if(window.__ledM){window.__ledM.forEach(function(m){m.o.material.color.copy(m.c);});}}
 /* Lichtberechnung (Nachtlicht): Leuchtdichte/Lichtstrom -> Beleuchtungsstärke am Sofa-Platz; Darstellung skaliert mit der Lichtstärke (cd) der Quellen */
 [nlLight,tvLight,slLight].forEach(function(l){l.distance=4.6;l.decay=1.1;});   // gleiches Abklingverhalten für alle Lichter
-var LMS='N',LMR=0.5,LMN={D:30,N:100,H:250},LMY={tv:0.297,nl:0.207,sl:0.476},LMI={tv:0.25,nl:0.17,sl:0.2,pic:0.9,pc:0.45},lmKey='';
+var LMS='N',LMR=0.5,LMRN=0.5,LMN={D:30,N:100,H:250},LMY={tv:0.297,nl:0.207,sl:0.476},LMI={tv:0.25,nl:0.17,sl:0.2,pic:0.9,pc:0.45},lmKey='';
 function lmCalc(){
-  var key=[tvSize,sbDz,LMS,LMR].join();if(key===lmKey)return;lmKey=key;rzInfo();
+  var key=[tvSize,sbDz,LMS,LMR,LMRN].join();if(key===lmKey)return;lmKey=key;rzInfo();
   var s=tvSize,Wt=(s==='65')?TV65.W:(s==='85')?TV85.W:TVW,Ht=(s==='65')?TV65.H:(s==='85')?TV85.H:TVH,cx=(s==='85')?TVCX85:TVCX,zc=((s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2))+sbDz;
   var L=LMN[LMS],A=Wt*Ht,ys=TVF-NY,yw=-NY,ex=3.04,ey=2.69,ez=1.25,PI=Math.PI,RHO=0.6,ETA=0.8,RM=0.4,SURF=90,i,j,px,pz,dx,dy,dz,d2;
   var eTv=0;for(i=0;i<8;i++)for(j=0;j<5;j++){px=cx-Wt/2+(i+.5)*Wt/8;pz=zc-Ht/2+(j+.5)*Ht/5;dx=ex-px;dy=ey-ys;dz=ez-pz;d2=dx*dx+dy*dy+dz*dz;eTv+=L*(A/40)*dy*dy/(d2*d2);}
-  var Ls=2*((Wt-0.07)+(Ht-0.07)),fs=400*Ls*LMR*LMY.tv,fn=9*100*LMR*LMY.nl,fb=2*490*LMR*LMY.sl;
+  var Ls=2*((Wt-0.07)+(Ht-0.07)),fs=400*Ls*LMR*LMY.tv,fn=9*100*LMRN*LMY.nl,fb=2*490*LMR*LMY.sl;
   var Ow=Wt+0.30,Oh=Ht+0.30,Ar=Ow*Oh-A,cells=[];
   for(i=0;i<10;i++)for(j=0;j<7;j++){px=cx-Ow/2+(i+.5)*Ow/10;pz=zc-Oh/2+(j+.5)*Oh/7;if(Math.abs(px-cx)<Wt/2&&Math.abs(pz-zc)<Ht/2)continue;cells.push([px,pz]);}
   var Lw=RHO*ETA*fs/(PI*Ar),eSt=0;
@@ -1148,11 +1148,11 @@ function lmCalc(){
 function lmNight(){}
 var lmGateState=null;
 function lmGate(){var n=!!nightOn;if(n===lmGateState)return;lmGateState=n;lmKey='';
-  ['lmD','lmN','lmH','lmR'].forEach(function(id){var e=document.getElementById(id);if(e){e.disabled=!n;var g=e.closest('.grp');if(g){g.style.opacity=n?'':'0.45';}}});}
-function lmSync(){['D','N','H'].forEach(function(k){var b=document.getElementById('lm'+k);if(b)b.classList.toggle('on',LMS===k);});var t=document.getElementById('lmV');if(t)t.textContent=Math.round(LMR*100)+' %';lmKey='';lmCalc();}
+  ['lmD','lmN','lmH','lmR','lmRN'].forEach(function(id){var e=document.getElementById(id);if(e){e.disabled=!n;var g=e.closest('.grp');if(g){g.style.opacity=n?'':'0.45';}}});}
+function lmSync(){['D','N','H'].forEach(function(k){var b=document.getElementById('lm'+k);if(b)b.classList.toggle('on',LMS===k);});var t=document.getElementById('lmV');if(t)t.textContent=Math.round(LMR*100)+' %';var tn=document.getElementById('lmVN');if(tn)tn.textContent=Math.round(LMRN*100)+' %';lmKey='';lmCalc();}
 var picB=document.getElementById('picB');picB.onclick=function(){picOn=!picOn;picB.classList.toggle('on',picOn);};
 ['D','N','H'].forEach(function(k){document.getElementById('lm'+k).onclick=function(){LMS=k;lmNight();lmSync();};});
-var lmR=document.getElementById('lmR');lmR.oninput=function(){LMR=lmR.value/100;lmNight();lmSync();};
+var lmR=document.getElementById('lmR');lmR.oninput=function(){LMR=lmR.value/100;lmNight();lmSync();};var lmRN=document.getElementById('lmRN');lmRN.oninput=function(){LMRN=lmRN.value/100;lmNight();lmSync();};
 nightB.addEventListener('click',function(){lmKey='';});
 lmSync();
 function applyLights(){if(!nlLight||!tvLight)return;nlLight.intensity=(nightOn&&ledOn)?LMI.nl:0;tvLight.intensity=(nightOn&&tvLedOn&&!hideCats.tvled)?LMI.tv:0;pcLight.intensity=(nightOn&&pcLedOn)?LMI.pc:0;slLight.intensity=(nightOn&&sofaLedOn&&!hideCats.sofaled)?LMI.sl:0;}
