@@ -674,16 +674,17 @@ var showLbl=true;
 var az=0.75,el=0.42,dist=10.5,tgt=center.clone(),fov=40;
 var views={v1:[0.75,0.42,10.5,40],v2:[0.0,1.50,9.0,40],v3:[-1.571,0.18,11.5,40],v4:[-2.356,0.222,3.41,81,[2.6,2.6,0.9]],v5:[Math.PI/2,0.04,6.0,40,[0,2.40,1.15]],v6:[-0.448,0.105,3.252,55,[3.631,-0.225,0.91]],v7:[-0.200,0.114,2.994,55,[3.631,-0.225,0.91]],v8:[0.075,0.116,2.943,55,[3.631,-0.225,0.91]]};
 var viewsBed={v6:[-0.592,-0.058,2.747,55,[3.631,-0.225,0.91]],v7:[-0.254,-0.069,2.356,55,[3.631,-0.225,0.91]],v8:[0.161,-0.070,2.310,55,[3.631,-0.225,0.91]]};   // Bett ausgeklappt: liegend/angelehnt, Augenhöhe 0,75 m, Kopf am linken Ende / Mitte / rechten Ende der Schlaffläche
+function fitV5(){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);dist=4.35;cam.fov=Math.max(36,Math.min(125,2*Math.atan(0.535/asp)*180/Math.PI));cam.updateProjectionMatrix();}
 function setView(k){var v=(bedOn&&viewsBed[k])||views[k];az=v[0];el=v[1];dist=v[2];cam.fov=v[3];cam.updateProjectionMatrix();tgt=v[4]?P(v[4][0],v[4][1],v[4][2]):center.clone();
   if(k==='v4'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(75,Math.min(125,2*Math.atan(Math.tan(0.9425)/asp)*180/Math.PI));cam.updateProjectionMatrix();}
   if(k==='v6'||k==='v7'||k==='v8'){var asp6=stage.clientWidth/Math.max(1,stage.clientHeight);cam.fov=Math.max(40,Math.min(125,2*Math.atan(Math.tan(0.96)/asp6)*180/Math.PI));cam.updateProjectionMatrix();}
-  if(k==='v5'){var asp=stage.clientWidth/Math.max(1,stage.clientHeight);dist=Math.max(6,Math.min(25,6.04/asp));}
+  if(k==='v5'){fitV5();}
   ['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(i){document.getElementById(i).classList.toggle('on',i===k);});}
 function place(){
   cam.position.set(tgt.x+dist*Math.cos(el)*Math.sin(az),tgt.y+dist*Math.sin(el),tgt.z+dist*Math.cos(el)*Math.cos(az));
   cam.up.set(0,1,0);cam.lookAt(tgt);
 }
-function resize(){var w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;if(typeof lastView!=='undefined'&&/^v[678]$/.test(lastView))cam.fov=Math.max(40,Math.min(125,2*Math.atan(Math.tan(0.96)/cam.aspect)*180/Math.PI));cam.updateProjectionMatrix();}
+function resize(){var w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;if(typeof lastView!=='undefined'&&lastView==='v5')fitV5();if(typeof lastView!=='undefined'&&/^v[678]$/.test(lastView))cam.fov=Math.max(40,Math.min(125,2*Math.atan(Math.tan(0.96)/cam.aspect)*180/Math.PI));cam.updateProjectionMatrix();}
 window.addEventListener('resize',resize);
 // Steuerung
 var ptrs={},lastPinch=0;
