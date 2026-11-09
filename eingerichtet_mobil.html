@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet Mobil · Stand v8</title>
+<title>Zimmer Eingerichtet Mobil · Stand v9</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -89,7 +89,7 @@ footer{grid-column:1/-1;grid-row:2}
 <div id="legend"><div><i style="background:#f4a261"></i>unter 1,50 m</div><div><i style="background:#ffe08a"></i>1,50 – 2,00 m</div><div><i style="background:#cfe8c0"></i>2,00 – 2,30 m</div></div></div>
 <div id="ctl"><div class="panel">
 <div class="sec">Ansicht</div>
-<div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt oder angeklickt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen">Nichts zeigen</button></div></div>
+<div class="grp hv hvg"><span class="lab">Beim Überfahren</span><div class="seg"><button id="hvOn" class="on" title="Maße erscheinen, sobald du mit der Maus über ein Möbelstück fährst">Maße zeigen</button><button id="hvOff" title="Beim Überfahren erscheint nichts. Maße, die du unten gewählt hast (z. B. Raum), bleiben sichtbar – zum Ausblenden unten „Keine“ wählen. Anklicken von Möbeln oder blauen Kreisen hält dann keine Maße fest">Nichts zeigen</button></div></div>
 <div class="grp"><span class="lab">Ansicht</span><div class="seg"><button id="v1" class="on">Übersicht</button><button id="v2">Draufsicht</button><button id="v3">Schräge im Profil</button><button id="v4">Von der Tür</button><button id="v5" title="Blick gerade auf die Schreibtischwand, Dachschräge wird ausgeblendet">Schreibtischwand</button><button id="tz">Kopfhöhen-Zonen</button></div></div>
 <div class="grp"><span class="lab">Blick vom Sofa</span><div class="seg"><button id="v6" title="Sitzend auf dem linken Platz (Richtung PC), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett (Haltung wählbar): liegend, Kopf am linken Ende">Links</button><button id="v7" title="Sitzend auf dem mittleren Platz, Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett (Haltung wählbar): liegend, in der Mitte">Mitte</button><button id="v8" title="Sitzend auf der Récamiere (L-Stück), Augenhöhe 1,25 m, Blick auf den Fernseher. Bei ausgeklapptem Bett (Haltung wählbar): liegend, Kopf am rechten Ende">L-Stück</button></div></div>
 <div class="grp"><span class="lab">Blickwinkel</span><div class="seg"><button id="fovW" class="on" title="Weitwinkel ca. 110° horizontal: viel Raum im Bild, der Fernseher wirkt kleiner als in echt (Sofa-Ansichten und Von der Tür)">Weitwinkel</button><button id="fovC" title="Eng ca. 90° horizontal: Fernseher füllt etwa 30 % der Bildbreite, die Ränder werden abgeschnitten (Sofa-Ansichten und Von der Tür)">Eng 90°</button><button id="fovN" title="Echtmaß: Blickwinkel aus Bildschirmgröße und Sitzabstand berechnet, der Fernseher erscheint so groß wie in echt (Sofa-Ansichten und Von der Tür)">Echtmaß</button></div></div>
@@ -1098,9 +1098,10 @@ function pick(e){var r=canvas.getBoundingClientRect();mv.set(((e.clientX-r.left)
   return null;}
 canvas.addEventListener('pointermove',function(e){if(Object.keys(ptrs).length)return;if(e.pointerType==='touch'||!hoverOn||measureOn||cmpOn)return;var k=pick(e);hoverCat=k;canvas.style.cursor=k?'pointer':'grab';});
 canvas.addEventListener('pointerleave',function(){hoverCat=null;});
+function hotFront(){function va(o){while(o){if(!o.visible)return false;o=o.parent;}return true;}var hits=ray.intersectObjects(room.children,true);for(var i=0;i<hits.length;i++){var o=hits[i].object;if(!o.isMesh||!va(o))continue;if(o.userData&&o.userData.hot)return true;if(o.userData&&o.userData.noPick)continue;return false;}return false;}
 canvas.addEventListener('pointerdown',function(e){downXY=[e.clientX,e.clientY];});
 canvas.addEventListener('pointerup',function(e){
-  if(downXY&&Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])<6){if(!measureOn&&!cmpOn){var k=pick(e);if(k){pinned[k]=!pinned[k];sync();}}}
+  if(downXY&&Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])<6){if(!measureOn&&!cmpOn&&hoverOn){var k=pick(e);if(k&&!hotFront()){pinned[k]=!pinned[k];sync();}}}
   downXY=null;if(e.pointerType==='touch')hoverCat=null;});
 (function(){var hd=null;function va(o){while(o){if(!o.visible)return false;o=o.parent;}return true;}
 canvas.addEventListener('pointerdown',function(e){hd=[e.clientX,e.clientY];});
