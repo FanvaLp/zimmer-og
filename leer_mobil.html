@@ -192,6 +192,28 @@ box(W-0.03,eWin.u0-0.02,eWin.v0-0.025,W+WD,eWin.u1+0.02,eWin.v0,0xffffff);
 box(sWin.u0-0.02,D-0.03,sWin.v0-0.025,sWin.u1+0.02,D+WD,sWin.v0,0xffffff);
 box(sWin.u0,D+0.01,sWin.v1-RK,sWin.u1,D+WD,sWin.v1,0xf3f1ea);   // Rollladenkasten
 box(sWin.u0+0.02,D+0.005,sWin.v1-RK-0.012,sWin.u1-0.02,D+0.012,sWin.v1-RK,0x8d8d85);   // Kastenunterkante / Rollladenschlitz
+// Gardinen nach Handyfotos: dunkelgrau mit hellgrauen Querstreifen, Unterkante knapp unter der Fensterbank, an Stange über dem Fenster
+(function(){
+  var CB=0x5e5d62,CL=0xa9a8ae;
+  function cur(x0,x1,y0,y1,z0,z1){
+    box(x0,y0,z0,x1,y1,z1,CB);
+    for(var z=z1-0.30;z>z0+0.08;z-=0.34)box(x0-0.003,y0,z-0.045,x1+0.003,y1,z+0.045,CL);   // helle Querstreifen
+    box(x0-0.003,y0,z0,x1+0.003,y1,z0+0.05,0x4a494e);                                      // dunkler Saum
+    var v=[],n=Math.max(3,Math.round((y1-y0)/0.05));function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
+    for(var i=1;i<n;i++){var u=y0+(y1-y0)*i/n;s([x0-0.004,u,z0],[x0-0.004,u,z1]);}
+    var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+    room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x44434a})));
+  }
+  // Großes Fenster (Fensterwand): links und rechts, Stange 2,12 m
+  var gx0=W-0.07,gx1=W-0.02,gz0=0.80;
+  cur(gx0,gx1,eWin.u0-0.42,eWin.u0+0.06,gz0,2.10);
+  cur(gx0,gx1,eWin.u1-0.06,eWin.u1+0.30,gz0,2.02);
+  var rm=new THREE.MeshLambertMaterial({color:0x4a4a4a});
+  var r1=new THREE.Mesh(new THREE.CylinderGeometry(0.01,0.01,(eWin.u1+0.36)-(eWin.u0-0.46),10),rm);r1.rotation.x=Math.PI/2;r1.position.copy(P(W-0.085,((eWin.u1+0.36)+(eWin.u0-0.46))/2,2.12));room.add(r1);
+  // Kleines Fenster (Schrägenwand): Vorhang nur auf der Seite zur Schreibtischwand (laut Foto), Stange 1,97 m
+  cur(0.00,0.29,D-0.07,D-0.02,0.85,1.95);
+  var r2=new THREE.Mesh(new THREE.CylinderGeometry(0.01,0.01,0.34,10),rm);r2.rotation.z=Math.PI/2;r2.position.copy(P(0.17,D-0.085,1.97));room.add(r2);
+})();
 // Heizkörper (Flachheizkörper mit Rippen-Frontblech nach Foto: ca. 100 × 54 cm, Unterkante 12 cm, Gitter oben, Thermostat rechts)
 (function(){var RX=W-0.15,RU0=YS-1.48+0.24,RU1=YS-0.24,RZ0=0.12,RZ1=0.66;
   box(RX,RU0,RZ0,W,RU1,RZ1,0xffffff);
