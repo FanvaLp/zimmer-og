@@ -385,10 +385,12 @@ var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxH
   var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
   var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(-sd*(dw-0.02),1.0,0.021);g.add(hm);paxG.push(hm);   // BILLSBRO 120 mm: je Tür ein schwarzer Griff an der Mittelfuge
   room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
-var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});}
+var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=a>0.7;}
 (function(){var b=document.getElementById('paxB');if(!b)return;
   window.paxToggle=function(){var on=paxAng<0.1;tw('pax',function(){return paxAng;},paxSet,on?1.5708:0,700);b.classList.toggle('on',on);};b.onclick=paxToggle;
-  hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});})();
+  hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});
+  window.hotPax=hotMk(room,0,0,0,function(){paxToggle();});hotPax.position.copy(P(PX0+PW/2,PDK-0.005,0.36));hotPax.visible=false;   // Schließen-Punkt im geöffneten Schrank
+})();
 cat='sideboard';
 // Sideboard (IKEA BESTÅ, 180 x 42 x 38 cm) direkt neben dem Schrank, auf dem Boden
 var SB0=PX0+PW+(W-(PX0+PW)-1.80)/2,SBW=1.80,SBD=0.42,SBH=0.38;
@@ -408,11 +410,12 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     var dw=SBW/3-0.002,g=new THREE.Group();g.position.copy(P(SB0+SBW*i/3-0.001,SBD-0.01,0));
     var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,SBH-0.004,0.02),sdm);dm.position.set(-dw/2,SBH/2,0);g.add(dm);
     room.add(g);sbDoors.push(g);});
-  window.sbAng=0;window.sbSet=function(a){sbAng=a;sbDoors.forEach(function(g){g.rotation.y=a;});};
+  window.sbAng=0;window.sbSet=function(a){sbAng=a;sbDoors.forEach(function(g){g.rotation.y=a;});if(window.hotSb)hotSb.visible=a>0.7;};
   var b=document.getElementById('sbB');
   window.sbToggle=function(){if(typeof sbV!=='undefined'&&sbV==='T')return;var on=sbAng<0.1;tw('sb',function(){return sbAng;},sbSet,on?1.75:0,700);if(b)b.classList.toggle('on',on);};
   if(b)b.onclick=sbToggle;
   hotMk(sbDoors[1],-SBW/6,SBH/2-0.02,0.03,function(){sbToggle();});
+  window.hotSb=hotMk(room,0,0,0,function(){sbToggle();});hotSb.position.copy(P(SB0+SBW/6,SBD-0.07,0.285));hotSb.visible=false;   // Schließen-Punkt im geöffneten Sideboard
 })();
 cat='sideboardT';
 // Sideboard-Alternative IKEA TONSTAD (178,4 x 37,2 x 54,9 cm, Eichenfurnier, zwei Schiebetüren), mittig unter dem Fernseher
@@ -558,11 +561,13 @@ var tws={};function tw(key,get,set,to,ms){var tk=(tws[key]=(tws[key]||0)+1),f=ge
 // Récamiere-Deckel: Scharnier an der Hinterkante (Oberkante), öffnet ca. 80°
 var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.45);g.position.copy(pv);room.add(g);
   [lidM,lidE].forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
-var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;}
+var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=a>0.5;}
 window.lidClose=function(){var b=document.getElementById('lidB');tw('lid',function(){return lidAng;},lidSet,0,300);if(b)b.classList.remove('on');};
 (function(){var b=document.getElementById('lidB');if(!b)return;
   window.lidToggle=function(){if(bedOn){return;}var on=lidAng<0.1;tw('lid',function(){return lidAng;},lidSet,on?1.4:0,650);b.classList.toggle('on',on);};b.onclick=lidToggle;
-  hotMk(lidG,0,0.012,-0.455,function(){lidToggle();});})();
+  hotMk(lidG,0,0.012,-0.455,function(){lidToggle();});
+  window.hotLid=hotMk(room,0,0,0,function(){lidToggle();});hotLid.position.copy(P(SX0+(284-50.75)/100,D-SGAP-1.475,0.32));hotLid.visible=false;   // Schließen-Punkt im geöffneten Stauraum
+})();
 (function(){   // Maßlinien Sofa
   var v=[],yb=D-SGAP,ZC=K+(H-K)/SD*SGAP;
   function s(p,q){v.push.apply(v,P.apply(null,p).toArray());v.push.apply(v,P.apply(null,q).toArray());}
