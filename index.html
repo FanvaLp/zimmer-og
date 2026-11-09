@@ -66,6 +66,7 @@ footer{margin-top:28px;color:var(--muted);font-size:13px}
 <footer>Die 3D-Ansichten laden die Bibliothek three.js aus dem Internet, eine Verbindung wird also benötigt. Einige Maße (Raumhöhe, Aufteilung des Schreibtischs, Stuhl) sind geschätzt und in den Ansichten unter „Hinweise“ vermerkt.</footer>
 </main>
 <script>
+try{sessionStorage.removeItem('ekpw');}catch(e){}   // Einkaufsliste wieder sperren
 // Passende Gruppe für das Gerät hervorheben
 (function(){
   var touch=matchMedia('(hover:none) and (pointer:coarse)').matches||window.innerWidth<700;
