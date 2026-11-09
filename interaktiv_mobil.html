@@ -385,7 +385,7 @@ var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxH
 [-1,1].forEach(function(sd){   // sd=-1: linke Tür (Scharnier links), 1: rechte Tür
   var dw=PW/2-0.001,g=new THREE.Group();g.position.copy(P(sd<0?PX0:PX0+PW,PD-0.012,0));
   var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
-  if(sd<0){var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(dw-0.02,1.0,0.021);g.add(hm);paxG.push(hm);}   // ein schwarzer Griff an der Mittelfuge (Planer-Bild)
+  var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(-sd*(dw-0.02),1.0,0.021);g.add(hm);paxG.push(hm);   // BILLSBRO 120 mm: je Tür ein schwarzer Griff an der Mittelfuge
   room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
 var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-Math.min(a,1.45):a;});}
 (function(){var b=document.getElementById('paxB');if(!b)return;
