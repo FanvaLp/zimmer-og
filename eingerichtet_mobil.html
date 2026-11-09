@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet Mobil · Stand v20</title>
+<title>Zimmer Eingerichtet Mobil · Stand v21</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -577,9 +577,9 @@ cat='sofa';
 // Decke über dem Sofa: 0,62 m + 0,884 * Abstand zur Schrägenwand -> 88 cm Rücken braucht mind. 29,4 cm Abstand, gewählt 35 cm.
 var backObjs=[],SGAP=0.85,SX0=1.62,SWD=2.84,LEGC=0xdcb98a;
 // Stoff "Tallmyra mittelgrau": mittelgraues, fein gerippt-meliertes Gewebe (Textur aus Pünktchen + Rippen)
-var fabTex=(function(){var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');g.fillStyle='#777a7f';g.fillRect(0,0,128,128);for(var rb=0;rb<128;rb+=4){g.fillStyle='rgba(30,32,36,0.09)';g.fillRect(rb,0,1.5,128);}for(var rh=0;rh<128;rh+=4){g.fillStyle='rgba(30,32,36,0.06)';g.fillRect(0,rh,128,1.2);}
+var fabTex=(function(){var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');g.fillStyle='#777a7f';g.fillRect(0,0,128,128);for(var rb=0;rb<128;rb+=4){g.fillStyle='rgba(30,32,36,0.035)';g.fillRect(rb,0,1.5,128);}for(var rh=0;rh<128;rh+=4){g.fillStyle='rgba(30,32,36,0.025)';g.fillRect(0,rh,128,1.2);}
   var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
-  for(var i=0;i<3600;i++){g.fillStyle=rnd()<0.5?'rgba(38,40,44,0.13)':'rgba(236,237,239,0.12)';g.fillRect(rnd()*128,rnd()*128,1.3,1.0+rnd()*0.6);}
+  for(var i=0;i<3600;i++){g.fillStyle=rnd()<0.5?'rgba(38,40,44,0.05)':'rgba(236,237,239,0.05)';g.fillRect(rnd()*128,rnd()*128,1.3,1.0+rnd()*0.6);}
   var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;})();
 function fabMat(rep,tint){var t=fabTex.clone();t.needsUpdate=true;t.repeat.set(rep,rep);return new THREE.MeshLambertMaterial({map:t,color:tint});}
 // abgerundete Polster: Box mit Rundung (Radius r), Normalen exakt berechnet; bei Fehler bleibt die normale Box
