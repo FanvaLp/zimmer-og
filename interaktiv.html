@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv · Stand v9</title>
+<title>Zimmer Interaktiv · Stand v10</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -404,11 +404,16 @@ var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxH
   var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
   var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(-sd*(dw-0.02),1.0,0.021);g.add(hm);paxG.push(hm);   // BILLSBRO 120 mm: je Tür ein schwarzer Griff an der Mittelfuge
   room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
-var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=a>0.7;}
+var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=a>0.7;if(window.zPax)zPax.forEach(function(z){z.visible=a>0.7;});}
 (function(){var b=document.getElementById('paxB');if(!b)return;
   window.paxToggle=function(){var on=paxAng<0.1;tw('pax',function(){return paxAng;},paxSet,on?1.5708:0,700);b.classList.toggle('on',on);};b.onclick=paxToggle;
   hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});
   window.hotPax=hotMk(room,0,0,0,function(){paxToggle();});hotPax.position.copy(P(PX0+PW/2,PDK-0.005,0.36));hotPax.visible=false;   // Schließen-Punkt im geöffneten Schrank
+  /* unsichtbare Klickflächen: bei geöffnetem Schrank schließt ein Klick auf Türen oder Innenraum (nur aktiv, solange offen) */
+  window.zoneMk=function(par,w,h,d,x,y,z,fn,arr){if(!window.zoneMat)window.zoneMat=new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide});var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),window.zoneMat);m.position.set(x,y,z);m.userData.noPick=true;m.userData.hot=fn;m.visible=false;par.add(m);arr.push(m);return m;};
+  window.zPax=[];var paxClose=function(){if(paxAng>0.3)paxToggle();};
+  paxDoors.forEach(function(d){var dw=PW/2-0.001;zoneMk(d.g,dw,PH-0.05,0.05,-d.sd*dw/2,(PH-0.05)/2+0.045,0,paxClose,zPax);});
+  var zpb=zoneMk(room,PW-0.02,PH,PD-0.03,0,0,0,paxClose,zPax);zpb.position.copy(P(PX0+PW/2,(PD-0.03)/2,PH/2));
 })();
 cat='sideboard';
 // Sideboard (IKEA BESTÅ, 180 x 42 x 38 cm) direkt neben dem Schrank, auf dem Boden
@@ -429,12 +434,15 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     var dw=SBW/3-0.002,g=new THREE.Group();g.position.copy(P(SB0+SBW*i/3-0.001,SBD-0.01,0));
     var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,SBH-0.004,0.02),sdm);dm.position.set(-dw/2,SBH/2,0);g.add(dm);
     room.add(g);sbDoors.push(g);});
-  window.sbAng=0;window.sbSet=function(a){sbAng=a;sbDoors.forEach(function(g){g.rotation.y=a;});if(window.hotSb)hotSb.visible=a>0.7;};
+  window.sbAng=0;window.sbSet=function(a){sbAng=a;sbDoors.forEach(function(g){g.rotation.y=a;});if(window.hotSb)hotSb.visible=a>0.7;if(window.zSb)zSb.forEach(function(z){z.visible=a>0.7;});};
   var b=document.getElementById('sbB');
   window.sbToggle=function(){if(typeof sbV!=='undefined'&&sbV==='T')return;var on=sbAng<0.1;tw('sb',function(){return sbAng;},sbSet,on?1.75:0,700);if(b)b.classList.toggle('on',on);};
   if(b)b.onclick=sbToggle;
   hotMk(sbDoors[1],-SBW/6,SBH/2-0.02,0.03,function(){sbToggle();});
   window.hotSb=hotMk(room,0,0,0,function(){sbToggle();});hotSb.position.copy(P(SB0+SBW/6,SBD-0.07,0.285));hotSb.visible=false;   // Schließen-Punkt im geöffneten Sideboard
+  window.zSb=[];var sbClose=function(){if(sbAng>0.3)sbToggle();};
+  sbDoors.forEach(function(g){var dw=SBW/3-0.002;zoneMk(g,dw,SBH-0.004,0.05,-dw/2,SBH/2,0,sbClose,zSb);});
+  var zsb=zoneMk(room,SBW-0.02,SBH,SBD-0.02,0,0,0,sbClose,zSb);zsb.position.copy(P(SB0+SBW/2,SBD/2,SBH/2));
 })();
 cat='sideboardT';
 // Sideboard-Alternative IKEA TONSTAD (178,4 x 37,2 x 54,9 cm, Eichenfurnier, zwei Schiebetüren), mittig unter dem Fernseher
@@ -581,12 +589,16 @@ var tws={};function tw(key,get,set,to,ms){var tk=(tws[key]=(tws[key]||0)+1),f=ge
 // Récamiere-Deckel: Scharnier an der Hinterkante (Oberkante), öffnet ca. 80°
 var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.30);g.position.copy(pv);room.add(g);
   [lidM,lidE].forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
-var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=a>0.5;}
+var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=a>0.5;if(window.zLid)zLid.forEach(function(z){z.visible=a>0.5;});}
 window.lidClose=function(){var b=document.getElementById('lidB');tw('lid',function(){return lidAng;},lidSet,0,300);if(b)b.classList.remove('on');};
 (function(){var b=document.getElementById('lidB');if(!b)return;
   window.lidToggle=function(){if(bedOn){return;}var on=lidAng<0.1;tw('lid',function(){return lidAng;},lidSet,on?1.6:0,650);b.classList.toggle('on',on);};b.onclick=lidToggle;
   hotMk(lidG,0,0.162,-0.455,function(){lidToggle();});
   window.hotLid=hotMk(room,0,0,0,function(){lidToggle();});hotLid.position.copy(P(SX0+(284-50.75)/100,D-SGAP-1.475,0.32));hotLid.visible=false;   // Schließen-Punkt im geöffneten Stauraum
+  window.zLid=[];var lidClose2=function(){if(lidAng>0.3)lidToggle();};
+  lidM.geometry.computeBoundingBox();var lbs=lidM.geometry.boundingBox.getSize(new THREE.Vector3());
+  var zl=zoneMk(lidG,lbs.x,lbs.y+0.04,lbs.z,0,0,0,lidClose2,zLid);zl.position.copy(lidM.position);
+  var zlb=zoneMk(room,1.015,0.30,0.91,0,0,0,lidClose2,zLid);zlb.position.copy(P(SX0+(284-50.75)/100,D-SGAP-1.475,0.15));
 })();
 (function(){   // Maßlinien Sofa
   var v=[],yb=D-SGAP,ZC=K+(H-K)/SD*SGAP;
@@ -1199,7 +1211,7 @@ function applyHide(){room.children.forEach(function(o){var c=o.userData&&o.userD
 function setHide(id,hide){HG[id].forEach(function(c){hideCats[c]=hide;});document.getElementById(id).classList.toggle('on',!hide);
   if(hide){applyHide();}else{room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c&&HG[id].indexOf(c)>=0)o.visible=true;});
     if(id==='hSofa'){backObjs.forEach(function(o){o.visible=!bedOn;});bedObjs.forEach(function(o){o.visible=bedOn;});}if(id==='hTv')setTvLed(tvLedOn);if(id==='hSofa')setSofaLed(sofaLedOn);}
-  accApply();applyLights();sync();}
+  paxSet(paxAng);if(window.sbSet)sbSet(sbAng);lidSet(lidAng);accApply();applyLights();sync();}
 Object.keys(HG).forEach(function(id){document.getElementById(id).onclick=function(){setHide(id,!hideCats[HG[id][0]]);};});
 document.getElementById('hCouch').onclick=function(){setCt(!ctOn);};document.getElementById('hRug').onclick=function(){setRug(!rugOn);};document.getElementById('hNano').onclick=function(){setLed(!ledOn);};
 document.getElementById('hAll').onclick=function(){var anyOn=Object.keys(HG).some(function(id){return !hideCats[HG[id][0]];})||ctOn||rugOn||ledOn;Object.keys(HG).forEach(function(id){setHide(id,anyOn);});hideCats.kabel=anyOn;hideCats.tablett=anyOn;accApply();setCt(!anyOn);setRug(!anyOn);setLed(!anyOn);};
