@@ -17,6 +17,15 @@ figure{margin:0 0 22px;background:#fff;border:1px solid var(--line);border-radiu
 figure img{display:block;width:100%;height:auto}
 figcaption{padding:10px 14px;font-size:13px;color:#555;background:#faf8f2;border-top:1px solid var(--line)}
 figcaption a{color:#1f4e8c}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:0 0 10px}
+.grp{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lab{font-size:13px;color:var(--muted);font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--panel)}
+.seg button{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:0;padding:8px 14px;min-height:40px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:#fff}
+.hint{display:none;color:#b3392b;font-size:12px;line-height:1.4;margin:0 0 10px}
+@media (prefers-color-scheme:dark){.hint{color:#ff8f80}.seg button.on{color:#10151c}}
 </style>
 </head>
 <body>
@@ -24,10 +33,28 @@ figcaption a{color:#1f4e8c}
 <a class="back" href="./">← Zur Übersicht</a>
 <h1>Grundriss 2D</h1>
 <p>Draufsicht mit Innenmaßen. Bild antippen oder „Vollbild“ öffnen, um zu zoomen.</p>
-<figure><a href="grundriss_eingerichtet.png" target="_blank" rel="noopener"><img src="grundriss_eingerichtet.png" alt="Grundriss eingerichtet"></a>
-<figcaption>Eingerichtet: Schreibtisch, PAX, BESTÅ, Fernseher, Sofa (Récamiere links), Couchtisch, Teppich (optional; Alternativen gepunktet bzw. gestrichelt), Stuhl mit Unterlage (Nanoleaf-Hexagons an der Wand nur in 3D). · <a href="grundriss_eingerichtet.png" target="_blank" rel="noopener">Vollbild</a></figcaption></figure>
+<div class="ctl" id="ctl">
+<div class="grp"><span class="lab">Sideboard</span><div class="seg"><button id="sB" class="on" title="IKEA BESTÅ 180 × 42 × 38 cm (aktuell geplant)">BESTÅ 38 cm</button><button id="sT" title="IKEA TONSTAD 178,4 × 37,2 × 54,9 cm, Eichenfurnier">TONSTAD 55 cm</button></div></div>
+<div class="grp"><span class="lab">Schranktüren</span><div class="seg"><button id="dS" class="on" title="PAX mit STORKLINTA-Türen (aktuell geplant)">STORKLINTA</button><button id="dT" title="PAX mit TONSTAD-Türen, Eichenfurnier">TONSTAD</button></div></div>
+</div>
+<div class="hint" id="hint">Hinweis: TONSTAD-Sideboard passend zu TONSTAD-Türen (Eichenfurnier, 2 × 95 € + Scharniere); Farbton geschätzt, im Laden prüfen. Nicht an die Wand hängen, gegen Kippen sichern.</div>
+<figure><a id="lnk" href="grundriss_eingerichtet_BS.png" target="_blank" rel="noopener"><img id="img" src="grundriss_eingerichtet_BS.png" alt="Grundriss eingerichtet"></a>
+<figcaption>Eingerichtet: Schreibtisch, PAX (<span id="cDr">STORKLINTA-Türen</span>), <span id="cSb">BESTÅ</span>, Fernseher, Sofa (Récamiere links), Couchtisch, Teppich (optional; Alternativen gepunktet bzw. gestrichelt), Stuhl mit Unterlage (Nanoleaf-Hexagons an der Wand nur in 3D). · <a id="lnk2" href="grundriss_eingerichtet_BS.png" target="_blank" rel="noopener">Vollbild</a></figcaption></figure>
 <figure><a href="grundriss_leer.png" target="_blank" rel="noopener"><img src="grundriss_leer.png" alt="Grundriss leer"></a>
 <figcaption>Leer: Wandmaße, Schräge, Kopfhöhen-Zonen und Schnitt. · <a href="grundriss_leer.png" target="_blank" rel="noopener">Vollbild</a></figcaption></figure>
 </main>
+<script>
+(function(){var sb='B',dr='S',$=function(i){return document.getElementById(i)};
+['BS','BT','TS','TT'].forEach(function(k){new Image().src='grundriss_eingerichtet_'+k+'.png'});
+function upd(){var f='grundriss_eingerichtet_'+sb+dr+'.png';$('img').src=f;$('lnk').href=f;$('lnk2').href=f;
+$('sB').classList.toggle('on',sb==='B');$('sT').classList.toggle('on',sb==='T');$('dS').classList.toggle('on',dr==='S');$('dT').classList.toggle('on',dr==='T');
+$('cSb').textContent=sb==='T'?'TONSTAD-Sideboard':'BESTÅ';$('cDr').textContent=dr==='T'?'TONSTAD-Türen':'STORKLINTA-Türen';
+$('hint').style.display=(sb==='T'||dr==='T')?'block':'none'}
+$('sB').onclick=function(){sb='B';upd()};
+$('sT').onclick=function(){sb='T';dr='T';upd()};   // wie in 3D: TONSTAD-Sideboard bringt die TONSTAD-Türen mit
+$('dS').onclick=function(){dr='S';upd()};
+$('dT').onclick=function(){dr='T';upd()};
+upd()})();
+</script>
 </body>
 </html>
