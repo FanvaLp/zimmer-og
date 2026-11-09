@@ -264,6 +264,22 @@ canvas.addEventListener('pointermove',function(e){
   else if(ids.length===2){ptrs[e.pointerId]=[e.clientX,e.clientY];var a=ptrs[ids[0]],b=ptrs[ids[1]];var d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastPinch)dist=Math.max(3,Math.min(25,dist*lastPinch/d));lastPinch=d;}
 });
 canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
+// Tastatursteuerung: A/D oder Pfeil links/rechts = seitlich gehen, W/S oder Pfeil hoch/runter = vor/zurück (in Blickrichtung, am Boden)
+(function(){var kd={},t0=0,run=false;
+  var MAP={a:'l',arrowleft:'l',d:'r',arrowright:'r',w:'f',arrowup:'f',s:'b',arrowdown:'b'};
+  function step(t){var dt=Math.min(0.05,(t-t0)/1000);t0=t;
+    var mx=(kd.r?1:0)-(kd.l?1:0),mf=(kd.f?1:0)-(kd.b?1:0);
+    if(!mx&&!mf){run=false;return;}
+    var sp=1.3*dt,s=Math.sin(az),c=Math.cos(az);
+    tgt.x+=(mx*c-mf*s)*sp;tgt.z+=(-mx*s-mf*c)*sp;
+    tgt.x=Math.max(0.1,Math.min(W-0.1,tgt.x));tgt.z=Math.max(-0.3,Math.min(D-0.1,tgt.z));
+    if(typeof renderScene==='function')renderScene();requestAnimationFrame(step);}
+  window.addEventListener('keydown',function(e){var k=MAP[(e.key||'').toLowerCase()];if(!k||e.ctrlKey||e.metaKey||e.altKey)return;
+    var tn=(e.target&&e.target.tagName||'').toLowerCase();if(tn==='input'||tn==='textarea'||tn==='select')return;
+    e.preventDefault();kd[k]=true;if(!run){run=true;t0=performance.now();requestAnimationFrame(step);}});
+  window.addEventListener('keyup',function(e){var k=MAP[(e.key||'').toLowerCase()];if(k)kd[k]=false;});
+  window.addEventListener('blur',function(){kd={};});
+})();
 ['v1','v2','v3','v4'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
 document.getElementById('tl').onclick=function(){showLbl=!showLbl;this.classList.toggle('on',showLbl);};
