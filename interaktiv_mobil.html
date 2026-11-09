@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v15</title>
+<title>Zimmer Interaktiv Mobil · Stand v16</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -162,7 +162,7 @@ function addTris(tris,color,opts){
   g.computeVertexNormals();
   var m=new THREE.MeshLambertMaterial({color:color,side:opts.double?THREE.DoubleSide:THREE.FrontSide,transparent:!!opts.opacity,opacity:opts.opacity||1,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
   var mesh=new THREE.Mesh(g,m);
-  if(typeof stuccoUV==='function'&&(color===0xf3f0e8||color===0xe2dfd6||color===0xfbfbf8)){stuccoUV(g,pos);m.map=(color===0xf3f0e8?STW:STC);}
+  if(typeof stuccoUV==='function'&&(color===0xf3f0e8||color===0xe2dfd6||color===0xfbfbf8)){stuccoUV(g,pos);m.map=(color===0xf3f0e8?STW:STC);m.color.setHex(color===0xf3f0e8?0xffffff:(color===0xe2dfd6?0xf1efea:0xffffff));}
   var grp=opts.group||room;grp.add(mesh);
   if(!opts.noEdges){var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(g,20),em));}
   return mesh;
@@ -176,13 +176,13 @@ function shapeTris(contour,holes,map){
 }
 function rect(u0,v0,u1,v1){return [[u0,v0],[u1,v0],[u1,v1],[u0,v1]];}
 // Rauputz: kornige Putztextur (nahtlos), 1 Kachel = 50 cm; Wände leicht, Decke und Schräge kräftiger
-function stuccoTex(str){var c=document.createElement('canvas');c.width=c.height=256;var g=c.getContext('2d');g.fillStyle='#f7f7f7';g.fillRect(0,0,256,256);
+function stuccoTex(str){var c=document.createElement('canvas');c.width=c.height=256;var g=c.getContext('2d');g.fillStyle='#ffffff';g.fillRect(0,0,256,256);
   var s=str*977+13;function r(){s=(s*16807)%2147483647;return s/2147483647;}
   function dot(x,y,w,h,col){for(var ox=-256;ox<=256;ox+=256)for(var oy=-256;oy<=256;oy+=256){var X=x+ox,Y=y+oy;if(X>-4&&X<260&&Y>-4&&Y<260){g.fillStyle=col;g.fillRect(X,Y,w,h);}}}
   for(var i=0;i<260;i++){var q=10+r()*26;dot(r()*256,r()*256,q,q*(0.7+r()*0.6),'rgba(120,115,105,'+(0.012+str*0.02)+')');}
   for(var j=0;j<9000;j++){var sz=1+r()*2.4,lt=r()<0.45;dot(r()*256,r()*256,sz,sz,lt?'rgba(255,255,255,'+(0.5+r()*0.4)+')':'rgba(70,64,56,'+(str*(0.10+r()*0.16))+')');}
   var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;if(THREE.sRGBEncoding)t.anisotropy=4;return t;}
-var STW=stuccoTex(0.8),STC=stuccoTex(1.5);
+var STW=stuccoTex(0.4),STC=stuccoTex(0.8);
 function stuccoUV(g,pos){var uv=new Float32Array(pos.length/3*2);
   for(var t=0;t<pos.length;t+=9){var ux=pos[t+3]-pos[t],uy=pos[t+4]-pos[t+1],uz=pos[t+5]-pos[t+2],vx=pos[t+6]-pos[t],vy=pos[t+7]-pos[t+1],vz=pos[t+8]-pos[t+2];
     var ax=Math.abs(uy*vz-uz*vy),ay=Math.abs(uz*vx-ux*vz),az=Math.abs(ux*vy-uy*vx);
