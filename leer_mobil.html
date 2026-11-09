@@ -187,8 +187,8 @@ function box(x0,y0,z0,x1,y1,z1,color){
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);
 }
 box(1.20,0,0,1.733,0.465,H,0xe9e6de);       // Mauervorsprung (Schornstein, Tiefe 46,5 cm)
-// Fußleisten rundum (laut Fotos: Holzleiste in Bodenfarbe, ca. 6,5 cm hoch, 1,5 cm stark; nicht an der Tür)
-(function(){var SKC=0xa87c50,SH=0.065,ST=0.015;
+// Fußleisten rundum (laut Fotos: Holzleiste in Bodenfarbe, ca. 5 cm hoch, 2,5 cm stark; nicht an der Tür)
+(function(){var SKC=0xa87c50,SH=0.05,ST=0.025;
   box(0,0,0,ST,D,SH,SKC);                              // Schreibtischwand
   box(0,0,0,0.125,ST,SH,SKC);box(1.075,0,0,1.20,ST,SH,SKC);   // Türwand (ohne Türöffnung 0,125–1,075)
   box(1.20-ST,0,0,1.20,0.465,SH,SKC);                  // Mauervorsprung, Seite zur Tür
