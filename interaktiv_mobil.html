@@ -917,7 +917,7 @@ var labels=[
     else if((c==='ctn'||c==='ctb'))m=W2;                       // LACK Eicheneffekt weiß lasiert
     else if(c==='sideboard'&&(h===0xd8c4a2||h===0xbfab8a))m=W2; // BESTÅ-Korpus
     else if(c==='schrank'&&(h===0xcbb799||h===0xd9ceb8))m=W1;   // PAX-Korpus
-    if(m){var mt=new THREE.MeshLambertMaterial({map:m,color:h});o.material=mt;}
+    if(m){var mt=new THREE.MeshLambertMaterial({map:m,color:(c==='tisch'?0xe0b072:h)});   // Schreibtisch laut Foto: helles, warmes Eichen-/Buchenfurniero.material=mt;}
   });
 }catch(e){}})();
 room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='schrank'||c==='sideboard'||c==='sideboardT'||c==='tv'||c==='tv65'||c==='tv85'||c==='tvled'||c==='tvled65'||c==='tvled85')o.position.z-=NY;});
