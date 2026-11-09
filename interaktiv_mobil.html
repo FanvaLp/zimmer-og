@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v24</title>
+<title>Zimmer Interaktiv Mobil · Stand v25</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -64,6 +64,11 @@ a.home:hover,a.home:focus-visible{border-color:var(--accent);outline:none}
 #cmpBar .cl.l{right:30px}#cmpBar .cl.r{left:30px}
 #measClr{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(20,20,24,.82);color:#fff;font:600 13px system-ui,sans-serif;cursor:pointer}
 #measLbl{z-index:6;background:#d2691e;color:#fff;border-color:#d2691e;font-size:13px;padding:2px 8px}
+/* ---- Wisch-Hinweis: Zeilen mit mehr Knoepfen als Platz haben, blenden am Rand aus (Wischen nach links/rechts) ---- */
+.seg.mr,.bar.mr{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 34px),transparent)}
+.seg.ml,.bar.ml{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 34px),transparent)}
+.seg.ml.mr,.bar.ml.mr{-webkit-mask-image:linear-gradient(to right,transparent,#000 34px,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(to right,transparent,#000 34px,#000 calc(100% - 34px),transparent)}
+.seg,.bar{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 /* ---- Handy: 3D oben gross, Bedienknoepfe unten scrollbar ---- */
 header p{display:none}
 #stage{flex:0 0 54dvh;margin:2px 8px 0}
@@ -1343,6 +1348,16 @@ function loop(){
   requestAnimationFrame(loop);
 }
 resize();loop();
+})();
+</script>
+<script>
+// Wisch-Hinweis: Rand-Verlauf zeigt, in welche Richtung eine Knopfzeile noch weitergeht
+(function(){var rows=[].slice.call(document.querySelectorAll('.seg,.bar'));
+  function upd(e){var l=e.scrollLeft>2,r=e.scrollLeft+e.clientWidth<e.scrollWidth-2;e.classList.toggle('ml',l);e.classList.toggle('mr',r);}
+  function all(){rows.forEach(upd);}
+  rows.forEach(function(e){e.addEventListener('scroll',function(){upd(e);},{passive:true});});
+  window.addEventListener('resize',all);window.addEventListener('orientationchange',all);
+  setTimeout(all,100);setTimeout(all,800);setInterval(all,1500);
 })();
 </script>
 </body>
