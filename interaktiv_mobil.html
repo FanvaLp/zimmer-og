@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v16</title>
+<title>Zimmer Interaktiv Mobil · Stand v17</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -439,7 +439,7 @@ var paxDM=new THREE.MeshLambertMaterial({map:woodTex(true),color:0xcdb898}),paxH
   var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,PH-0.05,0.024),paxDM);dm.position.set(-sd*dw/2,(PH-0.05)/2+0.045,0);g.add(dm);
   var hm=new THREE.Mesh(new THREE.BoxGeometry(0.024,0.12,0.02),paxHM);hm.position.set(-sd*(dw-0.02),1.0,0.021);g.add(hm);paxG.push(hm);   // BILLSBRO 120 mm: je Tür ein schwarzer Griff an der Mittelfuge
   room.add(g);paxDoors.push({g:g,sd:sd});if(!paxM)paxM=dm;});
-var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=false;if(window.zPax)zPax.forEach(function(z){z.visible=a>0.7;});}
+var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotation.y=d.sd<0?-a:a;});if(window.hotPax)hotPax.visible=false;if(window.zPax)zPax.forEach(function(z){z.visible=a>0.7;});if(window.zPaxO)zPaxO.forEach(function(z){z.visible=a<0.3;});}
 (function(){var b=document.getElementById('paxB');if(!b)return;
   window.paxToggle=function(){var on=paxAng<0.1;tw('pax',function(){return paxAng;},paxSet,on?1.5708:0,700);b.classList.toggle('on',on);};b.onclick=paxToggle;
   hotMk(paxDoors[0].g,PW/2-0.05,1.45,0.03,function(){paxToggle();});
@@ -449,6 +449,7 @@ var paxAng=0;function paxSet(a){paxAng=a;paxDoors.forEach(function(d){d.g.rotati
   window.zPax=[];var paxClose=function(){if(paxAng>0.3)paxToggle();};
   paxDoors.forEach(function(d){var dw=PW/2-0.001;zoneMk(d.g,dw,PH-0.05,0.05,-d.sd*dw/2,(PH-0.05)/2+0.045,0,paxClose,zPax);});
   var zpb=zoneMk(room,PW-0.02,PH,PD-0.03,0,0,0,paxClose,zPax);zpb.position.copy(P(PX0+PW/2,(PD-0.03)/2,PH/2));
+  window.zPaxO=[];paxDoors.forEach(function(d){var dw=PW/2-0.001,zo=zoneMk(d.g,dw,PH-0.05,0.04,-d.sd*dw/2,(PH-0.05)/2+0.045,0.03,function(){if(paxAng<0.3)paxToggle();},zPaxO);zo.visible=true;});   // geschlossen: ganze Tür klickbar (öffnet)
 })();
 cat='sideboard';
 // Sideboard (IKEA BESTÅ, 180 x 42 x 38 cm) direkt neben dem Schrank, auf dem Boden
