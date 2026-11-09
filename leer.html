@@ -261,9 +261,9 @@ canvas.addEventListener('pointercancel',function(e){delete ptrs[e.pointerId];las
 canvas.addEventListener('pointermove',function(e){
   var ids=Object.keys(ptrs);if(!ptrs[e.pointerId])return;
   if(ids.length===1){var p=ptrs[e.pointerId];az-=(e.clientX-p[0])*0.008;el=Math.max(-0.1,Math.min(1.55,el+(e.clientY-p[1])*0.006));ptrs[e.pointerId]=[e.clientX,e.clientY];}
-  else if(ids.length===2){ptrs[e.pointerId]=[e.clientX,e.clientY];var a=ptrs[ids[0]],b=ptrs[ids[1]];var d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastPinch)dist=Math.max(3,Math.min(25,dist*lastPinch/d));lastPinch=d;}
+  else if(ids.length===2){ptrs[e.pointerId]=[e.clientX,e.clientY];var a=ptrs[ids[0]],b=ptrs[ids[1]];var d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastPinch)dist=Math.max(0.3,Math.min(25,dist*lastPinch/d));lastPinch=d;}
 });
-canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
+canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(0.3,Math.min(25,dist*(1+e.deltaY*0.001)));},{passive:false});
 // Tastatursteuerung: A/D oder Pfeil links/rechts = seitlich gehen, W/S oder Pfeil hoch/runter = vor/zurück (in Blickrichtung, am Boden)
 (function(){var kd={},t0=0,run=false;
   var MAP={a:'l',arrowleft:'l',d:'r',arrowright:'r',w:'f',arrowup:'f',s:'b',arrowdown:'b'};
