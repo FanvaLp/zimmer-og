@@ -895,11 +895,11 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    if(typeof SNE==='undefined'||!SNE||!SNE.length)return;
    var kon=!hideCats.konsole,XA=(KV==='A')?SX0:(KV==='C')?XCC:SX0+KARM,T=(KV==='A')?KT:(KV==='C')?KTC:KTB,XE=XA+T[T.length-1][0]+T[T.length-1][1];
    function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
-   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=(KV==='C')?[XA+0.20,XE-0.20]:(KV==='B')?[3.50,XE-0.08]:[XA+0.40,XE-0.08];
+   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=(KV==='C')?[XA+0.20,XE-0.20]:(KV==='B')?[3.365,4.315]:[XA+0.40,XE-0.08];
    SNE.forEach(function(e,i){var z=hz(xs[i]);e.o.forEach(function(o){o.position.x=o.userData.p0.x+xs[i];o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
    var bOn=!!SNON&&tvSize!=='S',rOn=!!SNON&&kon;hideCats.beam=!bOn;hideCats.rear=!rOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='beam')o.visible=bOn;else if(c==='rear')o.visible=rOn;});
-   labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;l.el.textContent=(KV==='B'&&i===0)?'Era 100 neben deinem Kopf auf dem L-Sitzer (6 cm neben dem Nackenpolster) · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig':(KV==='C')?(i===0?'Era 100 auf der 120er-Konsole, links neben deinem Kopf (20 cm vom Konsolen-Anfang) · 18,25 cm hoch · Steckdose nötig':'Era 100 auf der 120er-Konsole, rechts neben deinem Kopf (20 cm vom Konsolen-Ende) · gleiche Maße · Steckdose nötig'):l.t0;});
+   labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;l.el.textContent=(KV==='B')?(i===0?'Era 100 neben deinem Kopf, Seite zur Sofa-Mitte (7 cm neben dem Nackenpolster) · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig':'Era 100 neben deinem Kopf, Außenwandseite (7 cm neben dem Nackenpolster) · gleiche Maße · Steckdose nötig'):(KV==='C')?(i===0?'Era 100 auf der 120er-Konsole, links neben deinem Kopf (20 cm vom Konsolen-Anfang) · 18,25 cm hoch · Steckdose nötig':'Era 100 auf der 120er-Konsole, rechts neben deinem Kopf (20 cm vom Konsolen-Ende) · gleiche Maße · Steckdose nötig'):l.t0;});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);
    if(h){var t='';if(SNON){
@@ -1091,21 +1091,42 @@ cat='stuhl';
 // Stuhlunterlage 100 x 120 cm + Bürostuhl (Maße geschätzt: Sitz 50 x 50, Gesamthöhe 98, Fußkreuz Ø 66)
 var MX0=0.42,MX1=1.62,MY0=2.30,MY1=3.30,CCX=1.07,CCY=2.80;   // Unterlage 1,20 m (Tisch -> Sofa) x 1,00 m (zur Couch zeigende Kante, längs zum Tisch), bündig mit der Sofa-Vorderkante, dadurch ca. 49,5 cm unter dem langen Tisch
 box(MX0,MY0,0,MX1,MY1,0.008,0x6e6e72);
-var CHC=0x222226;
-box(CCX-0.225,CCY-0.225,0.45,CCX+0.225,CCY+0.225,0.51,CHC);      // Sitzfläche 45 x 45
-box(CCX+0.225,CCY-0.21,0.53,CCX+0.275,CCY+0.21,1.06,CHC);        // Rückenlehne (Rücken zum Sofa)
-box(CCX-0.12,CCY-0.27,0.63,CCX+0.17,CCY-0.24,0.655,CHC);         // Armlehnen
-box(CCX-0.12,CCY+0.24,0.63,CCX+0.17,CCY+0.27,0.655,CHC);
-box(CCX-0.04,CCY-0.27,0.51,CCX-0.01,CCY-0.24,0.63,CHC);
-box(CCX-0.04,CCY+0.24,0.51,CCX-0.01,CCY+0.27,0.63,CHC);
-(function(){
-  var mt=new THREE.MeshLambertMaterial({color:CHC});
-  var gas=new THREE.Mesh(new THREE.CylinderGeometry(0.025,0.025,0.37,16),mt);gas.position.copy(P(CCX,CCY,0.265));room.add(gas);
-  for(var i=0;i<5;i++){var a=i*Math.PI*2/5;
-    var leg=new THREE.Mesh(new THREE.BoxGeometry(0.28,0.025,0.04),mt);
-    leg.position.copy(P(CCX+0.14*Math.cos(a),CCY+0.14*Math.sin(a),0.07));leg.rotation.y=-a;room.add(leg);
-    var w=new THREE.Mesh(new THREE.CylinderGeometry(0.02,0.02,0.035,12),mt);
-    w.position.copy(P(CCX+0.27*Math.cos(a),CCY+0.27*Math.sin(a),0.03));room.add(w);}
+(function(){   // Bürostuhl nach den Fotos/dem Video: hohe, gepolsterte Lehne (dunkelgrauer Stoffbezug), schwarze Kunststoff-Schale hinten, geschlossene Bügel-Armlehnen, Gasfeder mit Manschette, Fünfstern-Fuß mit Doppelrollen. Maße geschätzt (Fußkreuz Ø 68 als Maßstab gegen die Unterlage 1,00 x 1,20 m): Sitzhöhe 48, Sitz 50 breit x 46 tief, Armlehnen 73, Lehne bis 115 cm
+  var X=CCX,Y=CCY;
+  var fc=document.createElement('canvas');fc.width=fc.height=64;var fg=fc.getContext('2d'),sd=7;function rn(){sd=(sd*16807)%2147483647;return sd/2147483647;}
+  fg.fillStyle='#3a3a3f';fg.fillRect(0,0,64,64);for(var i=0;i<520;i++){fg.fillStyle=rn()<0.5?'rgba(120,120,128,0.32)':'rgba(10,10,12,0.35)';fg.fillRect(rn()*64,rn()*64,1.4,1.4);}
+  var ft=new THREE.CanvasTexture(fc);ft.wrapS=ft.wrapT=THREE.RepeatWrapping;ft.repeat.set(3,3);
+  var F=new THREE.MeshLambertMaterial({map:ft,color:0xffffff}),K=new THREE.MeshLambertMaterial({color:0x17171a}),M=new THREE.MeshLambertMaterial({color:0x2a2a2e});
+  function rb(sx,sy,sz,cx,cy,cz,mat,r,tilt){var g;try{g=sRound(new THREE.BoxGeometry(sx,sz,sy,5,5,5),r);}catch(e){g=new THREE.BoxGeometry(sx,sz,sy);}
+    var m=new THREE.Mesh(g,mat);m.position.copy(P(cx,cy,cz));if(tilt)m.rotation.z=-tilt;room.add(m);return m;}
+  var T=0.10;                                                  // Lehnenneigung (rad), oben nach hinten (zum Sofa)
+  function bx(z,t){return X+0.18+(z-0.50)*T-t/2;}              // Mitte der Lehnenschicht (Rückseite des Stoffs) in Höhe z
+  // Sitz: 50 breit x 46 tief, 10 cm dick, vorn abgerundet; Schale darunter schwarz
+  rb(0.46,0.50,0.10,X-0.01,Y,0.43,F,0.035);
+  rb(0.42,0.46,0.03,X-0.01,Y,0.365,K,0.012);
+  rb(0.16,0.26,0.05,X-0.02,Y,0.33,K,0.012);                    // Mechanik
+  // Lehne: Lordose-Wulst unten, obere Lehne schmaler, schwarze Rückschale
+  rb(0.06,0.46,0.40,bx(0.96,0.06),Y,0.96,F,0.028,T);
+  rb(0.10,0.48,0.28,bx(0.70,0.10),Y,0.70,F,0.04,T);
+  rb(0.02,0.47,0.62,X+0.19+(0.84-0.50)*T,Y,0.84,K,0.01,T);
+  rb(0.05,0.06,0.20,X+0.18,Y,0.55,K,0.012,T);                  // Lehnen-Strebe an der Sitzhinterkante
+  // Armlehnen: geschlossener Bügel (Halter am Sitz, zwei Stützen, Auflage)
+  [-1,1].forEach(function(s){var ya=Y+s*0.285;
+    rb(0.18,0.045,0.035,X+0.03,Y+s*0.262,0.395,K,0.01);
+    rb(0.035,0.035,0.30,X-0.06,ya,0.565,K,0.01);
+    rb(0.035,0.035,0.30,X+0.13,ya,0.565,K,0.01);
+    rb(0.30,0.055,0.04,X+0.035,ya,0.715,K,0.015);});
+  // Gasfeder mit Manschette, Nabe, Fünfstern-Fuß, Doppelrollen
+  var gas=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.24,16),M);gas.position.copy(P(X,Y,0.19));room.add(gas);
+  var man=new THREE.Mesh(new THREE.CylinderGeometry(0.038,0.052,0.14,16),K);man.position.copy(P(X,Y,0.24));room.add(man);
+  var hub=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.07,0.05,18),K);hub.position.copy(P(X,Y,0.075));room.add(hub);
+  for(var i2=0;i2<5;i2++){var a=i2*Math.PI*2/5;
+    var leg=new THREE.Mesh(new THREE.BoxGeometry(0.30,0.032,0.052),K);
+    leg.position.copy(P(X+0.19*Math.cos(a),Y+0.19*Math.sin(a),0.075));leg.rotation.y=-a;room.add(leg);
+    var st=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.008,0.05,8),M);st.position.copy(P(X+0.325*Math.cos(a),Y+0.325*Math.sin(a),0.06));room.add(st);
+    [-1,1].forEach(function(q){var w=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.016,14),K);
+      w.position.copy(P(X+0.325*Math.cos(a)-q*0.013*Math.sin(a),Y+0.325*Math.sin(a)+q*0.013*Math.cos(a),0.03));
+      w.rotation.y=-(a+Math.PI/2);w.rotation.z=Math.PI/2;room.add(w);});}
 })();
 (function(){   // Maßlinien Abstand Tisch - Sofa, Unterlage
   function mk(c,fn){cat=c;var v=[];
@@ -1381,7 +1402,7 @@ var labels=[
  ['Couchtisch LACK 90 × 55 × 45 cm',(CTN[0]+CTN[2])/2,(CTN[1]+CTN[3])/2,0.62],['Breite 90 cm',(CTN[0]+CTN[2])/2,CTN[1]-0.10,0.02],['Tiefe 55 cm',2.08,(CTN[1]+CTN[3])/2,0.02],['bis Sofa 33,5 cm',2.08,(CTN[3]+D-SGAP-1.02)/2,0.02],['bis Récamiere 36 cm',(CTN[2]+SX0+1.825)/2,1.55,0.02],['bis Sideboard 85 cm',2.75,(SBD+CTN[1])/2,0.02],['Höhe 45 cm',CTN[2]+0.06,1.545,0.22],['Couchtisch LACK 90 × 55 × 45 cm (hinter dem Sofa)',(CTB[0]+CTB[2])/2,(CTB[1]+CTB[3])/2,0.62],['Breite 90 cm (hinter dem Sofa)',(CTB[0]+CTB[2])/2,CTB[3]+0.10,0.02],['Tiefe 55 cm (hinter dem Sofa)',2.50,(CTB[1]+CTB[3])/2,0.02],['bis Sofa 10 cm',2.50,D-SGAP+0.05,0.02],['bis Schrägenwand 26,5 cm',3.70,(CTB[3]+D)/2,0.02],['Tischhöhe 45 cm',CTB[2]+0.06,(CTB[1]+CTB[3])/2,0.22],
  
  ['Tisch bis Sofa 70,5 cm',(0.915+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['49,5 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
- ['Stuhl–Sofa 27 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['Lücke 4 cm (Türen 90°)',(1.733+PX0)/2,0.30,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,09 m',(SB0+SBW+W)/2,0.75,0.02],['178,4 cm',SBT.X0+SBT.W/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,10 m (TONSTAD)',SBT.X0+SBT.W+0.115,0.75,0.02]
+ ['Stuhl–Sofa 27 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.25],['99,8 cm',PX0+PW/2,0.75,0.02],['Lücke 4 cm (Türen 90°)',(1.733+PX0)/2,0.30,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,09 m',(SB0+SBW+W)/2,0.75,0.02],['178,4 cm',SBT.X0+SBT.W/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,10 m (TONSTAD)',SBT.X0+SBT.W+0.115,0.75,0.02]
 ].concat(RUGLB).concat(HKLB).concat(NKLB).concat(KLB).concat(SNLB).concat(DKLB).concat(LEDLB).concat(TVLB).concat(TVLB65).concat(TVLBL65).concat(TVLB85).concat(TVLBL85).concat(TVLBHS).concat(TVLBLHS).concat(TVLBSE).concat(TVLBLSE).concat(SFLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2]-(({schrank:1,sideboard:1,sideboardT:1,tv:1,tv65:1,tv85:1,tvhs:1,tvledhs:1,tvse:1,tvledse:1,tvled:1,tvled65:1,tvled85:1,beam:1})[LC[l[0]]]?NY:0),l[3]),cat:LC[l[0]]||'raum'};});
 // Nische: Schrank, Sideboard, Fernseher und TV-LED stehen an der neuen Rückwand (NY weiter hinten)
 // Texturen für Möbel, die bisher nur eine Grundfarbe hatten (Lambert-Farbe wirkt als Tönung auf die helle Textur)
