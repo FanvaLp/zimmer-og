@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v52</title>
+<title>Zimmer Interaktiv Mobil · Stand v53</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -564,16 +564,17 @@ box(TVCX-0.06,TVF-0.07,SBH+0.008,TVCX+0.06,TVF-0.012,TVHS.Z0,0x1c1c1e);        /
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));})();
 // Hisense 75U7SE (75 Zoll, Alternative) nach Haendlerdaten (Geizhals, Dateks, Kontrolsat): Panel 166,8 x 96,3 x 5,8 cm, mit Fuss 102,4 cm hoch und 32,5 cm tief, 27,5 kg mit Fuss (26 kg ohne). Fussform (mittig, ca. 44 cm breit) nach Produktbild geschaetzt. Die Amazon-Seite mischt 85-Zoll-Maße ein (189,9 x 108,9) und wird dafuer nicht verwendet.
-var TVSE={W:1.668,H:0.963,D:0.058,FH:0.061,BD:0.325,FW:0.407};TVSE.Z0=SBH+TVSE.FH;
-var TVLBLSE=[['Fernseher Hisense 75U7SE · Panel 166,8 × 96,3 × 5,8 cm · 27,5 kg mit Fuß, 26 kg ohne (BESTÅ trägt 30 kg: passt, 2,5 kg Reserve)',TVCX,TVYB+TVSE.BD/2,TVSE.Z0+TVSE.H+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVSE.Z0+TVSE.H/2],['102,4 cm (mit Fuß)',SB0+SBW+0.06,SBD,SBH+TVSE.H/2],['140,4 cm gesamt',SB0+SBW+0.14,SBD,(TVSE.Z0+TVSE.H)/2],['Fuß ca. 41 × 32,5 cm (Rahmen mit zwei Standbeinen; Tiefenaufbau geschätzt)',TVCX,TVYB+TVSE.BD/2,SBH+0.03]];
+var TVSE={W:1.668,H:0.963,D:0.058,FH:0.061,BD:0.325,FW:0.437};TVSE.Z0=SBH+TVSE.FH;
+var TVLBLSE=[['Fernseher Hisense 75U7SE · Panel 166,8 × 96,3 × 5,8 cm · 27,5 kg mit Fuß, 26 kg ohne (BESTÅ trägt 30 kg: passt, 2,5 kg Reserve)',TVCX,TVYB+TVSE.BD/2,TVSE.Z0+TVSE.H+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVSE.Z0+TVSE.H/2],['102,4 cm (mit Fuß)',SB0+SBW+0.06,SBD,SBH+TVSE.H/2],['140,4 cm gesamt',SB0+SBW+0.14,SBD,(TVSE.Z0+TVSE.H)/2],['Fuß ca. 43,7 × 32,5 cm (nach Produktfoto; Tiefenaufbau geschätzt)',TVCX,TVYB+TVSE.BD/2,SBH+0.03]];
 cat='tvse';
 box(TVCX-TVSE.W/2,TVF-0.012,TVSE.Z0,TVCX+TVSE.W/2,TVF,TVSE.Z0+TVSE.H,0x161618);
 box(TVCX-TVSE.W/2+0.006,TVF,TVSE.Z0+0.010,TVCX+TVSE.W/2-0.006,TVF+0.0012,TVSE.Z0+TVSE.H-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});
 box(TVCX-TVSE.W*0.325,TVF-TVSE.D,TVSE.Z0,TVCX+TVSE.W*0.325,TVF-0.012,TVSE.Z0+TVSE.H*0.46,0x1b1b1e);
-// Fuss nach Amazon-Produktfoto: flacher Rahmen (ca. 40,7 cm breit, 32,5 cm tief; Aufbau von hinten/oben unbekannt, als Rahmen angenommen) mit zwei Standbeinen bei ca. +-19 cm
-[[TVYB,TVYB+0.03],[TVYB+TVSE.BD-0.03,TVYB+TVSE.BD]].forEach(function(r){box(TVCX-TVSE.FW/2,r[0],SBH,TVCX+TVSE.FW/2,r[1],SBH+0.012,0x1c1c1e);});
-[[TVCX-TVSE.FW/2,TVCX-TVSE.FW/2+0.03],[TVCX+TVSE.FW/2-0.03,TVCX+TVSE.FW/2]].forEach(function(r){box(r[0],TVYB,SBH,r[1],TVYB+TVSE.BD,SBH+0.012,0x1c1c1e);});
-[-0.19,0.19].forEach(function(dx){box(TVCX+dx-0.015,TVF-0.07,SBH+0.012,TVCX+dx+0.015,TVF-0.012,TVSE.Z0,0x1c1c1e);});
+// Fuss nach Amazon-Produktfoto (Frontansicht, Massstab aus der Panelbreite): untere Leiste ca. 43,7 cm breit, zwei Standbeine/Aufnahmen (4,2 cm breit) bei +-20 cm, kleines Mittelmodul unter dem Panel (ca. 15,5 cm breit). Aufbau von oben/hinten unbekannt: als Rahmen (4 Leisten, 4 cm breit) mit 32,5 cm Tiefe angenommen.
+[[TVYB,TVYB+0.04],[TVYB+TVSE.BD-0.04,TVYB+TVSE.BD]].forEach(function(r){box(TVCX-TVSE.FW/2,r[0],SBH,TVCX+TVSE.FW/2,r[1],SBH+0.021,0x1c1c1e);});
+[[TVCX-TVSE.FW/2,TVCX-TVSE.FW/2+0.04],[TVCX+TVSE.FW/2-0.04,TVCX+TVSE.FW/2]].forEach(function(r){box(r[0],TVYB,SBH,r[1],TVYB+TVSE.BD,SBH+0.021,0x1c1c1e);});
+[-0.20,0.20].forEach(function(dx){box(TVCX+dx-0.021,TVF-0.075,SBH+0.021,TVCX+dx+0.021,TVF-0.012,TVSE.Z0,0x1c1c1e);});
+box(TVCX-0.0775,TVF-0.04,TVSE.Z0-0.012,TVCX+0.0775,TVF-0.012,TVSE.Z0,0x18181a);   // Mittelmodul unter dem Panel
 (function(){var yy=TVF+0.004,v=[];
   v.push.apply(v,P(TVCX-TVSE.W/2+0.006,yy,TVSE.Z0+0.010).toArray());
   v.push.apply(v,P(TVCX+TVSE.W/2-0.006,yy,TVSE.Z0+TVSE.H-0.006).toArray());
