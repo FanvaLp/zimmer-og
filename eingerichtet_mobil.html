@@ -821,7 +821,7 @@ var KLB=[],KLC={},KO_SH=0.18;
   var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);return m;}
  var T=[[0,1.00,0.809],[1.01,1.00,0.809],[2.02,0.80,0.80]];
- T.forEach(function(t){var x0=XA+t[0],w=t[1],h=t[2],x1=x0+w,y1=Y0+DP,q=0.02,bt=0.016,st=0.015,sz=h-0.20,i=0.005,fx0=x0+i,fx1=x1-i,fy0=Y0+i,fy1=y1-i,ft=0.010,zt=h-bt-q,zs=sz-st-q;
+ T.forEach(function(t){var x0=XA+t[0],w=t[1],h=t[2],x1=x0+w,y1=Y0+DP,q=0.02,bt=0.010,st=0.010,sz=h-0.20,i=0.005,fx0=x0+i,fx1=x1-i,fy0=Y0+i,fy1=y1-i,ft=0.010,zt=h-bt-q,zs=sz-st-q;
   // Nach den Amazon-Fotos: Platte steht ca. 0,5 cm ueber dem Rahmen; oberer Rahmen aus Rohr 2 x 2 cm; Ablage liegt zwischen den Beinen auf einem eigenen Rahmen (vorn/hinten/seitlich); untere Streben 8 cm ueber dem Boden; runde Fuesse
   kb(x0,Y0,h-bt,x1,y1,h,0,bm(w));
   kb(fx0,fy0,zt,fx1,fy0+q,h-bt,FRC);kb(fx0,fy1-q,zt,fx1,fy1,h-bt,FRC);
