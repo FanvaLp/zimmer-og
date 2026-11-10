@@ -895,11 +895,11 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    if(typeof SNE==='undefined'||!SNE||!SNE.length)return;
    var kon=!hideCats.konsole,XA=(KV==='A')?SX0:(KV==='C')?XCC:SX0+KARM,T=(KV==='A')?KT:(KV==='C')?KTC:KTB,XE=XA+T[T.length-1][0]+T[T.length-1][1];
    function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
-   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=(KV==='C')?[XA+0.20,XE-0.20]:[XA+0.40,XE-0.08];
+   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=(KV==='C')?[XA+0.20,XE-0.20]:(KV==='B')?[3.50,XE-0.08]:[XA+0.40,XE-0.08];
    SNE.forEach(function(e,i){var z=hz(xs[i]);e.o.forEach(function(o){o.position.x=o.userData.p0.x+xs[i];o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
    var bOn=!!SNON&&tvSize!=='S',rOn=!!SNON&&kon;hideCats.beam=!bOn;hideCats.rear=!rOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='beam')o.visible=bOn;else if(c==='rear')o.visible=rOn;});
-   labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;l.el.textContent=(KV==='C')?(i===0?'Era 100 auf der 120er-Konsole, links neben deinem Kopf (20 cm vom Konsolen-Anfang) · 18,25 cm hoch · Steckdose nötig':'Era 100 auf der 120er-Konsole, rechts neben deinem Kopf (20 cm vom Konsolen-Ende) · gleiche Maße · Steckdose nötig'):l.t0;});
+   labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;l.el.textContent=(KV==='B'&&i===0)?'Era 100 neben deinem Kopf auf dem L-Sitzer (6 cm neben dem Nackenpolster) · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig':(KV==='C')?(i===0?'Era 100 auf der 120er-Konsole, links neben deinem Kopf (20 cm vom Konsolen-Anfang) · 18,25 cm hoch · Steckdose nötig':'Era 100 auf der 120er-Konsole, rechts neben deinem Kopf (20 cm vom Konsolen-Ende) · gleiche Maße · Steckdose nötig'):l.t0;});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);
    if(h){var t='';if(SNON){
@@ -912,7 +912,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
   if(snOffB)snOffB.onclick=function(){SNON=false;soundApply();};
   if(snOnB)snOnB.onclick=function(){SNON=true;soundApply();};
   window.__sn=function(){return room;};
-var DKON=true,KBON=true,DKE=[],DKLB=[],DKLC={},DKC={80:42,125:72,60:35,150:85};
+var DKON=true,KBON=true,DKE=[],DKLB=[],DKLC={},DKC={80:42,125:72,60:35,150:85},DKB={175:190};
   (function(){var c0=cat,s0=room.children.length;
    function M(c){return new THREE.MeshLambertMaterial({color:c});}
    function add(e,geo,col,x,y,z,sc,rot){var m=new THREE.Mesh(geo,M(col));if(sc)m.scale.set(sc[0],sc[1],sc[2]);if(rot)m.rotation.z=rot;m.position.copy(P(x,y,z));room.add(m);m.userData.p0=m.position.clone();e.o.push(m);return m;}
@@ -939,7 +939,7 @@ var DKON=true,KBON=true,DKE=[],DKLB=[],DKLC={},DKC={80:42,125:72,60:35,150:85};
    var kon=!hideCats.konsole,XA=(KV==='A')?SX0:(KV==='C')?XCC:SX0+KARM,T=(KV==='A')?KT:(KV==='C')?KTC:KTB;
    function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
    var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0);
-   DKE.forEach(function(e){var cm=(KV==='C'&&DKC[e.cm]!==undefined)?DKC[e.cm]:e.cm,x=XA+cm/100,z=hz(x)-(e.low?0.205:0);e.o.forEach(function(o){o.position.x=o.userData.p0.x+x;o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
+   DKE.forEach(function(e){var cm=(KV==='C'&&DKC[e.cm]!==undefined)?DKC[e.cm]:(KV==='B'&&DKB[e.cm]!==undefined)?DKB[e.cm]:e.cm,x=XA+cm/100,z=hz(x)-(e.low?0.205:0);e.o.forEach(function(o){o.position.x=o.userData.p0.x+x;o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
    var dOn=!!DKON&&kon,kOn=!!KBON&&kon;hideCats.deko=!dOn;hideCats.korb=!kOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='deko')o.visible=dOn;else if(c==='korb')o.visible=kOn;});if(KV==='C')DKE.forEach(function(e){if(DKC[e.cm]===undefined)e.o.forEach(function(o){o.visible=false;});});
    if(typeof labels!=='undefined'&&labels)labels.forEach(function(l){if(l.cat==='deko'){var dx=(KV==='C')?0.42:0.5;l.p.x=XA+dx;l.p.y=hz(XA+dx)+0.42;l.p.z=yc;}else if(l.cat==='korb'){var kx=(KV==='C')?0.85:1.5;l.p.x=XA+kx;l.p.y=hz(XA+kx)-0.30;l.p.z=yc;}});
