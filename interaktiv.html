@@ -882,8 +882,8 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    hideCats.beam=true;hideCats.rear=true;
    SNLB=[['Sonos Beam (Gen 2) · 65,1 × 10 × 6,9 cm · 2,8 kg · schwarz',BX,BY,BZ+BH+0.16],
     ['Beam 6,9 cm hoch: Bildunterkante 5 cm über dem Sideboard, Beam verdeckt ca. 2 cm vom Bild (geschätzt)',BX-0.45,BY-0.02,BZ+BH+0.05],
-    ['Era 100 rechts · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig',3,3.2,1],
-    ['Era 100 links · gleiche Maße · hinter Sofamitte, Rücken zur Schräge',3,3.2,1]];
+    ['Era 100 an der Außenwand · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig',3,3.2,1],
+    ['Era 100 am L-Stück, neben deinem Kopf · gleiche Maße · Steckdose nötig',3,3.2,1]];
    SNLB.forEach(function(l,i){SNLC[l[0]]=(i<2)?'beam':'rear';});
    cat=c0;
   })();
@@ -891,11 +891,11 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    if(typeof SNE==='undefined'||!SNE||!SNE.length)return;
    var kon=!hideCats.konsole,A=(KV==='A'),XA=A?SX0:SX0+KARM,T=A?KT:KTB,XE=XA+T[T.length-1][0]+T[T.length-1][1];
    function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
-   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=[3.1,XE-0.175];
+   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=[XA+0.08,XE-0.08];
    SNE.forEach(function(e,i){var z=hz(xs[i]);e.o.forEach(function(o){o.position.x=o.userData.p0.x+xs[i];o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
    var bOn=!!SNON&&tvSize!=='S',rOn=!!SNON&&kon;hideCats.beam=!bOn;hideCats.rear=!rOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='beam')o.visible=bOn;else if(c==='rear')o.visible=rOn;});
-   labels.forEach(function(l){if(l.cat!=='rear')return;var i=(l.el.textContent.indexOf('links')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;});
+   labels.forEach(function(l){if(l.cat!=='rear')return;var i=(l.el.textContent.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);
    if(h){var t='';if(SNON){
