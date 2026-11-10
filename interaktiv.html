@@ -795,7 +795,7 @@ var KLB=[],KLC={},KO_SH=0.18;
   m.position.copy(P((x0+x1)/2,(y0+y1)/2,(z0+z1)/2));room.add(m);
   var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);
   var l=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),em);l.position.copy(m.position);room.add(l);return m;}
- var T=[[0,1.00,0.81],[1.01,1.00,0.81],[2.02,0.80,0.80]];
+ var T=[[0,1.00,0.809],[1.01,1.00,0.809],[2.02,0.80,0.80]];
  T.forEach(function(t){var x0=XA+t[0],w=t[1],h=t[2],x1=x0+w,y1=Y0+DP,q=0.02,bt=0.016,st=0.015,sz=h-0.20,i=0.005,fx0=x0+i,fx1=x1-i,fy0=Y0+i,fy1=y1-i,ft=0.010,zt=h-bt-q,zs=sz-st-q;
   // Nach den Amazon-Fotos: Platte steht ca. 0,5 cm ueber dem Rahmen; oberer Rahmen aus Rohr 2 x 2 cm; Ablage liegt zwischen den Beinen auf einem eigenen Rahmen (vorn/hinten/seitlich); untere Streben 8 cm ueber dem Boden; runde Fuesse
   kb(x0,Y0,h-bt,x1,y1,h,0,bm(w));
@@ -808,10 +808,10 @@ var KLB=[],KLC={},KO_SH=0.18;
   kb(fx0+q,fy0,0.08,fx1-q,fy0+q,0.10,FRC);kb(fx0+q,fy1-q,0.08,fx1-q,fy1,0.10,FRC);
   kb(fx0,fy0+q,0.08,fx0+q,fy1-q,0.10,FRC);kb(fx1-q,fy0+q,0.08,fx1,fy1-q,0.10,FRC);
  });
- ctDims('konsole',function(hx,vy,vz){T.forEach(function(t){hx(YD,XA+t[0],XA+t[0]+t[1]);});hx(YD+0.22,XA,XE);vy(XE+0.14,Y0,Y0+DP);vy(XE+0.30,Y0+DP,D);vz(XA-0.06,Y0+DP/2,0,0.81);});
+ ctDims('konsole',function(hx,vy,vz){T.forEach(function(t){hx(YD,XA+t[0],XA+t[0]+t[1]);});hx(YD+0.22,XA,XE);vy(XE+0.14,Y0,Y0+DP);vy(XE+0.30,Y0+DP,D);vz(XA-0.06,Y0+DP/2,0,0.809);});
  KLB=[['Konsolentische VASAGLE 2 × 100 + 1 × 80 cm = 280 cm (Sofa 284 cm)',XA+1.41,YD+0.22,0.02],
   ['Konsole 1: 100 cm',XA+0.50,YD,0.02],['Konsole 2: 100 cm',XA+1.51,YD,0.02],['Konsole 3: 80 cm',XA+2.42,YD,0.02],
-  ['Höhe 80–81 cm (20 cm tief)',XA-0.06,Y0+DP/2,0.45],['Tiefe 20 cm',XE+0.14,Y0+DP/2,0.02],
+  ['Höhe 80,9 cm (100er) / 80 cm (80er)',XA-0.06,Y0+DP/2,0.45],['Tiefe 20 cm',XE+0.14,Y0+DP/2,0.02],
   ['bis Schrägenwand 68,5 cm (Schräge dort 1,23 m hoch, Konsole 0,81 m)',XE+0.30,(Y0+DP+D)/2,0.02]];
  KLB.forEach(function(l){KLC[l[0]]='konsole';});
  hideCats.konsole=true;
