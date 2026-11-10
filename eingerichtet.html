@@ -91,6 +91,7 @@ footer{grid-column:1/-1;grid-row:3}
 <div class="lhint">Lichter einzeln schalten und dimmen – die Regler wirken im Nachtmodus (oben „Nacht“)</div>
 <div class="grp lrow"><span class="lab">TV-LED-Streifen</span><div class="seg"><button id="tvledB" class="on" title="LED-Streifen Philips Hue Flux (5 m) hinter dem Fernseher">Ein/Aus</button></div><div class="lmw"><input id="lmRT" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit LED-Streifen hinter dem Fernseher"><span id="lmVT" class="lmv">50 %</span></div></div>
 <div class="grp lrow"><span class="lab">Sofa-Licht</span><div class="seg"><button id="sofaledB" class="on" title="Philips Hue Play Lightbar (2 Stück) auf dem Boden hinter dem Sofa">Ein/Aus</button></div><div class="lmw"><input id="lmR" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit Sofa-Licht (Hue Lightbars hinter dem Sofa)"><span id="lmV" class="lmv">50 %</span></div></div>
+<div class="grp lrow" id="konsLedRow"><span class="lab">Konsolen-Licht</span><div class="seg"><button id="konsledB" class="on" title="Philips Hue Flux UltraBright 3 m (2900 lm) auf der Rückseite der drei Konsolen, leuchtet die Schräge an (nur sichtbar, wenn die Konsolen eingeblendet sind)">Ein/Aus</button></div><div class="lmw"><input id="lmRK" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit Konsolen-Licht (Hue Flux 3 m hinter den Konsolen)"><span id="lmVK" class="lmv">50 %</span></div></div>
 <div class="grp lrow"><span class="lab">Nanoleaf (Wand)</span><div class="seg"><button id="ledOn" class="on" title="Neun Nanoleaf-Hexagons an der Wand über den Bildschirmen anzeigen">Ein/Aus</button><button id="ledOff" style="display:none" tabindex="-1" aria-hidden="true"></button></div><div class="lmw"><input id="lmRN" type="range" min="0" max="100" step="5" value="50" aria-label="Helligkeit der Nanoleaf-Hexagons an der Wand"><span id="lmVN" class="lmv">50 %</span></div></div>
 <div class="grp lrow"><span class="lab">Schreibtisch &amp; Monitore</span><div class="seg"><button id="pcledB" class="on" title="Schreibtischlicht An/Aus: rote PC-Beleuchtung (Lüfter, Streifen) und die roten LEDs der beiden Lautsprecher. Schaltet auch die beiden Monitore (Bildschirme) aus bzw. an.">Ein/Aus</button></div></div>
 <div class="grp lrow"><span class="lab">TV-Bild</span><div class="seg"><button id="picB" class="on" title="Nachtmodus: Fernseher zeigt ein simuliertes Testbild und beleuchtet den Raum (nur zur Einschätzung des Lichts, kein echtes Bild)">Ein/Aus</button></div><div class="lmw"><div class="seg"><button id="lmD" title="Dunkle Filmszene: ca. 30 cd/m² mittlere Bildhelligkeit">Dunkel</button><button id="lmN" class="on" title="Normale Szene: ca. 100 cd/m² mittlere Bildhelligkeit">Normal</button><button id="lmH" title="Helle Szene (z. B. Sport): ca. 250 cd/m² mittlere Bildhelligkeit">Hell</button></div></div></div>
@@ -818,7 +819,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
  konsDims(false);
  KLB=[['Konsolen VASAGLE 3 × 100 cm = 300 cm (Sofa 284 cm, links bündig mit dem Sofa)',XA+1.50,YD+0.22,0.02],
   ['Konsole 1: 100 cm',XA+0.50,YD,0.02],['Konsole 2: 100 cm',XA+1.50,YD,0.02],['Konsole 3: 100 cm',XA+2.50,YD,0.02],
-  ['Höhe 80,9 cm',XA-0.06,Y0+DP/2,0.45],['Tiefe 20 cm',XE+0.14,Y0+DP/2,0.02],['bis Außenwand 14 cm',(XE+W)/2,YD+0.0,0.02],
+  ['Höhe 80,9 cm',XA-0.06,Y0+DP/2,0.45],['Tiefe 20 cm',XE+0.14,Y0+DP/2,0.02],['bis Außenwand 14 cm',(XE+W)/2,YD+0.0,0.02],['Hue Flux 3 m (2900 lm) auf der Konsolen-Rückseite, leuchtet die Schräge an',XA+1.5,Y0+DP+0.06,0.90],
   ['bündig am Sofa (0,3 cm)',XA-0.12,D-SGAP+0.015,0.02],
   ['bis Schrägenwand 71 cm (Schräge dort 1,25 m hoch, Konsole 0,81 m)',XE+0.30,(Y0+DP+D)/2,0.02]];
  KLB.forEach(function(l){KLC[l[0]]='konsole';});
@@ -846,9 +847,9 @@ function konsCtb(on){var d=on?KO_SH:0,c0=cat;
   if(l.t0==='bis Schrägenwand 26,5 cm')l.el.textContent=on?'bis Schrägenwand 8,5 cm':l.t0;});}
 function konsArT(){var at=document.getElementById('arT'),on=!hideCats.konsole;if(at){at.style.opacity=on?'0.45':'';at.title=on?'Mit eingeblendeten Konsolen nicht möglich: Hocker (84 cm tief) plus Konsole (23 cm) sind mehr als die 91,5 cm hinter dem Sofa':'Couchtisch vor dem Sofa, Hocker hinter dem Sofa (Hocker passt dort mit 5 cm Luft, Deckel nicht öffenbar)';}
  var ko=document.getElementById('kOnB'),kf=document.getElementById('kOffB'),kh=document.getElementById('konsHint');if(ko)ko.classList.toggle('on',on);if(kf)kf.classList.toggle('on',!on);
- var kw=document.getElementById('kWallB'),ks=document.getElementById('kSofaB'),kg=document.getElementById('kPosGrp');if(kg)kg.style.display=on?'':'none';if(kw)kw.classList.toggle('on',on&&KO_WALL);if(ks)ks.classList.toggle('on',on&&!KO_WALL);
+ var klr=document.getElementById('konsLedRow');if(klr)klr.style.opacity=on?'':'0.45';var kw=document.getElementById('kWallB'),ks=document.getElementById('kSofaB'),kg=document.getElementById('kPosGrp');if(kg)kg.style.display=on?'':'none';if(kw)kw.classList.toggle('on',on&&KO_WALL);if(ks)ks.classList.toggle('on',on&&!KO_WALL);
  if(kh){kh.style.display=on?'block':'none';var t='';if(on){if(KO_WALL){t='Konsolen an der Wand: 24 cm Wandabstand (näher geht nicht: die Schräge ist dort nur 83 cm hoch, die Konsolen 81 cm), 47,5 cm Platz bis zum Sofa. Sofa-Licht ist aus (Lightbars verdeckt).'+((ctOn&&hkOn)?' Hocker hinter dem Sofa passt nicht: bei „Beide“ steht der Hocker vorne.':'')+(hkOn&&!ctOn?' Der Hocker (84 cm tief) passt hinter dem Sofa nicht.':'')+((ctOn&&tabBack())?' Der Couchtisch (55 cm tief) passt hinter dem Sofa nicht und ist ausgeblendet.':'');}else{t=((ctOn&&hkOn)?'Konsolen (3 × 1 m) an: Der Hocker passt hinter dem Sofa nicht mehr (84 cm + 20 cm Konsole > 91,5 cm). Bei „Beide“ steht deshalb der Hocker vorne und der Couchtisch dahinter. Sofa-Licht ist aus (die Lightbars wären verdeckt).':'Konsolen (3 × 1 m) an: Sofa-Licht (Hue Lightbars) ist aus, weil die Konsolen sie verdecken.');}}kh.textContent=t;}}
-function konsApply(){var on=!hideCats.konsole;konsMove();setSofaLed(sofaLedOn);konsCtb(on);if(on&&hkArr==='tf')hkArr='hf';applyTabHk();tabVis();
+function konsApply(){var on=!hideCats.konsole;konsMove();if(window.__kl&&typeof lmCalc==='function'){lmKey='';lmCalc();}setSofaLed(sofaLedOn);konsCtb(on);if(on&&hkArr==='tf')hkArr='hf';applyTabHk();tabVis();
  var sb=document.getElementById('sofaledB');if(sb){if(sb.dataset.t0===undefined)sb.dataset.t0=sb.title||'';sb.style.opacity=on?'0.45':'';sb.title=on?'Sofa-Licht ist aus, solange die Konsolen eingeblendet sind (die Lightbars stehen dort und wären verdeckt)':sb.dataset.t0;}}
 // Hocker IKEA SÖRVALLEN mit Aufbewahrung, Tallmyra mittelgrau: 105 x 84 x 45 cm (Länge x Breite x Höhe laut IKEA, Tiefe = 84 cm angenommen). Aufbau geschätzt nach den IKEA-Produktbildern: Beine ca. 8 cm (dunkle, nach unten verjüngte Blöcke), Korpus ca. 24 cm, Polsterdeckel ca. 13 cm, Deckel-Unterseite hell, zwei Klappenarme (Scherenarme) mit Dämpfer.
 // Auswahl: Entweder Tisch / Oder Hocker / Und beide (Tisch vorne + Hocker hinter dem Sofa oder umgekehrt). Vorne: 18 cm vor dem Sofa (sonst stößt der Deckel beim Öffnen ans Sofa), mittig vor den zwei Sitzen ohne Récamiere. Hinten: dicht am Sofa und an der Wand (91,5 cm frei, Fußleiste 2,5 cm, Hocker 84 cm: passt mit 5 cm Luft), Deckel dort nicht öffenbar. Bei ausgeklapptem Bett ist der Hocker weggestellt.
@@ -1473,38 +1474,67 @@ function picUpdate(){
     if(!window.__ledM)window.__ledM=ledObjs.filter(function(o){return o.isMesh;}).map(function(o){var mt=Array.isArray(o.material)?o.material[o.material.length-1]:o.material;return {o:{material:mt},c:mt.color.clone()};});
     window.__ledM.forEach(function(m){m.o.material.color.copy(m.c).multiplyScalar(nf);});
   }else if(window.__ledM){window.__ledM.forEach(function(m){m.o.material.color.copy(m.c);});}}
+/* Konsolen-Licht: Philips Hue Flux UltraBright 3 m (2900 lm) auf der Rückseite der drei Konsolen (Rohr unter der Platte), Lichtfläche zeigt zur Schräge. Beleuchtungsstärke je Punkt der Schräge/des Bodens: Lambert-Linienquelle, E = Summe I'·cosθ·cosα/r² */
+var LMRK=0.5,konsLedOn=true,KFLUX=2900,KOV=null,KFACE=null,KBODY=null,KST={ys:0,zs:0.789,xa:0,xe:0,n:0};
+(function(){var c0=cat;cat='konsole';
+ var XA=SX0,XE=XA+3.00,Y0=D-SGAP+0.003,yb=Y0+0.20-0.005,ys=yb+0.003;KST.ys=ys+0.0035;KST.xa=XA;KST.xe=XE;
+ KBODY=new THREE.Mesh(new THREE.BoxGeometry(3.00,0.0145,0.006),new THREE.MeshLambertMaterial({color:0xe9e9e4}));KBODY.position.copy(P(XA+1.5,ys,0.789));room.add(KBODY);
+ KFACE=new THREE.Mesh(new THREE.BoxGeometry(2.98,0.010,0.0015),new THREE.MeshBasicMaterial({color:0xd6d6d0}));KFACE.position.copy(P(XA+1.5,ys+0.00375,0.789));room.add(KFACE);
+ if(hideCats.konsole){KBODY.visible=false;KFACE.visible=false;}
+ cat='konskl';
+ var PT=[],NR=[],i,j;function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+ function tri(a,b,c,n){[a,b,c].forEach(function(p){PT.push(p[0]+n[0]*0.003,p[1]+n[1]*0.003,p[2]+n[2]*0.003);NR.push(n[0],n[1],n[2]);});}
+ var m=(H-K)/SD,nl=Math.sqrt(1+m*m),nS=[0,-m/nl,-1/nl],A_=[SX,D,K],Dp_=[W,D,K],E_=[W,YS,H],B_=[BX,YS,H],C_=[BX,D,H];
+ function q(s,t){return lerp(lerp(A_,Dp_,s),lerp(B_,E_,s),t);}
+ var NS=64,NT=44;for(i=0;i<NS;i++)for(j=0;j<NT;j++){var a=q(i/NS,j/NT),b=q((i+1)/NS,j/NT),c=q((i+1)/NS,(j+1)/NT),d=q(i/NS,(j+1)/NT);tri(a,b,c,nS);tri(a,c,d,nS);}
+ var nT=[-3.192/3.3303,0,-0.95/3.3303],NN=16;function pp(u,v){return [A_[0]+u*(B_[0]-A_[0])+v*(C_[0]-A_[0]),A_[1]+u*(B_[1]-A_[1])+v*(C_[1]-A_[1]),A_[2]+u*(B_[2]-A_[2])+v*(C_[2]-A_[2])];}
+ for(i=0;i<NN;i++)for(j=0;i+j<NN;j++){tri(pp(i/NN,j/NN),pp((i+1)/NN,j/NN),pp(i/NN,(j+1)/NN),nT);if(i+j<NN-1)tri(pp((i+1)/NN,j/NN),pp((i+1)/NN,(j+1)/NN),pp(i/NN,(j+1)/NN),nT);}
+ var yf=Y0+0.20,NF=60,NG=10;for(i=0;i<NF;i++)for(j=0;j<NG;j++){var f0=[W*i/NF,yf+(D-yf)*j/NG,0],f1=[W*(i+1)/NF,yf+(D-yf)*j/NG,0],f2=[W*(i+1)/NF,yf+(D-yf)*(j+1)/NG,0],f3=[W*i/NF,yf+(D-yf)*(j+1)/NG,0];tri(f0,f1,f2,[0,0,1]);tri(f0,f2,f3,[0,0,1]);}
+ var nv=PT.length/3,pos=new Float32Array(nv*3),col=new Float32Array(nv*3);for(i=0;i<nv;i++){pos[i*3]=PT[i*3];pos[i*3+1]=PT[i*3+2];pos[i*3+2]=PT[i*3+1];}
+ var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));var cAt=new THREE.BufferAttribute(col,3);g.setAttribute('color',cAt);
+ KOV=new THREE.Mesh(g,new THREE.MeshBasicMaterial({vertexColors:true,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));KOV.userData.noPick=true;KOV.userData.pt=PT;KOV.userData.nr=NR;KOV.userData.col=col;KOV.userData.ca=cAt;KOV.visible=false;room.add(KOV);
+ cat=c0;})();
+function konsLightCalc(){var on=!hideCats.konsole&&konsLedOn;if(!on||!KOV)return 0;
+ var PT=KOV.userData.pt,NR=KOV.userData.nr,col=KOV.userData.col,nv=PT.length/3,N=48,dx=3.00/N,I=KFLUX*LMRK/3.00/Math.PI,ys=KST.ys,zs=KST.zs,xa=KST.xa,tint=[1,0.80,0.58],emax=0,v,k,e,x,y,z,rx,ry,rz,r2,r,ct,ca,sx,L,s;
+ for(v=0;v<nv;v++){x=PT[v*3];y=PT[v*3+1];z=PT[v*3+2];e=0;
+  for(k=0;k<N;k++){sx=xa+(k+0.5)*dx;rx=x-sx;ry=y-ys;rz=z-zs;r2=rx*rx+ry*ry+rz*rz;r=Math.sqrt(r2);ct=ry/r;if(ct<=0)continue;ca=-(rx*NR[v*3]+ry*NR[v*3+1]+rz*NR[v*3+2])/r;if(ca<=0)continue;e+=I*dx*ct*ca/r2;}
+  if(NR[v*3+2]<0.9&&e>emax)emax=e;
+  L=0.6*e/Math.PI;s=Math.pow(Math.min(1,L/250),0.45)*0.95;col[v*3]=tint[0]*s;col[v*3+1]=tint[1]*s;col[v*3+2]=tint[2]*s;}
+ if(KOV.userData.ca)KOV.userData.ca.needsUpdate=true;return emax;}
+function konsFace(){if(!KOV||!KFACE)return;var on=!hideCats.konsole&&konsLedOn,lit=nightOn&&on;KOV.visible=lit;
+ if(lit){var s=0.35+0.65*LMRK;KFACE.material.color.setHex((Math.round(255*s)<<16)|(Math.round(204*s)<<8)|Math.round(148*s));}else KFACE.material.color.setHex(0xd6d6d0);}
 /* Lichtberechnung (Nachtlicht): Leuchtdichte/Lichtstrom -> Beleuchtungsstärke am Sofa-Platz; Darstellung skaliert mit der Lichtstärke (cd) der Quellen */
 [nlLight,tvLight,slLight].forEach(function(l){l.distance=4.6;l.decay=1.1;});   // gleiches Abklingverhalten für alle Lichter
 var LMS='N',LMR=0.5,LMRN=0.5,LMRT=0.5,LMN={D:30,N:100,H:250},LMY={tv:0.297,nl:0.207,sl:0.476},LMI={tv:0.25,nl:0.17,sl:0.2,pic:0.9,pc:0.45},lmKey='';
 function lmCalc(){
-  var key=[tvSize,sbDz,LMS,LMR,LMRN,LMRT].join();if(key===lmKey)return;lmKey=key;rzInfo();
+  var key=[tvSize,sbDz,LMS,LMR,LMRN,LMRT,LMRK,konsLedOn,!!hideCats.konsole].join();if(key===lmKey)return;lmKey=key;rzInfo();
   var s=tvSize,Wt=(s==='S')?TVSE.W:(s==='H')?TVHS.W:(s==='65')?TV65.W:(s==='85')?TV85.W:TVW,Ht=(s==='S')?TVSE.H:(s==='H')?TVHS.H:(s==='65')?TV65.H:(s==='85')?TV85.H:TVH,cx=(s==='85')?TVCX85:TVCX,zc=((s==='S')?(TVSE.Z0+TVSE.H/2):(s==='H')?(TVHS.Z0+TVHS.H/2):(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2))+sbDz;
   var L=LMN[LMS],A=Wt*Ht,ys=TVF-NY,yw=-NY,ex=3.04,ey=2.69,ez=1.25,PI=Math.PI,RHO=0.6,ETA=0.8,RM=0.4,SURF=90,i,j,px,pz,dx,dy,dz,d2;
   var eTv=0;for(i=0;i<8;i++)for(j=0;j<5;j++){px=cx-Wt/2+(i+.5)*Wt/8;pz=zc-Ht/2+(j+.5)*Ht/5;dx=ex-px;dy=ey-ys;dz=ez-pz;d2=dx*dx+dy*dy+dz*dz;eTv+=L*(A/40)*dy*dy/(d2*d2);}
-  var Ls=2*((Wt-0.07)+(Ht-0.07)),fs=400*Ls*LMRT*LMY.tv,fn=9*100*LMRN*LMY.nl,fb=2*490*LMR*LMY.sl;
+  var Ls=2*((Wt-0.07)+(Ht-0.07)),fs=400*Ls*LMRT*LMY.tv,fn=9*100*LMRN*LMY.nl,fb=hideCats.konsole?2*490*LMR*LMY.sl:0;
   var Ow=Wt+0.30,Oh=Ht+0.30,Ar=Ow*Oh-A,cells=[];
   for(i=0;i<10;i++)for(j=0;j<7;j++){px=cx-Ow/2+(i+.5)*Ow/10;pz=zc-Oh/2+(j+.5)*Oh/7;if(Math.abs(px-cx)<Wt/2&&Math.abs(pz-zc)<Ht/2)continue;cells.push([px,pz]);}
   var Lw=RHO*ETA*fs/(PI*Ar),eSt=0;
   cells.forEach(function(c){dx=ex-c[0];dy=ey-yw;dz=ez-c[1];d2=dx*dx+dy*dy+dz*dz;eSt+=Lw*(Ar/cells.length)*dy*dy/(d2*d2);});
-  var fpc=120*0.231,fOut=PI*L*A+RHO*ETA*fs+fn+RHO*ETA*fb+fpc,eInd=fOut*RM/(SURF*(1-RM)),eTot=eTv+eSt+eInd,K=0.9/(100*1.598);
+  var fpc=120*0.231,fk=(!hideCats.konsole&&konsLedOn)?KFLUX*LMRK:0,fOut=PI*L*A+RHO*ETA*fs+fn+RHO*ETA*fb+RHO*ETA*fk+fpc,eInd=fOut*RM/(SURF*(1-RM)),eTot=eTv+eSt+eInd,K=0.9/(100*1.598);
   LMI.pic=K*L*A;LMI.pc=0.9*0.35*((fpc/PI/0.64)/17.4)/0.54;   /* PC-RGB: 120 lm weiß-äquivalent x 0,231 (Rot), Lambert, bezogen auf 0,8 m Abstand wie der TV auf 2,8 m */LMI.tv=K*RHO*ETA*fs/PI;LMI.nl=K*fn/PI;LMI.sl=K*RHO*ETA*fb/PI;
   var pc=function(x){return Math.round(100*x/eTot);},v=Math.round(255*Math.min(0.98,0.28+0.72*L/250));
   picMat.map=PICT[LMS];picMat.color.setHex(0xffffff);picMat.needsUpdate=true;
   var el=document.getElementById('lmInfo');
   if(el)el.textContent='Am Sofa-Platz (Blick zum TV): ≈ '+eTot.toFixed(0)+' lx · TV '+pc(eTv)+' %, LED-Streifen '+pc(eSt)+' %, Raumreflexion '+pc(eInd)+' %. Lichtstrom: Streifen bei '+Math.round(LMRT*100)+' % = '+Math.round(fs)+' lm, Sofa-Licht bei '+Math.round(LMR*100)+' % = '+Math.round(fb)+' lm, Nanoleaf '+Math.round(fn)+' lm, PC '+Math.round(fpc)+' lm.'+(nightOn?'':' Nur im Nachtmodus wirksam: oben bei Werkzeuge „Nacht“ einschalten.');
-  window.__lm={eTv:eTv,eSt:eSt,eInd:eInd,eTot:eTot,fs:fs,fb:fb,fn:fn,I:LMI};
+  var kEm=konsLightCalc();if(el&&fk>0)el.textContent+=' Konsolen-Licht (Hue Flux 3 m) bei '+Math.round(LMRK*100)+' % = '+Math.round(fk)+' lm: Schräge und Boden dahinter bis ≈ '+Math.round(kEm)+' lx'+(nightOn?'.':' (Nacht einschalten).');window.__lm={eTv:eTv,eSt:eSt,eInd:eInd,eTot:eTot,fs:fs,fb:fb,fn:fn,I:LMI};
   applyLights();}
 function lmNight(){}
 var lmGateState=null;
 function lmGate(){var n=!!nightOn;if(n===lmGateState)return;lmGateState=n;lmKey='';
-  ['lmD','lmN','lmH','lmR','lmRN','lmRT'].forEach(function(id){var e=document.getElementById(id);if(e){e.disabled=!n;var g=e.closest('.lmw');if(g){g.style.opacity=n?'':'0.45';}}});}
-function lmSync(){['D','N','H'].forEach(function(k){var b=document.getElementById('lm'+k);if(b)b.classList.toggle('on',LMS===k);});var t=document.getElementById('lmV');if(t)t.textContent=Math.round(LMR*100)+' %';var tt=document.getElementById('lmVT');if(tt)tt.textContent=Math.round(LMRT*100)+' %';var tn=document.getElementById('lmVN');if(tn)tn.textContent=Math.round(LMRN*100)+' %';lmKey='';lmCalc();}
+  ['lmD','lmN','lmH','lmR','lmRN','lmRT','lmRK'].forEach(function(id){var e=document.getElementById(id);if(e){e.disabled=!n;var g=e.closest('.lmw');if(g){g.style.opacity=n?'':'0.45';}}});}
+function lmSync(){['D','N','H'].forEach(function(k){var b=document.getElementById('lm'+k);if(b)b.classList.toggle('on',LMS===k);});var t=document.getElementById('lmV');if(t)t.textContent=Math.round(LMR*100)+' %';var tt=document.getElementById('lmVT');if(tt)tt.textContent=Math.round(LMRT*100)+' %';var tn=document.getElementById('lmVN');if(tn)tn.textContent=Math.round(LMRN*100)+' %';var tk=document.getElementById('lmVK');if(tk)tk.textContent=Math.round(LMRK*100)+' %';lmKey='';lmCalc();}
 var picB=document.getElementById('picB');picB.onclick=function(){picOn=!picOn;picB.classList.toggle('on',picOn);};
 ['D','N','H'].forEach(function(k){document.getElementById('lm'+k).onclick=function(){LMS=k;lmNight();lmSync();};});
-var lmR=document.getElementById('lmR');lmR.oninput=function(){LMR=lmR.value/100;lmNight();lmSync();};var lmRT=document.getElementById('lmRT');lmRT.oninput=function(){LMRT=lmRT.value/100;lmNight();lmSync();};var lmRN=document.getElementById('lmRN');lmRN.oninput=function(){LMRN=lmRN.value/100;lmNight();lmSync();};
+var lmR=document.getElementById('lmR');lmR.oninput=function(){LMR=lmR.value/100;lmNight();lmSync();};var lmRT=document.getElementById('lmRT');lmRT.oninput=function(){LMRT=lmRT.value/100;lmNight();lmSync();};var lmRN=document.getElementById('lmRN');lmRN.oninput=function(){LMRN=lmRN.value/100;lmNight();lmSync();};var lmRK=document.getElementById('lmRK');lmRK.oninput=function(){LMRK=lmRK.value/100;lmNight();lmSync();};var konsledB=document.getElementById('konsledB');konsledB.onclick=function(){konsLedOn=!konsLedOn;konsledB.classList.toggle('on',konsLedOn);lmKey='';lmCalc();};
 nightB.addEventListener('click',function(){lmKey='';});
-lmSync();
-function applyLights(){if(!nlLight||!tvLight)return;nlLight.intensity=(nightOn&&ledOn)?LMI.nl:0;tvLight.intensity=(nightOn&&tvLedOn&&!hideCats.tvled)?LMI.tv:0;pcLight.intensity=(nightOn&&pcLedOn)?LMI.pc:0;slLight.intensity=(nightOn&&sofaLedOn&&!hideCats.sofaled&&!!hideCats.konsole)?LMI.sl:0;}
+lmSync();window.__kl=1;
+function applyLights(){if(!nlLight||!tvLight)return;nlLight.intensity=(nightOn&&ledOn)?LMI.nl:0;tvLight.intensity=(nightOn&&tvLedOn&&!hideCats.tvled)?LMI.tv:0;pcLight.intensity=(nightOn&&pcLedOn)?LMI.pc:0;slLight.intensity=(nightOn&&sofaLedOn&&!hideCats.sofaled&&!!hideCats.konsole)?LMI.sl:0;konsFace();}
 function setNight(on){nightOn=on;hemi.intensity=on?0.10:0.95;dl.intensity=on?0:0.45;stage.style.background=on?'#07070b':'';
   edgeMats.forEach(function(m){m.color.setHex(edgeColor());});
   if(tvHalo)tvHalo.material.opacity=on?1:0.5;if(tvHalo65)tvHalo65.material.opacity=on?1:0.5;if(tvHalo85)tvHalo85.material.opacity=on?1:0.5;if(tvHaloHS)tvHaloHS.material.opacity=on?1:0.5;if(tvHaloSE)tvHaloSE.material.opacity=on?1:0.5;sofaHalos.forEach(function(h){h.material.opacity=on?1:0.7;});nightB.classList.toggle('on',on);ceilB.classList.toggle('on',!on);applyLights();}
