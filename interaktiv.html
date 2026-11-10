@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv · Stand v43</title>
+<title>Zimmer Interaktiv · Stand v44</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -925,6 +925,7 @@ var pcLedMats=[],monScrMats=[];
 
   // ---- Headset in Ladestation (keilförmige Basis, Ohrmuscheln als Ellipsoide, Mikro-Ausleger) ----
   var hX=0.518,hY=3.45;   // links neben dem Mauspad (Pad endet bei y 3,26; Tisch bei 3,60)
+  var _hn=room.children.length;
   (function(){
     var sh=new THREE.Shape();sh.moveTo(hX-0.08,0);sh.lineTo(hX+0.08,0);sh.lineTo(hX+0.08,0.016);sh.lineTo(hX-0.08,0.068);sh.lineTo(hX-0.08,0);
     var g=new THREE.ExtrudeGeometry(sh,{depth:0.20,bevelEnabled:false});g.translate(0,0,-0.10);
@@ -942,6 +943,7 @@ var pcLedMats=[],monScrMats=[];
   var hc=ell(0.045,0.05,0.007,0x0d0d0f,hX-0.01,hY,hz+0.045+0.1);hc.position.y-=0.004;   // Kopfpolster
   rod([hX+0.005,hY+0.108,hz+0.02],[hX+0.065,hY+0.125,hz+0.115],0.0045,0x25252a);
   var tip=ell(0.014,0.0045,0.0045,0x0a0a0a,hX+0.068,hY+0.126,hz+0.119);
+  (function(){var pv=P(hX,hY,0),g=new THREE.Group();g.position.copy(pv);var ch=room.children.slice(_hn);ch.forEach(function(c){room.remove(c);c.position.sub(pv);g.add(c);});g.rotation.y=8*Math.PI/180;room.add(g);})();   // Station + Headset ca. 8° zum PC/Mauspad gedreht (Front zeigt leicht Richtung Pad)
 
   // ---- Mikrofonarm (L-förmig, dicke Rohre mit Gelenken) + Mikrofon mit Bügel ----
   var ax=0.145,ay=3.04,az=0.79;     // Arm sitzt mit einer Klemme an der Wandkante des linken Tisches (Tisch beginnt 11,5 cm von der Wand, x=0,115); kommt unter den Bildschirmen (Panelunterkante 0,86 m) hervor
