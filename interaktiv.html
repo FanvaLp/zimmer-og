@@ -108,7 +108,7 @@ footer{grid-column:1;grid-row:3}
 <div class="grp"><span class="lab">Fernseher</span><div class="seg"><button id="tv85B" title="Samsung M70H 85 Zoll: Panel 189,0 × 108,4 cm, mit Füßen 113,3 cm hoch; das Sideboard rückt mittig in die Nische">85 Zoll Samsung</button><button id="tv75B" class="on" title="Samsung M70H 75 Zoll: Panel 166,8 × 95,8 cm, mit Füßen 100,8 cm hoch">75 Zoll Samsung</button><button id="tvHB" style="display:none" aria-hidden="true">75 Zoll Hisense Pro</button><button id="tvSB" title="Alternative: Hisense 75U7SE (Mini-LED, 144 Hz): Panel 166,8 × 96,3 cm, mit Fuß 102,4 cm hoch, Fuß mit zwei Standbeinen, 27,5 kg (26 kg ohne Fuß), unter dem BESTÅ-Limit von 30 kg">75 Zoll Hisense SE</button><button id="tv65B" title="Samsung M70H 65 Zoll: Panel 144,4 × 83,1 cm, mit Füßen 88,2 cm hoch">65 Zoll Samsung</button></div></div>
 <div class="grp"><span class="lab">Sideboard</span><div class="seg"><button id="sbBB" class="on" title="IKEA BESTÅ 180 × 42 × 38 cm, Eicheneffekt (aktuell geplant)">BESTÅ 38 cm</button><button id="sbTB" title="IKEA TONSTAD 178,4 × 37,2 × 54,9 cm, Eichenfurnier; der Schrank bekommt dann passende TONSTAD-Türen">TONSTAD 55 cm</button></div></div>
 <div id="sbHint" style="display:none;color:#b3392b;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
-<div class="grp"><span class="lab">Soundsystem</span><div class="seg"><button id="snOff" class="on">Aus</button><button id="snOn" title="Sonos Beam (Gen 2) vor dem Fernseher + 2 × Sonos Era 100 ganz außen auf den Konsolen (Rücklautsprecher)">Sonos Beam + 2 × Era 100</button></div></div>
+<div class="grp"><span class="lab">Soundsystem</span><div class="seg"><button id="snOff">Aus</button><button id="snOn" class="on" title="Sonos Beam (Gen 2) vor dem Fernseher + 2 × Sonos Era 100 ganz außen auf den Konsolen (Rücklautsprecher)">Sonos Beam + 2 × Era 100</button></div></div>
 <div id="snHint" style="display:none;color:#8a8a8a;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
 <div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
@@ -836,7 +836,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
  room.children.slice(s0).forEach(function(o){o.visible=false;});
  cat=c0;
 })();
-  var SNON=false,SNE=[],SNLB=[],SNLC={};
+  var SNON=true,SNE=[],SNLB=[],SNLC={};
   (function(){var c0=cat,s0=room.children.length;
    function tex(rx,ry){var c=document.createElement('canvas');c.width=c.height=64;var g=c.getContext('2d');g.fillStyle='#2b2b2e';g.fillRect(0,0,64,64);g.fillStyle='#0d0d0f';for(var i=0;i<8;i++)for(var j=0;j<8;j++){g.beginPath();g.arc(4+i*8+((j%2)?4:0),4+j*8,1.9,0,6.3);g.fill();}var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rx,ry);return t;}
    function M(col,map){return new THREE.MeshLambertMaterial(map?{color:0xffffff,map:map}:{color:col});}
@@ -1623,6 +1623,7 @@ function setTvSize(s){tvSize=s;altHide.tv=(s!=='75');altHide.tvled=(s!=='75');al
   var zz0=(s==='S')?(TVSE.Z0+TVSE.H/2):(s==='H')?(TVHS.Z0+TVHS.H/2):(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2);var zz=zz0+sbDz;tvLight.position.copy(P((s==='85')?TVCX85:TVCX,0.12-NY,zz));
   sbRefresh();tv75B.classList.toggle('on',s==='75');tv65B.classList.toggle('on',s==='65');tv85B.classList.toggle('on',s==='85');tvHB.classList.toggle('on',s==='H');tvSB.classList.toggle('on',s==='S');}
 tv75B.onclick=function(){setTvSize('75');};tv65B.onclick=function(){setTvSize('65');};tv85B.onclick=function(){setTvSize('85');};tvHB.onclick=function(){setTvSize('H');};tvSB.onclick=function(){setTvSize('S');};
+soundApply();
 var sbBB=document.getElementById('sbBB'),sbTB=document.getElementById('sbTB'),sbHint=document.getElementById('sbHint');
 var SBTT={'138,8 cm gesamt':'155,7 cm gesamt','126,2 cm gesamt':'143,1 cm gesamt','151,3 cm gesamt':'168,2 cm gesamt','Bettkante bis Sideboard 82,5 cm':'Bettkante bis Sideboard 87,5 cm','bis Sideboard 85 cm':'bis Sideboard 90 cm','IKEA 200 × 300 quer: 8 cm bis Sideboard':'IKEA 200 × 300 quer: 13 cm bis Sideboard','IKEA 200 × 300 längs: 8 cm bis Sideboard':'IKEA 200 × 300 längs: 13 cm bis Sideboard','IKEA 170 × 240 quer: 22 cm bis Sideboard':'IKEA 170 × 240 quer: 27 cm bis Sideboard','Kaufland 250 × 300: 32 cm bis Sideboard':'Kaufland 250 × 300: 37 cm bis Sideboard'};
 function sbRefresh(){if(typeof soundApply==='function')soundApply();var T=(sbV==='T'),dx=(tvSize==='85')?DX85:0,rest=W-(SBT.X0+SBT.W+dx);
