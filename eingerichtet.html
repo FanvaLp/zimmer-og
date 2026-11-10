@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet · Stand v42</title>
+<title>Zimmer Eingerichtet · Stand v43</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -924,7 +924,7 @@ var pcLedMats=[],monScrMats=[];
   });
 
   // ---- Headset in Ladestation (keilförmige Basis, Ohrmuscheln als Ellipsoide, Mikro-Ausleger) ----
-  var hX=0.31,hY=3.45;   // links neben dem Mauspad (Pad endet bei y 3,26; Tisch bei 3,60)
+  var hX=0.518,hY=3.45;   // links neben dem Mauspad (Pad endet bei y 3,26; Tisch bei 3,60)
   (function(){
     var sh=new THREE.Shape();sh.moveTo(hX-0.08,0);sh.lineTo(hX+0.08,0);sh.lineTo(hX+0.08,0.016);sh.lineTo(hX-0.08,0.068);sh.lineTo(hX-0.08,0);
     var g=new THREE.ExtrudeGeometry(sh,{depth:0.20,bevelEnabled:false});g.translate(0,0,-0.10);
@@ -1004,7 +1004,7 @@ var spkLedObjs=[];
     var glow=new THREE.Mesh(new THREE.CircleGeometry(0.085,32),new THREE.MeshBasicMaterial({color:0xff2a2a,transparent:true,opacity:0.22}));glow.rotation.x=-Math.PI/2;glow.position.y=0.0015;g.add(glow);spkLedObjs.push(ring,glow);
     g.position.copy(P(x,y,DZ));room.add(g);
   }
-  spk(0.12,3.46);spk(0.13,2.12);
+  spk(0.17,3.46);spk(0.18,2.12);
 })();
 cat='led';
 // Nanoleaf Shapes Ultra Black Hexagons (9 Stück), Muster nach Vorlage: je 23 x 20 cm (Spitze zu Spitze x Kante zu Kante), ca. 1 cm tief, an der Wand über den Bildschirmen
