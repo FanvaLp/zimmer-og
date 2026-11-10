@@ -102,7 +102,7 @@ footer{grid-column:1;grid-row:3}
 <div class="grp lrow" style="flex-wrap:wrap;gap:6px 8px"><span class="lab" style="flex:0 0 auto">Sofa</span><div class="seg" style="display:inline-flex;vertical-align:top"><button id="hSofa" class="on" title="Sofa (auch ausgeklappt) ein- oder ausblenden">Ein/Aus</button></div><div class="seg" style="display:inline-flex;flex-wrap:wrap;vertical-align:top;max-width:100%"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="subh" style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin:12px 0 4px;border-bottom:1px solid rgba(128,128,128,.25);padding-bottom:2px">TV-Wand</div>
 <div class="grp lrow" style="flex-wrap:wrap;gap:6px 8px"><span class="lab" style="flex:0 0 auto">Fernseher</span><div class="seg" style="display:inline-flex;vertical-align:top"><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Ein/Aus</button></div><div class="seg" style="display:inline-flex;flex-wrap:wrap;vertical-align:top;max-width:100%"><button id="tv85B" title="Samsung M70H 85 Zoll: Panel 189,0 × 108,4 cm, mit Füßen 113,3 cm hoch; das Sideboard rückt mittig in die Nische">85 Zoll Samsung</button><button id="tv75B" class="on" title="Samsung M70H 75 Zoll: Panel 166,8 × 95,8 cm, mit Füßen 100,8 cm hoch">75 Zoll Samsung</button><button id="tvHB" style="display:none" aria-hidden="true">75 Zoll Hisense Pro</button><button id="tvSB" title="Alternative: Hisense 75U7SE (Mini-LED, 144 Hz): Panel 166,8 × 96,3 cm, mit Fuß 102,4 cm hoch, Fuß mit zwei Standbeinen, 27,5 kg (26 kg ohne Fuß), unter dem BESTÅ-Limit von 30 kg">75 Zoll Hisense SE</button><button id="tv65B" title="Samsung M70H 65 Zoll: Panel 144,4 × 83,1 cm, mit Füßen 88,2 cm hoch">65 Zoll Samsung</button></div></div>
-<div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">TV-Bretter</span><div class="seg"><button id="brettB" title="Zwei BESTÅ Böden (56 × 36 cm, Eicheneffekt weiß lasiert) unter den Füßen heben den Fernseher um ca. 1,6 cm (Dicke geschätzt), damit die Beam weniger vom Bild verdeckt. Nur bei Samsung 65, 75 und 85 Zoll.">Ein/Aus</button></div></div>
+<div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">TV-Bretter</span><div class="seg"><button id="brettB" title="Zwei BESTÅ Böden (56 × 36 cm, Eicheneffekt weiß lasiert) unter den Füßen heben den Fernseher um ca. 1,6 cm (Dicke geschätzt), damit die Soundbar sicher unter dem Bild bleibt. Nur bei Samsung 65, 75 und 85 Zoll.">Ein/Aus</button></div></div>
 <div class="grp lrow" style="flex-wrap:wrap;gap:6px 8px"><span class="lab" style="flex:0 0 auto">Sideboard</span><div class="seg" style="display:inline-flex;vertical-align:top"><button id="hSide" class="on" title="BESTÅ-Sideboard ein- oder ausblenden">Ein/Aus</button></div><div class="seg" style="display:inline-flex;flex-wrap:wrap;vertical-align:top;max-width:100%"><button id="sbBB" class="on" title="IKEA BESTÅ 180 × 42 × 38 cm, Eicheneffekt (aktuell geplant)">BESTÅ 38 cm</button><button id="sbTB" title="IKEA TONSTAD 178,4 × 37,2 × 54,9 cm, Eichenfurnier; der Schrank bekommt dann passende TONSTAD-Türen">TONSTAD 55 cm</button></div></div>
 <div id="sbHint" style="display:none;color:#b3392b;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
 <div class="subh" style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin:12px 0 4px;border-bottom:1px solid rgba(128,128,128,.25);padding-bottom:2px">Weitere Möbel</div>
@@ -112,14 +112,14 @@ footer{grid-column:1;grid-row:3}
 <div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Nackenpolster</span><div class="seg"><button id="hNack" class="on" title="Nackenpolster am Sofa ein- oder ausblenden">Ein/Aus</button></div></div>
 <div class="grp"><span class="lab">Tisch / Hocker</span><div class="seg"><button id="ctOnB" class="on" title="Nur der Couchtisch LACK (90 × 55 × 45 cm); bei ausgeklapptem Bett steht er hinter dem Sofa">Tisch</button><button id="hkOnB" title="Nur der Hocker SÖRVALLEN mit Aufbewahrung (105 × 84 × 45 cm); bei ausgeklapptem Bett weggestellt">Hocker</button><button id="bothB" title="Tisch und Hocker zusammen; der eine steht vor dem Sofa, der andere dahinter (Auswahl daneben)">Beide</button><button id="ctOffB" title="Weder Couchtisch noch Hocker anzeigen">Keins</button></div></div>
 <div class="grp" id="arGrp" style="display:none"><span class="lab">Bei „Beide“: Platzierung</span><div class="seg"><button id="arT" class="on" title="Couchtisch vor dem Sofa, Hocker hinter dem Sofa (Hocker passt dort mit 5 cm Luft, Deckel nicht öffenbar)">Tisch vorne, Hocker hinter dem Sofa</button><button id="arH" title="Hocker vor dem Sofa, Couchtisch hinter dem Sofa">Hocker vorne, Tisch hinter dem Sofa</button></div></div>
-<div class="grp"><span class="lab">Konsolen hinter dem Sofa</span><div class="seg"><button id="kOffB" class="on" title="Konsolen ausblenden">Aus</button><button id="kVarB" title="2 × 100 cm + 1 × 80 cm (80er in der Mitte) = 280 cm: beginnt am Ende des letzten Kissens (Armlehne 22,5 cm), endet 11,5 cm vor der Außenwand">2 × 100 + 80 cm</button><button id="kVarA" title="3 × 100 cm = 300 cm: bündig mit der Sofa-Außenkante (Schreibtischseite), 16 cm über das Sofa hinaus, 14 cm vor der Außenwand">3 × 100 cm</button><button id="kVarC" title="1 × 120 cm: nur eine Konsole, 29 cm vor der Außenwand, mittig vor dem Fensterende-Sitz: beide Sonos Era 100 stehen darauf, ganz außen an den beiden Enden">1 × 120 cm</button></div></div>
+<div class="grp"><span class="lab">Konsolen hinter dem Sofa</span><div class="seg"><button id="kOffB" class="on" title="Konsolen ausblenden">Aus</button><button id="kVarB" title="2 × 100 cm + 1 × 80 cm (80er in der Mitte) = 280 cm: beginnt am Ende des letzten Kissens (Armlehne 22,5 cm), endet 11,5 cm vor der Außenwand">2 × 100 + 80 cm</button><button id="kVarA" title="3 × 100 cm = 300 cm: bündig mit der Sofa-Außenkante (Schreibtischseite), 16 cm über das Sofa hinaus, 14 cm vor der Außenwand">3 × 100 cm</button><button id="kVarC" title="1 × 120 cm: nur eine Konsole, 29 cm vor der Außenwand, mittig vor dem Fensterende-Sitz: beide Bose-Lautsprecher stehen darauf, ganz außen an den beiden Enden">1 × 120 cm</button></div></div>
 <div class="grp" id="kVarGrp" style="display:none"><button id="kSofaB" style="display:none" aria-hidden="true">Ein</button></div>
 <div id="konsHint" style="display:none;font-size:11px;line-height:1.4;opacity:.7;margin:-2px 0 4px"></div>
 <div class="grp" id="dkRow"><span class="lab">Konsolen-Deko</span><div class="seg"><button id="dkB" class="on" title="Beispiel-Dekoration auf den Konsolen: 2 Pflanzen und Bücher (nur wählbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Dekoration</button><button id="kbB" class="on" title="Drei Flechtkörbe auf der unteren Ablage der Konsolen (nur wählbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Körbe unten</button></div></div>
 <div id="dkHint" style="display:none;color:#8a8a8a;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
 <div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
-<div class="grp"><span class="lab">Soundsystem</span><div class="seg"><button id="snOff">Aus</button><button id="snOn" class="on" title="Sonos Beam (Gen 2) vor dem Fernseher + 2 × Sonos Era 100 ganz außen auf den Konsolen (Rücklautsprecher)">Sonos Beam + 2 × Era 100</button></div></div>
+<div class="grp"><span class="lab">Soundsystem</span><div class="seg"><button id="snOff">Aus</button><button id="snOn" class="on" title="Bose Smart Soundbar 600 vor dem Fernseher + 2 × Bose Surround Speakers ganz außen auf den Konsolen (Rücklautsprecher)">Bose Soundbar 600 + 2 Surround Speakers</button></div></div>
 <div id="snHint" style="display:none;color:#8a8a8a;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
 <div class="sec">Öffnen &amp; Zubehör</div>
 <div class="grp"><span class="lab">Öffnen / Schließen</span><div class="seg"><button id="lidB" title="Sofa-Stauraum (Récamiere) öffnen / schließen – nur im Sitzmodus">Sofa-Klappe öffnen</button><button id="paxB" title="Schranktüren öffnen / schließen">Schranktüren öffnen</button><button id="sbB" title="Sideboard-Türen (BESTÅ) öffnen / schließen">Sideboard-Türen öffnen</button><button id="hkB" title="Hocker-Deckel öffnen / schließen (blendet den Hocker bei Bedarf ein; nicht bei ausgeklapptem Bett)">Hocker-Deckel öffnen</button></div></div>
@@ -774,9 +774,9 @@ var bedOn=false;
 // Normal: vor dem Sofa (Abstand 33,5 cm zu den Sitzkissen). Sofa ausgeklappt: vor dem ausgeklappten Sofa (20 cm Abstand zur Bettkante, 64 cm bis zum Sideboard).
 var CTN=[2.18,1.27,3.08,1.82],CTB=[2.60,D-SGAP+0.10,3.50,D-SGAP+0.65];   // bei ausgeklapptem Bett: weggestellt hinter dem Sofa (10 cm hinter der Sofarückseite, Schräge dort über 0,8 m hoch)
 cat='brett';
-var BRT=0.016,brDz=0;   // BESTÅ Boden 56 x 36 cm (Eicheneffekt weiß lasiert), Dicke 1,6 cm geschätzt; je einer unter jedem Samsung-Fuß, Innenkante 0,5 cm neben der Beam
+var BRT=0.016,brDz=0;   // BESTÅ Boden 56 x 36 cm (Eicheneffekt weiß lasiert), Dicke 1,6 cm geschätzt; je einer unter jedem Samsung-Fuß, Innenkante 0,5 cm neben der Soundbar (Bose 69,4 cm breit)
 [[TVCX,1.250,'75'],[TVCX,TV65.FS,'65'],[TVCX85,TV85.FS,'85']].forEach(function(v){[-1,1].forEach(function(sg){
-  var fx=v[1]/2-0.0205,cxo=Math.max(fx,0.611),cx=v[0]+sg*cxo;
+  var fx=v[1]/2-0.0205,cxo=Math.max(fx,0.632),cx=v[0]+sg*cxo;
   box(cx-0.28,0.06,SBH,cx+0.28,0.42,SBH+BRT,0xcdb898);var n0=room.children.length;room.children.slice(n0-2).forEach(function(o){o.userData.bsz=v[2];});});});
 cat='tv';
 var ctOn=true,hideCats={};var accState={kabel:true,tablett:false,brett:false};function accApply(){room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='kabel'||c==='tablett'||c==='brett')o.visible=!!accState[c]&&!hideCats[c]&&!(c==='tablett'&&hideCats.sofa)&&!(c==='brett'&&o.userData.bsz!==tvSize);});}
@@ -851,7 +851,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
   ['Hue Flux auf 2,80 m gekürzt, auf der Konsolen-Rückseite (leuchtet die Schräge an)',XB+1.40,Y0+DP+0.06,0.90],
   ['Konsolen 0,3 cm hinter dem Sofa',XB-0.12,D-SGAP+0.015,0.02],['Armlehne 22,5 cm: Konsolen beginnen am Ende des Kissens',SX0+0.11,YD+0.12,0.90],
   ['Konsolen bis Schrägenwand 71 cm (Schräge dort 1,25 m hoch)',XEB+0.30,(Y0+DP+D)/2,0.02]]);
- KLB=KLB.concat([['Konsole VASAGLE 1 × 120 cm (20 × 120 × 80,9 cm) · beide Era 100 stehen ganz außen darauf',XCC+0.60,YD+0.22,0.02],
+ KLB=KLB.concat([['Konsole VASAGLE 1 × 120 cm (20 × 120 × 80,9 cm) · beide Bose-Lautsprecher stehen ganz außen darauf',XCC+0.60,YD+0.22,0.02],
   ['Länge 120 cm (1 Konsole)',XCC+0.60,YD,0.02],['Konsole Höhe 80,9 cm (120er)',XCC-0.06,Y0+DP/2,0.45],['Konsole Tiefe 20 cm (120er)',XCC+1.34,Y0+DP/2,0.02],['Konsole bis Außenwand 29 cm (120er)',(XCC+1.20+W)/2,YD,0.02],
   ['Hue Flux auf 1,16 m gekürzt, auf der Konsolen-Rückseite (leuchtet die Schräge an)',XCC+0.60,Y0+DP+0.06,0.90],
   ['Konsole 120 cm bis Schrägenwand 71 cm (Schräge dort 1,25 m hoch)',XCC+1.50,(Y0+DP+D)/2,0.02]]);
@@ -866,41 +866,33 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    function M(col,map){return new THREE.MeshLambertMaterial(map?{color:0xffffff,map:map}:{color:col});}
    function bx(w,d,h,x,y,z,col,arr){var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col));m.position.copy(P(x,y,z));room.add(m);m.userData.p0=m.position.clone();if(arr)arr.push(m);return m;}
    function cy(rt,rb,h,sx,sz,x,y,z,mat,arr){var m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,40),mat);m.scale.set(sx,1,sz);m.position.copy(P(x,y,z));room.add(m);m.userData.p0=m.position.clone();if(arr)arr.push(m);return m;}
-   // ---- Sonos Beam (Gen 2): 65,1 x 10 x 6,9 cm, Stadionform, Gitterfront, glänzende Oberseite (nach Amazon-Fotos)
+   // ---- Bose Smart Soundbar 600: 69,4 x 10,4 x 5,6 cm; Korpus mit feinem Metallgitter rundum (Front und Enden), glänzend schwarze Glasplatte oben mit abgesenktem Gitterfeld (Atmos), Touch-Tasten links, BOSE-Schriftzug mittig vorn (nach Amazon-Fotos)
    cat='beam';
-   var BX=TVCX,BY=0.355,BZ=SBH,BL=0.651,BD=0.10,BH=0.069,R=BD/2,hl=BL/2-R,gm=M(0,tex(14,3)),gm2=M(0,tex(2,3));
-   bx(hl*2,BD,BH,BX,BY,BZ+BH/2,0x151517);
-   [-1,1].forEach(function(s){cy(1,1,BH,R,R,BX+s*hl,BY,BZ+BH/2,gm2);});
-   bx(hl*2,0.002,BH*0.70,BX,BY-BD/2-0.0005,BZ+BH*0.38,0x2b2b2e);
-   (function(){var m=room.children[room.children.length-1];m.material=gm;})();
-   bx(hl*2,BD-0.002,0.006,BX,BY,BZ+BH-0.003,0x0b0b0d);
-   [-1,1].forEach(function(s){cy(1,1,0.006,R-0.001,R-0.001,BX+s*hl,BY,BZ+BH-0.003,M(0x0b0b0d));});
-   [-0.018,0,0.018].forEach(function(dx){bx(0.006,0.004,0.0006,BX+dx,BY+0.012,BZ+BH+0.0003,0x8a8a90);});
-   bx(0.05,0.0006,0.007,BX,BY-BD/2-0.0012,BZ+BH*0.62,0x3a3a3f);   // SONOS-Schriftzug (Platzhalter)
+   var BX=TVCX,BL=0.694,BD=0.104,BH=0.056,BY=0.405-BD/2,BZ=SBH,gm=M(0,tex(40,4)),TPH=0.007;
+   bx(BL-0.004,BD-0.004,BH-TPH,BX,BY,BZ+(BH-TPH)/2,0x1a1a1c).material=gm;
+   bx(BL,BD,TPH,BX,BY,BZ+BH-TPH/2,0x0a0a0c);   // Glasplatte oben (steht leicht über)
+   bx(BL*0.52,BD*0.50,0.0008,BX+0.02,BY+0.004,BZ+BH+0.0004,0x131315);   // Gitterfeld oben (Atmos)
+   bx(0.006,0.006,0.0006,BX-0.255,BY-0.012,BZ+BH+0.0003,0x55555a);bx(0.004,0.004,0.0006,BX-0.215,BY-0.012,BZ+BH+0.0003,0x55555a);   // Touch-Tasten
+   bx(0.040,0.0008,0.007,BX,BY-BD/2-0.0006,BZ+BH*0.52,0x9a9aa0);   // BOSE-Schriftzug (Platzhalter)
    room.children.slice(s0).forEach(function(o){o.visible=false;});
    var s1=room.children.length;
-   // ---- Sonos Era 100: 12 x 13,05 cm oval, 18,25 cm hoch, 2,02 kg; Lochgitter rundum, glatte Rückenleiste mit Tasten, Schlitz oben, Sockel angeschrägt (nach Amazon-Fotos)
+   // ---- Bose Surround Speakers: je 8,4 x 8,1 x 9,4 cm (B x T x H); Front mit Lochgitter (zum Sofa), glänzende Deckkappe mit Metallrand, schwarzer Sockelrand, BOSE-Schriftzug unten vorn (nach Amazon-Fotos)
    cat='rear';
-   var RX=0.06,RY=0.06525,gE=M(0,tex(26,12));
+   var gB=M(0,tex(26,26));
    [0,1].forEach(function(i){var arr=[];
-    cy(1,0.84,0.02,RX,RY,0,0,0.01,M(0x111113),arr);
-    cy(1,1,0.1585,RX,RY,0,0,0.02+0.07925,gE,arr);
-    cy(1,1,0.004,RX,RY,0,0,0.1805,M(0x0e0e10),arr);
-    bx(0.10,0.014,0.0015,0,0.004,0.1825,0x040405,arr);
-    [-0.03,0,0.03].forEach(function(dx){bx(0.006,0.006,0.0006,dx,-0.04,0.1823,0x77777c,arr);});
-    bx(0.045,0.003,0.145,0,RY+0.0005,0.095,0x161618,arr);
-    bx(0.012,0.002,0.02,0,RY+0.0022,0.158,0x0a0a0b,arr);
-    bx(0.012,0.002,0.02,0,RY+0.0022,0.072,0x0a0a0b,arr);
-    bx(0.004,0.002,0.004,0,RY+0.0035,0.064,0x3fd35a,arr);
-    bx(0.012,0.002,0.016,0,RY+0.0022,0.044,0x040405,arr);
-    bx(0.008,0.0008,0.05,0.022,-RY-0.0004,0.14,0x34343a,arr);   // SONOS-Schriftzug (Platzhalter)
+    bx(0.082,0.079,0.004,0,0,0.002,0x0b0b0c,arr);   // Sockelrand
+    bx(0.084,0.081,0.082,0,0,0.045,0x141416,arr);   // Korpus
+    bx(0.0838,0.0008,0.078,0,-0.0405,0.047,0x141416,arr).material=gB;   // Lochgitter-Front
+    bx(0.086,0.083,0.0015,0,0,0.0865,0x8a8a90,arr);   // Metallrand
+    bx(0.084,0.081,0.0065,0,0,0.0905,0x08080a,arr);   // glänzende Deckkappe
+    bx(0.032,0.0008,0.006,0,-0.0412,0.014,0xd0d0d4,arr);   // BOSE-Schriftzug (Platzhalter)
     SNE.push({o:arr});});
    room.children.slice(s1).forEach(function(o){o.visible=false;});
    hideCats.beam=true;hideCats.rear=true;
-   SNLB=[['Sonos Beam (Gen 2) · 65,1 × 10 × 6,9 cm · 2,8 kg · schwarz',BX,BY,BZ+BH+0.16],
-    ['Beam 6,9 cm hoch: Bildunterkante 5 cm über dem Sideboard, Beam verdeckt ca. 2 cm vom Bild (geschätzt)',BX-0.45,BY-0.02,BZ+BH+0.05],
-    ['Era 100 an der Außenwand · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig',3,3.2,1],
-    ['Era 100 am L-Stück, ca. 40 cm vom Ende nach innen, hinter deinem Kopf · gleiche Maße · Steckdose nötig',3,3.2,1]];
+   SNLB=[['Bose Smart Soundbar 600 · 69,4 × 10,4 × 5,6 cm · 3,13 kg · schwarz',BX,BY,BZ+BH+0.16],
+    ['Soundbar 5,6 cm hoch: Bildunterkante 5 cm über dem Sideboard, ohne TV-Bretter ragt sie ca. 0,6 cm ins Bild, mit den Brettern bleibt ca. 1 cm Luft (geschätzt)',BX-0.45,BY-0.02,BZ+BH+0.05],
+    ['Bose Surround Speaker an der Außenwand · 8,4 × 8,1 × 9,4 cm · Funkempfänger + Steckdose nötig',3,3.2,1],
+    ['Bose Surround Speaker am L-Stück, ca. 40 cm vom Ende nach innen, hinter deinem Kopf · gleiche Maße · Funkempfänger + Steckdose nötig',3,3.2,1]];
    SNLB.forEach(function(l,i){SNLC[l[0]]=(i<2)?'beam':'rear';});
    cat=c0;
   })();
@@ -912,14 +904,14 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    SNE.forEach(function(e,i){var z=hz(xs[i]);e.o.forEach(function(o){o.position.x=o.userData.p0.x+xs[i];o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
    var bOn=!!SNON&&tvSize!=='S',rOn=!!SNON&&kon;hideCats.beam=!bOn;hideCats.rear=!rOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='beam')o.visible=bOn;else if(c==='rear')o.visible=rOn;});
-   labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;l.el.textContent=(KV==='A'||KV==='B')?(i===0?'Era 100 neben deinem Kopf, Seite zur Sofa-Mitte (7 cm neben dem Nackenpolster) · 18,25 cm hoch, 12 × 13,05 cm · 2,02 kg · Steckdose nötig':'Era 100 neben deinem Kopf, Außenwandseite (7 cm neben dem Nackenpolster) · gleiche Maße · Steckdose nötig'):(KV==='C')?(i===0?'Era 100 auf der 120er-Konsole, ganz außen am Konsolen-Anfang (Seite zur Sofa-Mitte, 7 cm vom Rand) · 18,25 cm hoch · Steckdose nötig':'Era 100 auf der 120er-Konsole, ganz außen am Konsolen-Ende (zur Außenwand, 7 cm vom Rand) · gleiche Maße · Steckdose nötig'):l.t0;});
+   labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;l.el.textContent=(KV==='A'||KV==='B')?(i===0?'Bose Surround Speaker neben deinem Kopf, Seite zur Sofa-Mitte (7 cm neben dem Nackenpolster) · 8,4 × 8,1 × 9,4 cm · Funkempfänger + Steckdose nötig':'Bose Surround Speaker neben deinem Kopf, Außenwandseite (7 cm neben dem Nackenpolster) · gleiche Maße · Funkempfänger + Steckdose nötig'):(KV==='C')?(i===0?'Bose Surround Speaker auf der 120er-Konsole, ganz außen am Konsolen-Anfang (Seite zur Sofa-Mitte, 7 cm vom Rand) · 9,4 cm hoch · Funkempfänger + Steckdose nötig':'Bose Surround Speaker auf der 120er-Konsole, ganz außen am Konsolen-Ende (zur Außenwand, 7 cm vom Rand) · gleiche Maße · Funkempfänger + Steckdose nötig'):l.t0;});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);
    if(h){var t='';if(SNON){
-     if(tvSize==='S')t='Beam passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
-     else t='Beam vor dem Fernseher, verdeckt ca. 2 cm vom unteren Bild (geschätzt).';
-     if(!kon)t+=' Era 100 erscheinen, sobald die Konsolen eingeblendet sind.';
-     else if(KO_WALL)t+=' ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Era 100 (ca. 0,99 m) stoßen an.';}
+     if(tvSize==='S')t='Die Soundbar passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
+     else t='Soundbar vor dem Fernseher (5,6 cm hoch): ohne TV-Bretter ragt sie ca. 0,6 cm ins Bild, mit den Brettern bleibt Luft (geschätzt).';
+     if(!kon)t+=' Die Bose-Lautsprecher erscheinen, sobald die Konsolen eingeblendet sind.';
+     else if(KO_WALL)t+=' ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Bose-Lautsprecher (ca. 0,90 m) stoßen an.';}
     h.style.display=SNON?'block':'none';h.textContent=t;}}
   var snOffB=document.getElementById('snOff'),snOnB=document.getElementById('snOn');
   if(snOffB)snOffB.onclick=function(){SNON=false;soundApply();};
@@ -986,7 +978,7 @@ function konsCtb(on){var d=on?KO_SH:0,c0=cat;
 function konsArT(){var at=document.getElementById('arT'),on=!hideCats.konsole;if(at){at.style.opacity=on?'0.45':'';at.title=on?'Mit eingeblendeten Konsolen nicht möglich: Hocker (84 cm tief) plus Konsole (23 cm) sind mehr als die 91,5 cm hinter dem Sofa':'Couchtisch vor dem Sofa, Hocker hinter dem Sofa (Hocker passt dort mit 5 cm Luft, Deckel nicht öffenbar)';}
  var ko=document.getElementById('kOnB'),kf=document.getElementById('kOffB'),kh=document.getElementById('konsHint');if(ko)ko.classList.toggle('on',on);if(kf)kf.classList.toggle('on',!on);
  var va=document.getElementById('kVarA'),vb=document.getElementById('kVarB');if(va&&vb){va.classList.toggle('on',on&&KV==='A');vb.classList.toggle('on',on&&KV==='B');}var vc=document.getElementById('kVarC');if(vc)vc.classList.toggle('on',on&&KV==='C');var bb=document.getElementById('bothB');if(bb){bb.disabled=on;bb.style.opacity=on?'0.45':'';if(bb.dataset.t0===undefined)bb.dataset.t0=bb.title||'';bb.title=on?'Mit den Konsolen nicht möglich: Tisch oder Hocker wählen (hinter dem Sofa ist für den Hocker kein Platz, vorne nur für eines von beiden)':bb.dataset.t0;}var klr=document.getElementById('konsLedRow');if(klr)klr.style.opacity=on?'':'0.45';var kw=document.getElementById('kWallB'),ks=document.getElementById('kSofaB'),kg=document.getElementById('kPosGrp');if(kg)kg.style.display=on?'':'none';if(kw)kw.classList.toggle('on',on&&KO_WALL);if(ks)ks.classList.toggle('on',on&&!KO_WALL);
- if(kh){kh.style.display=on?'block':'none';var t='';if(on){if(KO_WALL){t='Konsolen an der Wand: 24 cm Wandabstand (näher geht nicht: die Schräge ist dort nur 83 cm hoch, die Konsolen 81 cm), 47,5 cm Platz bis zum Sofa. Sofa-Licht ist aus (Lightbars verdeckt).'+((ctOn&&hkOn)?' Hocker hinter dem Sofa passt nicht: bei „Beide“ steht der Hocker vorne.':'')+(hkOn&&!ctOn?' Der Hocker (84 cm tief) passt hinter dem Sofa nicht.':'')+((ctOn&&tabBack())?' Der Couchtisch (55 cm tief) passt hinter dem Sofa nicht und ist ausgeblendet.':'');}else{t='Konsolen ('+(KV==='A'?'3 × 100 cm':KV==='C'?'1 × 120 cm (29 cm vor der Außenwand), beide Era 100 ganz außen darauf':'2 × 100 + 80 cm, 80er in der Mitte')+') an: Tisch oder Hocker, nicht beide (hinter dem Sofa ist für den Hocker kein Platz, vorne nur für eines von beiden). Sofa-Licht (Hue Lightbars) ist aus, weil die Konsolen sie verdecken.';}}kh.textContent=t;}}
+ if(kh){kh.style.display=on?'block':'none';var t='';if(on){if(KO_WALL){t='Konsolen an der Wand: 24 cm Wandabstand (näher geht nicht: die Schräge ist dort nur 83 cm hoch, die Konsolen 81 cm), 47,5 cm Platz bis zum Sofa. Sofa-Licht ist aus (Lightbars verdeckt).'+((ctOn&&hkOn)?' Hocker hinter dem Sofa passt nicht: bei „Beide“ steht der Hocker vorne.':'')+(hkOn&&!ctOn?' Der Hocker (84 cm tief) passt hinter dem Sofa nicht.':'')+((ctOn&&tabBack())?' Der Couchtisch (55 cm tief) passt hinter dem Sofa nicht und ist ausgeblendet.':'');}else{t='Konsolen ('+(KV==='A'?'3 × 100 cm':KV==='C'?'1 × 120 cm (29 cm vor der Außenwand), beide Bose-Lautsprecher ganz außen darauf':'2 × 100 + 80 cm, 80er in der Mitte')+') an: Tisch oder Hocker, nicht beide (hinter dem Sofa ist für den Hocker kein Platz, vorne nur für eines von beiden). Sofa-Licht (Hue Lightbars) ist aus, weil die Konsolen sie verdecken.';}}kh.textContent=t;}}
 function konsApply(){var on=!hideCats.konsole;konsVar();konsMove();if(typeof soundApply==='function')soundApply();if(typeof decoApply==='function')decoApply();if(window.__kl&&typeof lmCalc==='function'){lmKey='';lmCalc();}setSofaLed(sofaLedOn);konsCtb(on);if(on&&ctOn&&hkOn)setTabMode(true,false);if(on&&hkArr==='tf')hkArr='hf';applyTabHk();tabVis();
  var sb=document.getElementById('sofaledB');if(sb){if(sb.dataset.t0===undefined)sb.dataset.t0=sb.title||'';sb.style.opacity=on?'0.45':'';sb.title=on?'Sofa-Licht ist aus, solange die Konsolen eingeblendet sind (die Lightbars stehen dort und wären verdeckt)':sb.dataset.t0;}}
 // Hocker IKEA SÖRVALLEN mit Aufbewahrung, Tallmyra mittelgrau: 105 x 84 x 45 cm (Länge x Breite x Höhe laut IKEA, Tiefe = 84 cm angenommen). Aufbau geschätzt nach den IKEA-Produktbildern: Beine ca. 8 cm (dunkle, nach unten verjüngte Blöcke), Korpus ca. 24 cm, Polsterdeckel ca. 13 cm, Deckel-Unterseite hell, zwei Klappenarme (Scherenarme) mit Dämpfer.
@@ -1522,7 +1514,7 @@ canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(0.3
 })();
 ['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');if(/^v[678]$/.test(k)){try{stage.scrollIntoView({block:'end'});}catch(e){}}};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['hocker','Hocker'],['nacken','Nackenpolster'],['konsole','Konsolen'],['beam','Sonos Beam'],['deko','Dekoration'],['korb','Körbe unten'],['rear','Sonos Era 100'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['sofaled','Sofa-Licht (Hue Play)'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['hocker','Hocker'],['nacken','Nackenpolster'],['konsole','Konsolen'],['beam','Bose Soundbar 600'],['deko','Dekoration'],['korb','Körbe unten'],['rear','Bose Surround Speakers'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['sofaled','Sofa-Licht (Hue Play)'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
