@@ -1501,7 +1501,7 @@ function konsLightCalc(){var on=!hideCats.konsole&&konsLedOn;if(!on||!KOV)return
   if(NR[v*3+2]<0.9&&e>emax)emax=e;
   L=0.6*e/Math.PI;s=Math.pow(Math.min(1,L/250),0.45)*0.95;col[v*3]=tint[0]*s;col[v*3+1]=tint[1]*s;col[v*3+2]=tint[2]*s;}
  if(KOV.userData.ca)KOV.userData.ca.needsUpdate=true;return emax;}
-function konsFace(){if(!KOV||!KFACE)return;var on=!hideCats.konsole&&konsLedOn,lit=nightOn&&on;KOV.visible=lit;
+function konsFace(){if(!KOV||!KFACE)return;var kh=!!hideCats.konsole,kb=document.getElementById('konsledB'),kr=document.getElementById('lmRK');if(kb){kb.disabled=kh;kb.style.opacity=kh?'0.45':'';}if(kr){kr.disabled=kh||!nightOn;var kw=kr.closest('.lmw');if(kw)kw.style.opacity=(kh||!nightOn)?'0.45':'';}var on=!hideCats.konsole&&konsLedOn,lit=nightOn&&on;KOV.visible=lit;
  if(lit){var s=0.35+0.65*LMRK;KFACE.material.color.setHex((Math.round(255*s)<<16)|(Math.round(204*s)<<8)|Math.round(148*s));}else KFACE.material.color.setHex(0xd6d6d0);}
 /* Lichtberechnung (Nachtlicht): Leuchtdichte/Lichtstrom -> Beleuchtungsstärke am Sofa-Platz; Darstellung skaliert mit der Lichtstärke (cd) der Quellen */
 [nlLight,tvLight,slLight].forEach(function(l){l.distance=4.6;l.decay=1.1;});   // gleiches Abklingverhalten für alle Lichter
