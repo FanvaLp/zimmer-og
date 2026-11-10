@@ -785,12 +785,18 @@ ctDims('ctb',function(hx,vy,vz){hx(CTB[3]+0.10,CTB[0],CTB[2]);vy(2.50,CTB[1],CTB
 var KLB=[],KLC={},KO_SH=0.18;
 (function(){var c0=cat,s0=room.children.length;cat='konsole';
  var Y0=D-SGAP+0.03,DP=0.20,FRC=0x1d1d20,XA=SX0+0.01,XE=XA+2.82,YD=Y0+DP+0.10;
- var wc=document.createElement('canvas');wc.width=wc.height=128;var g=wc.getContext('2d'),sd=5;function rn(){sd=(sd*16807)%2147483647;return sd/2147483647;}
- g.fillStyle='#7b5233';g.fillRect(0,0,128,128);
- for(var i=0;i<26;i++){g.fillStyle='rgba(40,22,10,'+(0.08+rn()*0.14)+')';g.fillRect(0,rn()*128,128,1+rn()*2.5);}
- for(var j=0;j<7;j++){g.fillStyle='rgba(30,16,8,'+(0.10+rn()*0.12)+')';g.beginPath();g.ellipse(rn()*128,rn()*128,5+rn()*9,3+rn()*5,rn()*3,0,6.3);g.fill();}
- var wt=new THREE.CanvasTexture(wc);wt.wrapS=wt.wrapT=THREE.RepeatWrapping;
- function bm(w){var t=wt.clone();t.needsUpdate=true;t.repeat.set(Math.max(1,w/0.5),1);return new THREE.MeshLambertMaterial({map:t,color:0xffffff});}
+ var wc=document.createElement('canvas');wc.width=wc.height=256;var g=wc.getContext('2d'),sd=5;function rn(){sd=(sd*16807)%2147483647;return sd/2147483647;}
+ // Vintagebraun nach den VASAGLE-Fotos: mittelbraun-orange, grosse dunkle "angebrannte" Wolken, feine waagrechte Maserung, einzelne Astlöcher, helle Stellen
+ g.fillStyle='#86593a';g.fillRect(0,0,256,256);
+ for(var i=0;i<46;i++){var x=rn()*256,y=rn()*256,r=12+rn()*30,dk=rn()<0.62,gr=g.createRadialGradient(x,y,0,x,y,r);
+  gr.addColorStop(0,dk?'rgba(34,17,8,'+(0.30+rn()*0.40)+')':'rgba(196,138,86,'+(0.16+rn()*0.20)+')');gr.addColorStop(1,'rgba(0,0,0,0)');
+  g.save();g.translate(x,y);g.scale(1.8+rn()*1.6,0.55+rn()*0.4);g.translate(-x,-y);g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,6.3);g.fill();g.restore();}
+ for(var k=0;k<260;k++){var ly=rn()*256,lx=rn()*256,ll=30+rn()*150,dk2=rn()<0.65;g.fillStyle=dk2?'rgba(45,24,12,'+(0.05+rn()*0.16)+')':'rgba(205,150,96,'+(0.04+rn()*0.10)+')';g.fillRect(lx,ly,ll,0.5+rn()*1.3);}
+ for(var n=0;n<3;n++){var kx=20+rn()*216,ky=20+rn()*216;for(var q2=5;q2>0;q2--){g.strokeStyle='rgba(30,15,7,'+(0.14+0.05*q2)+')';g.lineWidth=1.2;g.beginPath();g.ellipse(kx,ky,q2*3.4,q2*1.5,0,0,6.3);g.stroke();}g.fillStyle='rgba(25,12,6,0.7)';g.beginPath();g.ellipse(kx,ky,3,1.5,0,0,6.3);g.fill();}
+ var id=g.getImageData(0,0,256,256),dd=id.data;for(var p=0;p<dd.length;p+=4){var nz=(rn()-0.5)*16;dd[p]+=nz;dd[p+1]+=nz*0.85;dd[p+2]+=nz*0.7;}g.putImageData(id,0,0);
+ var wt=new THREE.CanvasTexture(wc);wt.wrapS=wt.wrapT=THREE.MirroredRepeatWrapping;
+ var EDG=new THREE.MeshLambertMaterial({color:0xa5764a});
+ function bm(w){var t=wt.clone();t.needsUpdate=true;t.repeat.set(Math.max(1,w/0.55),0.42);var tp=new THREE.MeshLambertMaterial({map:t,color:0xffffff});return [EDG,EDG,tp,tp,EDG,EDG];}
  function kb(x0,y0,z0,x1,y1,z1,color,mat){var m=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,z1-z0,y1-y0),mat||new THREE.MeshLambertMaterial({color:color}));
   m.position.copy(P((x0+x1)/2,(y0+y1)/2,(z0+z1)/2));room.add(m);
   var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);
