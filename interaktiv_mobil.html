@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v32</title>
+<title>Zimmer Interaktiv Mobil · Stand v33</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -114,7 +114,7 @@ footer{grid-column:1/-1;grid-row:2}
 <div class="grp"><span class="lab">Möbel ein / aus</span><div class="seg"><button id="hSofa" class="on" title="Sofa (auch ausgeklappt) ein- oder ausblenden">Sofa</button><button id="hTisch" class="on" title="Schreibtisch mit PC, Bildschirmen, Lautsprechern usw. ein- oder ausblenden">Schreibtisch</button><button id="hSchrank" class="on" title="PAX-Schrank ein- oder ausblenden">Schrank</button><button id="hSide" class="on" title="BESTÅ-Sideboard ein- oder ausblenden">Sideboard</button><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Fernseher</button><button id="hStuhl" class="on" title="Bürostuhl und Unterlage ein- oder ausblenden">Stuhl</button><button id="hCouch" class="on" title="Couchtisch ein- oder ausblenden">Couchtisch</button><button id="hHock" title="Hocker ein- oder ausblenden">Hocker</button><button id="hNack" class="on" title="Nackenpolster am Sofa ein- oder ausblenden">Nackenpolster</button><button id="hRug" class="on" title="Teppich ein- oder ausblenden (gewählter Teppich bleibt gemerkt)">Teppich</button><button id="hNano" class="on" title="Nanoleaf-Panele an der Schreibtischwand ein- oder ausblenden">Nanoleaf</button><button id="hAll" title="Alle diese Möbel auf einmal ein- oder ausblenden">Alle</button></div></div>
 <div class="grp"><span class="lab">Sofa</span><div class="seg"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="grp"><span class="lab">Nackenpolster</span><div class="seg"><button id="nkOnB" class="on" title="SÖRVALLEN Nackenpolster (Tallmyra mittelgrau wie das Sofa, 81 × 16 cm) auf dem Rückenkissen der Récamiere-Seite anzeigen">An</button><button id="nkOffB" title="Nackenpolster ausblenden">Aus</button></div></div>
-<div class="grp"><span class="lab">Tisch / Hocker</span><div class="seg"><button id="ctOnB" class="on" title="Entweder: nur der Couchtisch LACK (90 × 55 × 45 cm); bei ausgeklapptem Bett steht er hinter dem Sofa">Entweder: Tisch</button><button id="hkOnB" title="Oder: nur der Hocker SÖRVALLEN mit Aufbewahrung (105 × 84 × 45 cm); bei ausgeklapptem Bett weggestellt">Oder: Hocker</button><button id="bothB" title="Und: Tisch und Hocker zusammen; der eine steht vor dem Sofa, der andere dahinter (Auswahl daneben)">Und: beide</button><button id="ctOffB" title="Weder Couchtisch noch Hocker anzeigen">Keins</button></div></div>
+<div class="grp"><span class="lab">Tisch / Hocker</span><div class="seg"><button id="ctOnB" class="on" title="Nur der Couchtisch LACK (90 × 55 × 45 cm); bei ausgeklapptem Bett steht er hinter dem Sofa">Tisch</button><button id="hkOnB" title="Nur der Hocker SÖRVALLEN mit Aufbewahrung (105 × 84 × 45 cm); bei ausgeklapptem Bett weggestellt">Hocker</button><button id="bothB" title="Tisch und Hocker zusammen; der eine steht vor dem Sofa, der andere dahinter (Auswahl daneben)">Beide</button><button id="ctOffB" title="Weder Couchtisch noch Hocker anzeigen">Keins</button></div></div>
 <div class="grp" id="arGrp" style="display:none"><span class="lab">Bei „Und“</span><div class="seg"><button id="arT" class="on" title="Couchtisch vor dem Sofa, Hocker hinter dem Sofa (dort nur ca. 1,5 cm zu eng, Deckel nicht öffenbar)">Tisch vorne, Hocker hinter dem Sofa</button><button id="arH" title="Hocker vor dem Sofa, Couchtisch hinter dem Sofa">Hocker vorne, Tisch hinter dem Sofa</button></div></div>
 <div class="grp"><span class="lab">Fernseher</span><div class="seg"><button id="tv85B" title="Samsung M70H 85 Zoll: Panel 189,0 × 108,4 cm, mit Füßen 113,3 cm hoch; das Sideboard rückt mittig in die Nische">85 Zoll</button><button id="tv75B" class="on" title="Samsung M70H 75 Zoll: Panel 166,8 × 95,8 cm, mit Füßen 100,8 cm hoch">75 Zoll</button><button id="tv65B" title="Samsung M70H 65 Zoll: Panel 144,4 × 83,1 cm, mit Füßen 88,2 cm hoch">65 Zoll</button></div></div>
 <div class="grp"><span class="lab">Sideboard</span><div class="seg"><button id="sbBB" class="on" title="IKEA BESTÅ 180 × 42 × 38 cm, Eicheneffekt (aktuell geplant)">BESTÅ 38 cm</button><button id="sbTB" title="IKEA TONSTAD 178,4 × 37,2 × 54,9 cm, Eichenfurnier; der Schrank bekommt dann passende TONSTAD-Türen">TONSTAD 55 cm</button></div></div>
@@ -604,7 +604,7 @@ var backObjs=[],SGAP=0.85,SX0=1.62,SWD=2.84,LEGC=0xbf9660;
 var fabTex=(function(){var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');g.fillStyle='#484849';g.fillRect(0,0,128,128);
   var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
   var id=g.getImageData(0,0,128,128),d=id.data,TP=Math.PI*2/128;   // feines, gleichmäßiges Gewebe wie auf den IKEA-Bildern (Körnung ca. 3 %, kein grobes Pünktchenmuster)
-  for(var y=0;y<128;y++)for(var x=0;x<128;x++){var i=(y*128+x)*4,n=1.0*((rnd()-0.5)*5+(((x+y)&1)?1.6:-1.6)+((x&1)?0.8:-0.8)+Math.sin(TP*3*x+1.3)*1.2+Math.sin(TP*2*y+0.4)*1.2);d[i]+=n;d[i+1]+=n;d[i+2]+=n;}
+  for(var y=0;y<128;y++)for(var x=0;x<128;x++){var i=(y*128+x)*4,n=1.0*((rnd()-0.5)*5+(((x+y)&1)?1.6:-1.6)+((x&1)?0.8:-0.8)+Math.sin(TP*3*x+1.3)*0.6+Math.sin(TP*2*y+0.4)*0.6);d[i]+=n;d[i+1]+=n;d[i+2]+=n;}
   g.putImageData(id,0,0);
   var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;})();
 function fabMat(rep,tint){var t=fabTex.clone();t.needsUpdate=true;t.repeat.set(rep,rep);return new THREE.MeshLambertMaterial({map:t,color:tint});}
@@ -623,6 +623,7 @@ function sb(u0,v0,z0,u1,v1,z1,tint,rrx){
   var x0=SX0+(284-u1)/100,x1=SX0+(284-u0)/100,y0=D-SGAP-v1/100,y1=D-SGAP-v0/100,a=z0/100,b=z1/100;
   var rep=Math.max(1,Math.round(Math.max(x1-x0,y1-y0,b-a)/0.2));
   var rr=(rrx!==undefined)?rrx:((tint===CU)?0.02:(tint===FR?0.015:0)),m=new THREE.Mesh(rr?sRound(new THREE.BoxGeometry(x1-x0,b-a,y1-y0,6,6,6),rr):new THREE.BoxGeometry(x1-x0,b-a,y1-y0),fabMat(rep,tint||0xe2e2e4));
+  if(m.material.map&&(b-a)<=Math.min(x1-x0,y1-y0))m.material.map.repeat.set(Math.max(1,(x1-x0)/0.2),Math.max(1,(y1-y0)/0.2));   // gleiche Gewebegröße (20 cm) auf allen Sitzflächen
   m.position.copy(P((x0+x1)/2,(y0+y1)/2,(a+b)/2));room.add(m);sofaEdges(m);return m;}
 var FR=0xd2d2d6,CU=0xf2f2f4;
 function edgesSkip(e,pred){var p=e.geometry.attributes.position,a=[];if(!p||!p.count)return;for(var i=0;i+1<p.count;i+=2){if(!(pred(p.getX(i),p.getY(i),p.getZ(i))&&pred(p.getX(i+1),p.getY(i+1),p.getZ(i+1))))a.push(p.getX(i),p.getY(i),p.getZ(i),p.getX(i+1),p.getY(i+1),p.getZ(i+1));}
@@ -641,8 +642,9 @@ sb(22.5,10,30,101.5,39,45,FR);sb(101.5,10,30,261.5,41,45,FR);              // F�
 sb(22.5,0,30,261.5,10,74,FR);               // Rückwand (Rückenstütze 74 cm)
 sb(0,0,30,22.5,135,58,CU);                  // Armlehne Récamiere-Seite (58 cm hoch, 22,5 cm breit, ca. 135 cm lang laut IKEA-Seitenansicht)
 sb(261.5,0,30,284,102,58,CU);               // Armlehne Gegenseite
-var rcM=sb(22.5,39,30,101.5,102,45,CU,0),rcE=room.children[room.children.length-1];onFace(rcM,rcE,'z',-1);   // Récamiere-Sitzfläche: laut IKEA-Foto durchgängig, ohne Naht (hinterer Teil, Sitztiefe 154 cm)
-var lidM=sb(22.5,102,30,101.5,193,45,CU,0),lidE=room.children[room.children.length-1];onFace(lidM,lidE,'z',1);onFace(lidM,lidE,'x',1);   // Récamiere vorne = Deckel
+sb(22.5,39,30,101.5,102,45,CU);   // Récamiere-Sitzfläche: laut IKEA-Foto durchgängig, ohne Naht (hinterer Teil, Sitztiefe 154 cm)
+var lidM=sb(22.5,98,30,101.5,193,45.05,CU),lidE=room.children[room.children.length-1];   // 4 cm überlappt nach hinten und liegt 0,5 mm höher: die gerundete Kante an der Nahtstelle verschwindet
+   // Récamiere vorne = Deckel
 sb(101.8,41,30,181.2,102,45,CU);            // Sitzkissen 1
 sb(181.8,41,30,261.2,102,45,CU);            // Sitzkissen 2
 // 3 Rückenkissen (je 81 cm breit, 41,5 cm hoch, 24 cm dick, ca. 11° nach hinten geneigt, Oberkante 88 cm)
@@ -659,7 +661,7 @@ sb(181.8,41,30,261.2,102,45,CU);            // Sitzkissen 2
 var nkOn=true,nkObjs=[],NKLB=[],NKLC={};
 (function(){cat='nacken';var s0=room.children.length;
  var ang=0.2,h=0.415,sn=Math.sin(ang),cs=Math.cos(ang),xc=SX0+(284-(22.5+39.83))/100,yb=D-SGAP-0.28,zb=0.45,cy=yb+(h+0.055)*sn,cz=zb+(h+0.055)*cs,HL=0.405,R=0.08;
- var bm=new THREE.Mesh(new THREE.CylinderGeometry(R,R,2*HL,28,1),(function(){var m=fabMat(2.5,FR);m.map.repeat.set(2.5,4);return m;})());bm.rotation.z=Math.PI/2;bm.position.copy(P(xc,cy,cz));room.add(bm);
+ var bm=new THREE.Mesh(new THREE.CylinderGeometry(R,R,2*HL,28,1),(function(){var m=fabMat(1.25,0xf0f0f2);m.map.repeat.set(1.25,2);return m;})());bm.rotation.z=Math.PI/2;bm.position.copy(P(xc,cy,cz));room.add(bm);
  var chrome=new THREE.MeshLambertMaterial({color:0xd5d9dd});
  [-0.285,0.285].forEach(function(dx){var len=0.34,m=new THREE.Mesh(new THREE.CylinderGeometry(0.0035,0.0035,len,8),chrome);   // Bügel-Schenkel hinter dem Kissen
   m.rotation.x=ang;m.position.set(xc+dx,cz-0.075*sn-(len/2)*cs,cy+0.075*cs-(len/2)*sn);room.add(m);});
@@ -681,7 +683,7 @@ window.__nk=function(){return [nkOn,nkObjs.length,nkObjs[0].visible];};
 var tws={};function tw(key,get,set,to,ms){var tk=(tws[key]=(tws[key]||0)+1),f=get(),t0=performance.now();(function st(){if(tws[key]!==tk)return;var k=Math.min(1,(performance.now()-t0)/ms);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;set(f+(to-f)*k);if(typeof renderScene==='function')renderScene();if(k<1)requestAnimationFrame(st);})();}
 // Récamiere-Deckel: Scharnier an der Hinterkante (Oberkante), öffnet ca. 80°
 var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.02,0.30);g.position.copy(pv);room.add(g);
-  var n0=room.children.length;var stM=sb(0,135,30,22.5,193,45,CU,0),stE=room.children[room.children.length-1];onFace(stM,stE,'x',-1);sb(4,103,29.4,97.5,189.5,30,0xb9a37f);sb(4,104,24,7,128,29.4,0xb9bdc4);sb(95.5,104,24,98.5,128,29.4,0xb9bdc4);   // Deckel-Unterseite (beige) und Gasdruckfedern
+  var n0=room.children.length;sb(0,135,30,26.5,193,45.05,CU);sb(4,103,29.4,97.5,189.5,30,0xb9a37f);sb(4,104,24,7,128,29.4,0xb9bdc4);sb(95.5,104,24,98.5,128,29.4,0xb9bdc4);   // Deckel-Unterseite (beige) und Gasdruckfedern
   var lidX=room.children.slice(n0).filter(function(o){return o.type!=='Group';});
   [lidM,lidE].concat(lidX).forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
 sb(4,103,12,7,108,29.4,0xb9bdc4);sb(95.5,103,12,98.5,108,29.4,0xb9bdc4);   // Scharnier-Konsolen am Korpus
@@ -830,7 +832,7 @@ function hkVis(){var f=hkOn&&!bedOn&&!hkBack()&&!hideCats.hocker,b=hkOn&&!bedOn&
 function hkBtns(){var ids={ctOnB:ctOn&&!hkOn,hkOnB:hkOn&&!ctOn,bothB:ctOn&&hkOn,ctOffB:!ctOn&&!hkOn,arT:hkArr==='tf',arH:hkArr==='hf',hHock:hkOn};
  Object.keys(ids).forEach(function(k){var e=document.getElementById(k);if(e)e.classList.toggle('on',!!ids[k]);});
  var ag=document.getElementById('arGrp');if(ag)ag.style.display=(ctOn&&hkOn)?'':'none';
- var hb=document.getElementById('hkB');if(hb){var no=bedOn||(hkOn&&hkBack());hb.style.opacity=no?'0.45':'';hb.title=no?(bedOn?'Hocker-Deckel: bei ausgeklapptem Bett ist der Hocker weggestellt':'Hocker-Deckel: hinter dem Sofa (Wand, Schräge, Sofa) nicht öffenbar – wähle „Hocker vorne“'):'Hocker-Deckel öffnen / schließen (schaltet bei Bedarf auf „Oder: Hocker“)';}}
+ var hb=document.getElementById('hkB');if(hb){var no=bedOn||(hkOn&&hkBack());hb.style.opacity=no?'0.45':'';hb.title=no?(bedOn?'Hocker-Deckel: bei ausgeklapptem Bett ist der Hocker weggestellt':'Hocker-Deckel: hinter dem Sofa (Wand, Schräge, Sofa) nicht öffenbar – wähle „Hocker vorne“'):'Hocker-Deckel öffnen / schließen (schaltet bei Bedarf auf „Hocker“)';}}
 window.__hk=function(){return {f:hkObjs[0].visible,b:hkBObjs[0].visible,tn:ctN[0].visible,tb:ctB[0].visible,ar:hkArr,m:[ctOn,hkOn],rod:[hkStr[0].r1.scale.y,hkStr[0].r2.scale.y].map(function(v){return +v.toFixed(3);})};};
 function applyTabHk(){tabVis();hkVis();hkBtns();}
 function setHk(on){hkOn=on;applyTabHk();}
