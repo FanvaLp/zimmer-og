@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv Mobil · Stand v33</title>
+<title>Zimmer Interaktiv Mobil · Stand v34</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -809,7 +809,8 @@ function hkBuild(R,cn,open){cat=cn;var s0=room.children.length;
   window.hotHk=hotMk(room,0,0,0,function(){hkToggle();});hotHk.position.copy(P(cx,(y0+y1)/2,0.22));hotHk.visible=false;res.objs.push(hotHk);   // Schließen-Punkt im geöffneten Hocker
   var hkClose2=function(){if(hkAng>0.3)hkToggle();};
   zoneMk(g,x1-x0,zt-zk+0.02,y1-y0,0,(zt-zk)/2,-(y1-y0)/2,hkClose2,zHk);
-  var zb2=zoneMk(room,x1-x0,0.34,y1-y0,0,0,0,hkClose2,zHk);zb2.position.copy(P(cx,(y0+y1)/2,0.22));}
+  var zb2=zoneMk(room,x1-x0,0.44,y1-y0,0,0,0,hkClose2,zHk);zb2.position.copy(P(cx,(y0+y1)/2,0.23));   // Innenraum komplett anklickbar (schließt)
+  window.zHkO=[];var zo=zoneMk(g,x1-x0,zt-zk+0.02,y1-y0,0,(zt-zk)/2,-(y1-y0)/2,function(){if(hkAng<0.3)hkToggle();},zHkO);zo.visible=true;}   // ganze Deckel-Oberseite anklickbar (öffnet)
  res.objs.forEach(function(o){o.visible=false;});
  return res;}
 var HKF=hkBuild(HK,'hocker',true),HKBK=hkBuild(HKB,'hockerb',false);
@@ -820,7 +821,7 @@ function hkStruts(a){var L=0.20,ca=Math.cos(a),sa=Math.sin(a),zk=HKF.zk,y1=HKF.y
   function rod(m,pa,qa,pb,qb,len){m.position.set(S.ax,(pa+pb)/2,(qa+qb)/2);m.rotation.x=Math.atan2(qb-qa,pb-pa);m.scale.y=len||Math.sqrt((pb-pa)*(pb-pa)+(qb-qa)*(qb-qa));}
   rod(S.r1,Ap,Aq,Ep,Eq);rod(S.r2,Ep,Eq,Bp,Bq);
   if(S.dm){var l1=Math.sqrt((Ep-Ap)*(Ep-Ap)+(Eq-Aq)*(Eq-Aq));rod(S.dm,Ap,Aq,Ep,Eq,l1*0.8);S.dm.position.x=S.ax+0.028;}});}
-function hkSet(a){hkAng=a;hkLid.rotation.x=a;hkStruts(a);var v=hkOn&&!bedOn&&!hkBack();if(window.hotHk)hotHk.visible=a>0.5&&v;if(window.zHk)zHk.forEach(function(z){z.visible=a>0.5&&v;});}
+function hkSet(a){hkAng=a;hkLid.rotation.x=a;hkStruts(a);var v=hkOn&&!bedOn&&!hkBack();if(window.hotHk)hotHk.visible=a>0.5&&v;if(window.zHk)zHk.forEach(function(z){z.visible=a>0.5&&v;});if(window.zHkO)zHkO.forEach(function(z){z.visible=a<0.3;});}
 function hkBack(){return hkOn&&ctOn&&hkArr==='tf';}   // beide: Tisch vorne, Hocker hinter dem Sofa
 function tabBack(){return bedOn||(hkOn&&ctOn&&hkArr==='hf');}   // Tisch hinten (Bett ausgeklappt oder Hocker vorne)
 function tabVis(){ctN.forEach(function(o){o.visible=ctOn&&!tabBack();});ctB.forEach(function(o){o.visible=ctOn&&tabBack();});}
