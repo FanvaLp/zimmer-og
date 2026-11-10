@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Eingerichtet · Stand v39</title>
+<title>Zimmer Eingerichtet · Stand v40</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -944,22 +944,21 @@ var pcLedMats=[],monScrMats=[];
   var tip=ell(0.014,0.0045,0.0045,0x0a0a0a,hX+0.068,hY+0.126,hz+0.119);
 
   // ---- Mikrofonarm (L-förmig, dicke Rohre mit Gelenken) + Mikrofon mit Bügel ----
-  var ax=0.145,ay=2.80,az=0.76;     // Arm sitzt mit einer Klemme an der Wandkante des linken Tisches (Tisch beginnt 11,5 cm von der Wand, x=0,115); kommt unter den Bildschirmen (Panelunterkante 0,86 m) hervor
+  var ax=0.145,ay=2.80,az=0.79;     // Arm sitzt mit einer Klemme an der Wandkante des linken Tisches (Tisch beginnt 11,5 cm von der Wand, x=0,115); kommt unter den Bildschirmen (Panelunterkante 0,86 m) hervor
   function jt(x,y,z,r){var m=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),lam(0x222226));return put(m,x,y,z);}
-  rod([ax,ay,DZ],[ax,ay,az],0.016,0x1a1a1d);
+  rod([ax,ay,DZ],[ax,ay,az],0.0185,0x1a1a1d);
   // Tischklemme (C-Klemme): oben Auflage, hinten Platte an der Tischkante, unten Gegenplatte mit Spannschraube
   put(new THREE.Mesh(new THREE.BoxGeometry(0.055,0.008,0.045),lam(0x1a1a1d)),0.1425,ay,DZ+0.004);
   put(new THREE.Mesh(new THREE.BoxGeometry(0.012,0.108,0.045),lam(0x1a1a1d)),0.109,ay,0.674);
   put(new THREE.Mesh(new THREE.BoxGeometry(0.055,0.008,0.045),lam(0x1a1a1d)),0.1425,ay,0.624);
   rod([0.145,ay,0.624],[0.145,ay,0.695],0.0055,0x2a2a2e);
   put(new THREE.Mesh(new THREE.CylinderGeometry(0.016,0.016,0.012,16),lam(0x2a2a2e)),0.145,ay,0.616);
-  jt(ax,ay,az,0.02);
-  rod([ax,ay,az],[0.095,ay,az],0.014,0x1a1a1d);
-  jt(0.095,ay,az,0.018);
-  rod([0.095,ay,az],[0.22,3.06,0.80],0.0135,0x1c1c20);     // flach unter dem linken Bildschirm durch
-  jt(0.22,3.06,0.80,0.017);
-  var mx=0.31,my=3.14,mz=0.865;
-  rod([0.22,3.06,0.80],[mx,my,mz+0.085],0.0125,0x1c1c20);   // dann nach oben/vorne zum Mikrofon
+  jt(ax,ay,az,0.024);
+  rod([ax,ay,az],[0.165,2.95,0.795],0.017,0x1a1a1d);   // kurzer unterer Arm (Elgato Wave Mic Arm LP: unterer Arm ca. 7 cm über dem Tisch)
+  jt(0.165,2.95,0.795,0.024);
+  var lg=put(new THREE.Mesh(new THREE.CylinderGeometry(0.013,0.013,0.004,18),lam(0x6b6b70)),0.19,2.95,0.797);lg.rotation.z=Math.PI/2;   // Elgato-Logoscheibe am Gelenk
+  var mx=0.31,my=3.14,mz=0.80;   // Mikro hängt unter dem Armende (Elgato LP: oberer Arm max. ca. 16 cm über dem Tisch)
+  rod([0.165,2.95,0.795],[mx,my,mz+0.085],0.0175,0x1c1c20);   // langer oberer Arm zum Mikrofon (reicht bis 74 cm, hier eingeklappt)
   jt(mx,my,mz+0.085,0.016);
   rod([mx,my,mz+0.085],[mx,my,mz+0.05],0.0075,0x2a2a2e);
   var mg=new THREE.Group();mg.position.copy(P(mx,my,mz));mg.rotation.z=-0.22;room.add(mg);
