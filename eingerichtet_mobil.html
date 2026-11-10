@@ -908,10 +908,11 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    labels.forEach(function(l){if(l.cat!=='rear')return;var i=(l.el.textContent.indexOf('links')>=0)?0:1;l.p.x=xs[i];l.p.y=hz(xs[i])+0.30;l.p.z=yc;});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);
-   if(h){var t='';if(SNON){t='Beam steht auf dem Sideboard vor dem Panel (6,9 cm hoch, verdeckt ca. 2 cm vom unteren Bild, geschätzt). Era 100 stehen ganz außen auf den Konsolen, Vorderseite zum Sofa; je Lautsprecher eine Steckdose nötig.';
-     if(tvSize==='S')t+=' Mit dem Hisense SE passt die Beam NICHT: Der Fußrahmen (43,7 cm breit) steht bis vorn ans Sideboard, deshalb ist sie ausgeblendet.';
-     if(!kon)t+=' Konsolen sind ausgeblendet, daher auch die Era 100.';
-     if(kon&&KO_WALL)t+=' ACHTUNG: Mit den Konsolen an der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Era 100 (Konsole 0,81 m + 18,25 cm = ca. 0,99 m) stößt dort an die Schräge. In der normalen Stellung (Schräge dort ca. 1,25 m hoch) passt sie.';}
+   if(h){var t='';if(SNON){
+     if(tvSize==='S')t='Beam passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
+     else t='Beam vor dem Fernseher, verdeckt ca. 2 cm vom unteren Bild (geschätzt).';
+     if(!kon)t+=' Era 100 erscheinen, sobald die Konsolen eingeblendet sind.';
+     else if(KO_WALL)t+=' ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Era 100 (ca. 0,99 m) stoßen an.';}
     h.style.display=SNON?'block':'none';h.textContent=t;}}
   var snOffB=document.getElementById('snOff'),snOnB=document.getElementById('snOn');
   if(snOffB)snOffB.onclick=function(){SNON=false;soundApply();};
