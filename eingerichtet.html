@@ -106,8 +106,7 @@ footer{grid-column:1;grid-row:3}
 <div class="grp"><span class="lab">Konsolen hinter dem Sofa</span><div class="seg"><button id="kOffB" class="on" title="Konsolen ausblenden">Aus</button><button id="kVarB" title="2 × 100 cm + 1 × 80 cm (80er in der Mitte) = 280 cm: beginnt am Ende des letzten Kissens (Armlehne 22,5 cm), endet 11,5 cm vor der Außenwand">2 × 100 + 80 cm</button><button id="kVarA" title="3 × 100 cm = 300 cm: bündig mit der Sofa-Außenkante (Schreibtischseite), 16 cm über das Sofa hinaus, 14 cm vor der Außenwand">3 × 100 cm</button></div></div>
 <div class="grp" id="kVarGrp" style="display:none"><button id="kSofaB" style="display:none" aria-hidden="true">Ein</button></div>
 <div id="konsHint" style="display:none;font-size:11px;line-height:1.4;opacity:.7;margin:-2px 0 4px"></div>
-<div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Dekoration</span><div class="seg"><button id="dkB" class="on" title="Beispiel-Dekoration auf den Konsolen: 2 Pflanzen und Bücher (nur sichtbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Ein/Aus</button></div></div>
-<div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Körbe unten</span><div class="seg"><button id="kbB" class="on" title="Drei Flechtkörbe auf der unteren Ablage der Konsolen (nur sichtbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Ein/Aus</button></div></div>
+<div class="grp" id="dkRow"><span class="lab">Konsolen-Deko</span><div class="seg"><button id="dkB" class="on" title="Beispiel-Dekoration auf den Konsolen: 2 Pflanzen und Bücher (nur wählbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Dekoration</button><button id="kbB" class="on" title="Drei Flechtkörbe auf der unteren Ablage der Konsolen (nur wählbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Körbe unten</button></div></div>
 <div id="dkHint" style="display:none;color:#8a8a8a;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
 <div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
@@ -942,7 +941,8 @@ var DKON=true,KBON=true,DKE=[],DKLB=[],DKLC={};
    if(typeof labels!=='undefined'&&labels)labels.forEach(function(l){if(l.cat==='deko'){l.p.x=XA+0.5;l.p.y=hz(XA+0.5)+0.42;l.p.z=yc;}else if(l.cat==='korb'){l.p.x=XA+1.5;l.p.y=hz(XA+1.5)-0.30;l.p.z=yc;}});
    var a=document.getElementById('dkB'),b=document.getElementById('kbB'),h=document.getElementById('dkHint');
    if(a)a.classList.toggle('on',!!DKON);if(b)b.classList.toggle('on',!!KBON);
-   if(h){var t='';if((DKON||KBON)&&!kon)t='Dekoration und Körbe erscheinen, sobald die Konsolen eingeblendet sind.';else if((DKON||KBON)&&KO_WALL)t='ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Pflanzen (bis ca. 1,1 m) stoßen an.';h.style.display=t?'block':'none';h.textContent=t;}}
+   [a,b].forEach(function(x){if(x){x.disabled=!kon;x.style.opacity=kon?'':'0.45';}});var rw=document.getElementById('dkRow');if(rw)rw.style.opacity=kon?'':'0.6';
+   if(h){var t='';if(!kon)t='Dekoration und Körbe sind nur wählbar, wenn die Konsolen eingeblendet sind.';else if((DKON||KBON)&&KO_WALL)t='ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Pflanzen (bis ca. 1,1 m) stoßen an.';h.style.display=t?'block':'none';h.textContent=t;}}
   var dkBtn=document.getElementById('dkB'),kbBtn=document.getElementById('kbB');
   if(dkBtn)dkBtn.onclick=function(){DKON=!DKON;decoApply();};
   if(kbBtn)kbBtn.onclick=function(){KBON=!KBON;decoApply();};
