@@ -706,7 +706,7 @@ var nkOn=true,nkObjs=[],NKLB=[],NKLC={};
  var dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.Float32BufferAttribute(v,3));room.add(new THREE.LineSegments(dg,new THREE.LineBasicMaterial({color:0xd2691e})));
  nkObjs=room.children.slice(s0).filter(function(o){return o.type!=='Group'&&!o.isLineSegments;});
  NKLB=[['Nackenpolster SÖRVALLEN 81 × 16 cm (Länge × Stärke), Bügel 58 cm breit',xc,cy,zz+0.08],['Nackenpolster 81 cm',xc,cy,zz-0.01]];
- NKLB.forEach(function(l){NKLC[l[0]]='nacken';});
+ NKLB.forEach(function(l){NKLC[l[0]]='nacken';});cat='sofa';
 })();
 function nkVis(){var v=nkOn&&!hideCats.sofa;nkObjs.forEach(function(o){o.visible=v;});}
 function setNk(on){nkOn=on;nkVis();['nkOnB','hNack'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.toggle('on',on);});var o=document.getElementById('nkOffB');if(o)o.classList.toggle('on',!on);}
