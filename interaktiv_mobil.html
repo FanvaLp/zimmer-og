@@ -854,7 +854,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
 function konsDims(wall){var Y0=wall?D-0.44:D-SGAP+0.003,DP=0.20,YD=Y0+DP+0.10,c0=cat;
  [['konsole',SX0,KT],['konsoleB',SX0+KARM,KTB]].forEach(function(v){var XA=v[1],T=v[2],XE=XA+T[T.length-1][0]+T[T.length-1][1],g=dimG[v[0]];if(g){while(g.children.length)g.remove(g.children[0]);}
   ctDims(v[0],function(hx,vy,vz){T.forEach(function(t){hx(YD,XA+t[0],XA+t[0]+t[1]);});hx(YD+0.22,XA,XE);hx(YD,XE,W);vy(XE+0.14,Y0,Y0+DP);vy(XE+0.30,Y0+DP,D);if(wall)vy(XA-0.12,D-SGAP,Y0);vz(XA-0.06,Y0+DP/2,0,0.809);});});cat=c0;}
-function konsVar(){altHide.konsole=(KV!=='A');altHide.konsoleB=(KV!=='B');KST.xa=(KV==='A')?SX0:SX0+KARM;KST.len=(KV==='A')?3.00:2.80;
+function konsVar(){altHide.konsole=(KV!=='A');altHide.konsoleB=(KV!=='B');KST.xa=(KV==='A')?SX0:SX0+KARM;KST.len=(KV==='A')?3.00:2.80;KST.zs=(KV==='A')?0.789:0.7825;
  room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='konsole'||c==='konsoleB')o.visible=!hideCats[c]&&!altHide[c];});}
 var KTXT={'bis Schrägenwand 71 cm (Schräge dort 1,25 m hoch, Konsole 0,81 m)':'bis Schrägenwand 24 cm (Schräge dort 0,83 m hoch, Konsole 0,81 m)','bündig am Sofa (0,3 cm)':'bis Sofa 47,5 cm'};
 function konsMove(){var d=KO_WALL?KO_DY:0;
@@ -1507,8 +1507,8 @@ function picUpdate(){
 var LMRK=0.5,konsLedOn=true,KFLUX=2900,KOV=null,KFACES=[],KST={ys:0,zs:0.789,xa:SX0,len:3.00};
 (function(){var c0=cat;
  var Y0=D-SGAP+0.003,yb=Y0+0.20-0.005,ys=yb+0.003;KST.ys=ys+0.0035;
- [['konsole',SX0,3.00],['konsoleB',SX0+KARM,2.80]].forEach(function(v){cat=v[0];var body=new THREE.Mesh(new THREE.BoxGeometry(v[2],0.0145,0.006),new THREE.MeshLambertMaterial({color:0xe9e9e4}));body.position.copy(P(v[1]+v[2]/2,ys,0.789));room.add(body);
-  var face=new THREE.Mesh(new THREE.BoxGeometry(v[2]-0.02,0.010,0.0015),new THREE.MeshBasicMaterial({color:0xd6d6d0}));face.position.copy(P(v[1]+v[2]/2,ys+0.00375,0.789));room.add(face);KFACES.push(face);body.visible=false;face.visible=false;});
+ [['konsole',SX0,3.00,0.789],['konsoleB',SX0+KARM,2.80,0.7825]].forEach(function(v){cat=v[0];var body=new THREE.Mesh(new THREE.BoxGeometry(v[2],0.0145,0.006),new THREE.MeshLambertMaterial({color:0xe9e9e4}));body.position.copy(P(v[1]+v[2]/2,ys,v[3]));room.add(body);
+  var face=new THREE.Mesh(new THREE.BoxGeometry(v[2]-0.02,0.010,0.0015),new THREE.MeshBasicMaterial({color:0xd6d6d0}));face.position.copy(P(v[1]+v[2]/2,ys+0.00375,v[3]));room.add(face);KFACES.push(face);body.visible=false;face.visible=false;});
  cat='konskl';
  var PT=[],NR=[],i,j;function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
  function tri(a,b,c,n){[a,b,c].forEach(function(p){PT.push(p[0]+n[0]*0.003,p[1]+n[1]*0.003,p[2]+n[2]*0.003);NR.push(n[0],n[1],n[2]);});}
