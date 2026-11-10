@@ -3,7 +3,7 @@
 <head><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%231f4e8c%22/%3E%3Cpath%20d=%22M13%2050V27L32%2012l19%2015v23z%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%224.5%22%20stroke-linejoin=%22round%22/%3E%3Crect%20x=%2223%22%20y=%2231%22%20width=%2218%22%20height=%2211%22%20rx=%221.5%22%20fill=%22%23fff%22/%3E%3Crect%20x=%2229%22%20y=%2242%22%20width=%226%22%20height=%223%22%20fill=%22%23fff%22/%3E%3C/svg%3E"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zimmer Interaktiv · Stand v34</title>
+<title>Zimmer Interaktiv · Stand v35</title>
 <style>
 :root{--bg:#f4f3ef;--fg:#222;--muted:#666;--panel:#fff;--line:#d8d6cf;--accent:#1f4e8c;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -669,7 +669,7 @@ var lidG=(function(){var g=new THREE.Group(),pv=P(SX0+(284-50.75)/100,D-SGAP-1.0
   var lidX=room.children.slice(n0).filter(function(o){return o.type!=='Group';});
   [lidM,lidE].concat(lidX).forEach(function(o){room.remove(o);o.position.sub(pv);g.add(o);});return g;})();
 sb(4,103,12,7,108,29.4,0xb9bdc4);sb(95.5,103,12,98.5,108,29.4,0xb9bdc4);   // Scharnier-Konsolen am Korpus
-var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=false;if(window.zLid)zLid.forEach(function(z){z.visible=a>0.5;});}
+var lidAng=0;function lidSet(a){lidAng=a;lidG.rotation.x=a;if(window.hotLid)hotLid.visible=false;if(window.zLid)zLid.forEach(function(z){z.visible=a>0.5;});if(window.zLidO)zLidO.forEach(function(z){z.visible=a<0.3&&!bedOn;});}
 window.lidClose=function(){var b=document.getElementById('lidB');tw('lid',function(){return lidAng;},lidSet,0,300);if(b)b.classList.remove('on');};
 (function(){var b=document.getElementById('lidB');if(!b)return;
   window.lidToggle=function(){if(bedOn){return;}var on=lidAng<0.1;tw('lid',function(){return lidAng;},lidSet,on?1.75:0,650);b.classList.toggle('on',on);};b.onclick=lidToggle;
@@ -679,6 +679,9 @@ window.lidClose=function(){var b=document.getElementById('lidB');tw('lid',functi
   lidM.geometry.computeBoundingBox();var lbs=lidM.geometry.boundingBox.getSize(new THREE.Vector3());
   var zl=zoneMk(lidG,lbs.x,lbs.y+0.04,lbs.z,0,0,0,lidClose2,zLid);zl.position.copy(lidM.position);
   var zlb=zoneMk(room,1.015,0.30,0.91,0,0,0,lidClose2,zLid);zlb.position.copy(P(SX0+(284-50.75)/100,D-SGAP-1.475,0.15));
+  window.zLidO=[];var fnO=function(){if(!bedOn&&lidAng<0.3)lidToggle();};   // ganze Sitzfläche der Récamiere öffnet den Deckel
+  var zo1=zoneMk(lidG,lbs.x,lbs.y+0.04,lbs.z,0,0,0,fnO,zLidO);zo1.position.copy(lidM.position);zo1.visible=true;
+  var zo2=zoneMk(lidG,0.265,0.19,0.58,0,0,0,fnO,zLidO);zo2.position.copy(P(SX0+(284-13.25)/100,D-SGAP-1.64,0.385).sub(lidG.position));zo2.visible=true;
 })();
 (function(){   // Maßlinien Sofa
   var v=[],yb=D-SGAP,ZC=K+(H-K)/SD*SGAP;
@@ -1224,7 +1227,7 @@ var hBtn={Ein:document.getElementById('hvOn'),Aus:document.getElementById('hvOff
 hBtn.Ein.onclick=function(){hoverOn=true;hBtn.Ein.classList.add('on');hBtn.Aus.classList.remove('on');};
 hBtn.Aus.onclick=function(){hoverOn=false;hoverCat=null;canvas.style.cursor='grab';hBtn.Ein.classList.remove('on');hBtn.Aus.classList.add('on');};
 var bedBtn=document.getElementById('bed'),bedOff=document.getElementById('bedoff');
-function setBed(on){bedOn=on;if(on&&window.lidClose)lidClose();var pg_=document.getElementById('poseGrp');if(pg_)pg_.style.display=on?'':'none';if(/^v[678]$/.test(lastView))setView(lastView);bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});tabVis();hkVis();hkBtns();pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
+function setBed(on){bedOn=on;if(on&&window.lidClose)lidClose();var pg_=document.getElementById('poseGrp');if(pg_)pg_.style.display=on?'':'none';if(/^v[678]$/.test(lastView))setView(lastView);bedObjs.forEach(function(o){o.visible=on;});backObjs.forEach(function(o){o.visible=!on;});if(window.zLidO)zLidO.forEach(function(z){z.visible=!on&&lidAng<0.3;});tabVis();hkVis();hkBtns();pinned.bett=on;pinned.couchtisch=on;sync();bedBtn.classList.toggle('on',on);bedOff.classList.toggle('on',!on);}
 bedBtn.onclick=function(){setBed(true);};bedOff.onclick=function(){setBed(false);};
 var ledOn=true,ledB1=document.getElementById('ledOn'),ledB0=document.getElementById('ledOff');
 function setLed(on){ledOn=on;syncM();applyLights();ledObjs.forEach(function(o){o.visible=on;});ledB1.classList.toggle('on',on);ledB0.classList.toggle('on',!on);}
