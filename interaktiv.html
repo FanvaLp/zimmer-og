@@ -785,7 +785,7 @@ var ctB=room.children.slice(ctS).filter(function(o){return o.type!=='Group';});
 ctB.forEach(function(o){o.visible=false;});
 ctDims('ctb',function(hx,vy,vz){hx(CTB[3]+0.10,CTB[0],CTB[2]);vy(2.50,CTB[1],CTB[3]);vy(2.50,D-SGAP,CTB[1]);vy(3.70,CTB[3],D);vz(CTB[2]+0.06,(CTB[1]+CTB[3])/2,0,0.45);});
 // Konsolen VASAGLE (Amazon, schmaler Sofatisch mit 2 Ablagen, Reihe LNT133): 2 x 100 cm + 1 x 80 cm = 280 cm hinter dem Sofa (284 cm), je 20 cm tief, 80 cm (80er) bzw. 81 cm (100er laut Massbild) hoch. Aufbau nach den Herstellerbildern: Stahlrohr 2 x 2 cm, Platte ca. 1,6 cm, untere Ablage 20 cm unter der Platte (Oberkante), untere Streben 8 cm ueber dem Boden, Dekor Vintagebraun. 3 cm Luft zur Sofarueckseite.
-var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,1.00,0.809],[2.00,1.00,0.809]],KTB=[[0,1.00,0.809],[1.00,0.80,0.80],[1.80,1.00,0.809]],KV='A',KARM=0.225;
+var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,1.00,0.809],[2.00,1.00,0.809]],KTB=[[0,1.00,0.809],[1.00,0.80,0.805],[1.80,1.00,0.809]],KV='A',KARM=0.225;
 (function(){var c0=cat,s0=room.children.length;cat='konsole';
  var Y0=D-SGAP+0.003,DP=0.20,FRC=0x1d1d20,XA=SX0,XE=XA+3.00,YD=Y0+DP+0.10;
  var wc=document.createElement('canvas');wc.width=wc.height=256;var g=wc.getContext('2d'),sd=5;function rn(){sd=(sd*16807)%2147483647;return sd/2147483647;}
@@ -825,7 +825,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
  var XB=SX0+KARM,XEB=XB+2.80;
  KLB=KLB.concat([['Konsolen VASAGLE 2 × 100 + 1 × 80 cm = 280 cm (80er in der Mitte, beginnt am Ende des Sofa-Kissens)',XB+1.40,YD+0.22,0.02],
   ['Konsole B1: 100 cm',XB+0.50,YD,0.02],['Konsole B2: 80 cm',XB+1.40,YD,0.02],['Konsole B3: 100 cm',XB+2.30,YD,0.02],
-  ['Höhe 80,9 cm (80er: 80 cm)',XB-0.06,Y0+DP/2,0.45],['Konsolen: Tiefe 20 cm',XEB+0.14,Y0+DP/2,0.02],['bis Außenwand 11,5 cm',(XEB+W)/2,YD,0.02],
+  ['Höhe 80,9 cm (80er: 80,5 cm)',XB-0.06,Y0+DP/2,0.45],['Konsolen: Tiefe 20 cm',XEB+0.14,Y0+DP/2,0.02],['bis Außenwand 11,5 cm',(XEB+W)/2,YD,0.02],
   ['Hue Flux auf 2,80 m gekürzt, auf der Konsolen-Rückseite (leuchtet die Schräge an)',XB+1.40,Y0+DP+0.06,0.90],
   ['Konsolen 0,3 cm hinter dem Sofa',XB-0.12,D-SGAP+0.015,0.02],['Armlehne 22,5 cm: Konsolen beginnen am Ende des Kissens',SX0+0.11,YD+0.12,0.90],
   ['Konsolen bis Schrägenwand 71 cm (Schräge dort 1,25 m hoch)',XEB+0.30,(Y0+DP+D)/2,0.02]]);
