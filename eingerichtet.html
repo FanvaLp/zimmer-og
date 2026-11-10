@@ -106,6 +106,9 @@ footer{grid-column:1;grid-row:3}
 <div class="grp"><span class="lab">Konsolen hinter dem Sofa</span><div class="seg"><button id="kOffB" class="on" title="Konsolen ausblenden">Aus</button><button id="kVarB" title="2 × 100 cm + 1 × 80 cm (80er in der Mitte) = 280 cm: beginnt am Ende des letzten Kissens (Armlehne 22,5 cm), endet 11,5 cm vor der Außenwand">2 × 100 + 80 cm</button><button id="kVarA" title="3 × 100 cm = 300 cm: bündig mit der Sofa-Außenkante (Schreibtischseite), 16 cm über das Sofa hinaus, 14 cm vor der Außenwand">3 × 100 cm</button></div></div>
 <div class="grp" id="kVarGrp" style="display:none"><button id="kSofaB" style="display:none" aria-hidden="true">Ein</button></div>
 <div id="konsHint" style="display:none;font-size:11px;line-height:1.4;opacity:.7;margin:-2px 0 4px"></div>
+<div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Dekoration</span><div class="seg"><button id="dkB" class="on" title="Beispiel-Dekoration auf den Konsolen: 2 Pflanzen und Bücher (nur sichtbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Ein/Aus</button></div></div>
+<div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Körbe unten</span><div class="seg"><button id="kbB" class="on" title="Drei Flechtkörbe auf der unteren Ablage der Konsolen (nur sichtbar, wenn die Konsolen eingeblendet sind; kein Einkaufsposten)">Ein/Aus</button></div></div>
+<div id="dkHint" style="display:none;color:#8a8a8a;font-size:11px;line-height:1.35;margin:-2px 0 4px"></div>
 <div class="grp"><span class="lab">Teppich</span><div class="seg"><button id="rug">Kein Teppich</button><button id="rugA">IKEA 200 × 300</button><button id="rugB">IKEA 170 × 240</button><button id="rugC">Kaufland 250 × 300</button></div></div>
 <div class="grp" id="orgrp"><span class="lab">Teppich-Ausrichtung</span><div class="seg"><button id="rugQ">quer</button><button id="rugL">längs</button></div></div>
 <div class="subh" style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin:12px 0 4px;border-bottom:1px solid rgba(128,128,128,.25);padding-bottom:2px">TV-Wand</div>
@@ -906,6 +909,43 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
   if(snOffB)snOffB.onclick=function(){SNON=false;soundApply();};
   if(snOnB)snOnB.onclick=function(){SNON=true;soundApply();};
   window.__sn=function(){return room;};
+var DKON=true,KBON=true,DKE=[],DKLB=[],DKLC={};
+  (function(){var c0=cat,s0=room.children.length;
+   function M(c){return new THREE.MeshLambertMaterial({color:c});}
+   function add(e,geo,col,x,y,z,sc,rot){var m=new THREE.Mesh(geo,M(col));if(sc)m.scale.set(sc[0],sc[1],sc[2]);if(rot)m.rotation.z=rot;m.position.copy(P(x,y,z));room.add(m);m.userData.p0=m.position.clone();e.o.push(m);return m;}
+   function bx(e,w,d,h,x,y,z,col){return add(e,new THREE.BoxGeometry(w,h,d),col,x,y,z+h/2);}
+   function cyl(e,rt,rb,h,x,y,z,col,n){return add(e,new THREE.CylinderGeometry(rt,rb,h,n||16),col,x,y,z+h/2);}
+   function sp(e,r,x,y,z,col){return add(e,new THREE.SphereGeometry(r,10,8),col,x,y,z);}
+   function ent(cm,low){var e={cm:cm,low:!!low,o:[]};DKE.push(e);return e;}
+   function plant(cm,big,trail){var e=ent(cm);cat='deko';var b=big;
+    cyl(e,0.055*b,0.044*b,0.09*b,0,0,0,0xb9704a,18);
+    [[-0.06,0,0.14,0.07],[0.06,0.01,0.17,0.075],[0,0,0.22,0.085],[-0.09,-0.01,0.21,0.055],[0.09,0,0.22,0.06],[0,-0.04,0.17,0.06]].forEach(function(l){sp(e,l[3]*b,l[0]*b,l[1]*b,l[2]*b,0x5f8f4e);});
+    if(trail)[-0.12,-0.08,0.1].forEach(function(dx,k){cyl(e,0.003,0.003,0.30+0.03*k,dx*b,-0.106,-0.30-0.03*k+0.0,0x4d7a3e,6);});}
+   function books(cm,n){var e=ent(cm);cat='deko';var z=0,cols=[0x6d7f8c,0xc4a77d,0x8b5e5a,0x4f6b55];
+    for(var i=0;i<n;i++){var h=0.055+(i%2)*0.015,w=0.22-0.02*i;bx(e,w,0.15,h,0.02*(i%2),0,z,cols[i%4]);z+=h;}}
+   function basket(cm){var e=ent(cm,true);cat='korb';bx(e,0.34,0.17,0.18,0,0,0,0xc8a878);[1,2,3].forEach(function(i){bx(e,0.342,0.172,0.004,0,0,0.18*i/4-0.002,0xa98a5e);});}
+   plant(50,1,true);books(95,3);plant(175,0.9,true);books(215,2);basket(60);basket(150);basket(235);
+   room.children.slice(s0).forEach(function(o){o.visible=false;});
+   hideCats.deko=true;hideCats.korb=true;
+   DKLB=[['Dekoration (Beispiel): 2 Pflanzen, Bücher · Platte trägt 30 kg, Deko unkritisch · nicht in der Einkaufsliste',3,3,1],['Körbe auf der unteren Ablage (Beispiel) · Ablage trägt 20 kg',3,3,1]];
+   DKLC[DKLB[0][0]]='deko';DKLC[DKLB[1][0]]='korb';
+   cat=c0;
+  })();
+  function decoApply(){
+   if(typeof DKE==='undefined'||!DKE||!DKE.length)return;
+   var kon=!hideCats.konsole,A=(KV==='A'),XA=A?SX0:SX0+KARM,T=A?KT:KTB;
+   function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
+   var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0);
+   DKE.forEach(function(e){var x=XA+e.cm/100,z=hz(x)-(e.low?0.205:0);e.o.forEach(function(o){o.position.x=o.userData.p0.x+x;o.position.y=o.userData.p0.y+z;o.position.z=o.userData.p0.z+yc;});});
+   var dOn=!!DKON&&kon,kOn=!!KBON&&kon;hideCats.deko=!dOn;hideCats.korb=!kOn;
+   room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='deko')o.visible=dOn;else if(c==='korb')o.visible=kOn;});
+   if(typeof labels!=='undefined'&&labels)labels.forEach(function(l){if(l.cat==='deko'){l.p.x=XA+0.5;l.p.y=hz(XA+0.5)+0.42;l.p.z=yc;}else if(l.cat==='korb'){l.p.x=XA+1.5;l.p.y=hz(XA+1.5)-0.30;l.p.z=yc;}});
+   var a=document.getElementById('dkB'),b=document.getElementById('kbB'),h=document.getElementById('dkHint');
+   if(a)a.classList.toggle('on',!!DKON);if(b)b.classList.toggle('on',!!KBON);
+   if(h){var t='';if((DKON||KBON)&&!kon)t='Dekoration und Körbe erscheinen, sobald die Konsolen eingeblendet sind.';else if((DKON||KBON)&&KO_WALL)t='ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Pflanzen (bis ca. 1,1 m) stoßen an.';h.style.display=t?'block':'none';h.textContent=t;}}
+  var dkBtn=document.getElementById('dkB'),kbBtn=document.getElementById('kbB');
+  if(dkBtn)dkBtn.onclick=function(){DKON=!DKON;decoApply();};
+  if(kbBtn)kbBtn.onclick=function(){KBON=!KBON;decoApply();};
 function konsDims(wall){var Y0=wall?D-0.44:D-SGAP+0.003,DP=0.20,YD=Y0+DP+0.10,c0=cat;
  [['konsole',SX0,KT],['konsoleB',SX0+KARM,KTB]].forEach(function(v){var XA=v[1],T=v[2],XE=XA+T[T.length-1][0]+T[T.length-1][1],g=dimG[v[0]];if(g){while(g.children.length)g.remove(g.children[0]);}
   ctDims(v[0],function(hx,vy,vz){T.forEach(function(t){hx(YD,XA+t[0],XA+t[0]+t[1]);});hx(YD+0.22,XA,XE);hx(YD,XE,W);vy(XE+0.14,Y0,Y0+DP);vy(XE+0.30,Y0+DP,D);if(wall)vy(XA-0.12,D-SGAP,Y0);vz(XA-0.06,Y0+DP/2,0,0.809);});});cat=c0;}
@@ -930,7 +970,7 @@ function konsArT(){var at=document.getElementById('arT'),on=!hideCats.konsole;if
  var ko=document.getElementById('kOnB'),kf=document.getElementById('kOffB'),kh=document.getElementById('konsHint');if(ko)ko.classList.toggle('on',on);if(kf)kf.classList.toggle('on',!on);
  var va=document.getElementById('kVarA'),vb=document.getElementById('kVarB');if(va&&vb){va.classList.toggle('on',on&&KV==='A');vb.classList.toggle('on',on&&KV==='B');}var bb=document.getElementById('bothB');if(bb){bb.disabled=on;bb.style.opacity=on?'0.45':'';if(bb.dataset.t0===undefined)bb.dataset.t0=bb.title||'';bb.title=on?'Mit den Konsolen nicht möglich: Tisch oder Hocker wählen (hinter dem Sofa ist für den Hocker kein Platz, vorne nur für eines von beiden)':bb.dataset.t0;}var klr=document.getElementById('konsLedRow');if(klr)klr.style.opacity=on?'':'0.45';var kw=document.getElementById('kWallB'),ks=document.getElementById('kSofaB'),kg=document.getElementById('kPosGrp');if(kg)kg.style.display=on?'':'none';if(kw)kw.classList.toggle('on',on&&KO_WALL);if(ks)ks.classList.toggle('on',on&&!KO_WALL);
  if(kh){kh.style.display=on?'block':'none';var t='';if(on){if(KO_WALL){t='Konsolen an der Wand: 24 cm Wandabstand (näher geht nicht: die Schräge ist dort nur 83 cm hoch, die Konsolen 81 cm), 47,5 cm Platz bis zum Sofa. Sofa-Licht ist aus (Lightbars verdeckt).'+((ctOn&&hkOn)?' Hocker hinter dem Sofa passt nicht: bei „Beide“ steht der Hocker vorne.':'')+(hkOn&&!ctOn?' Der Hocker (84 cm tief) passt hinter dem Sofa nicht.':'')+((ctOn&&tabBack())?' Der Couchtisch (55 cm tief) passt hinter dem Sofa nicht und ist ausgeblendet.':'');}else{t='Konsolen ('+(KV==='A'?'3 × 100 cm':'2 × 100 + 80 cm, 80er in der Mitte')+') an: Tisch oder Hocker, nicht beide (hinter dem Sofa ist für den Hocker kein Platz, vorne nur für eines von beiden). Sofa-Licht (Hue Lightbars) ist aus, weil die Konsolen sie verdecken.';}}kh.textContent=t;}}
-function konsApply(){var on=!hideCats.konsole;konsVar();konsMove();if(typeof soundApply==='function')soundApply();if(window.__kl&&typeof lmCalc==='function'){lmKey='';lmCalc();}setSofaLed(sofaLedOn);konsCtb(on);if(on&&ctOn&&hkOn)setTabMode(true,false);if(on&&hkArr==='tf')hkArr='hf';applyTabHk();tabVis();
+function konsApply(){var on=!hideCats.konsole;konsVar();konsMove();if(typeof soundApply==='function')soundApply();if(typeof decoApply==='function')decoApply();if(window.__kl&&typeof lmCalc==='function'){lmKey='';lmCalc();}setSofaLed(sofaLedOn);konsCtb(on);if(on&&ctOn&&hkOn)setTabMode(true,false);if(on&&hkArr==='tf')hkArr='hf';applyTabHk();tabVis();
  var sb=document.getElementById('sofaledB');if(sb){if(sb.dataset.t0===undefined)sb.dataset.t0=sb.title||'';sb.style.opacity=on?'0.45':'';sb.title=on?'Sofa-Licht ist aus, solange die Konsolen eingeblendet sind (die Lightbars stehen dort und wären verdeckt)':sb.dataset.t0;}}
 // Hocker IKEA SÖRVALLEN mit Aufbewahrung, Tallmyra mittelgrau: 105 x 84 x 45 cm (Länge x Breite x Höhe laut IKEA, Tiefe = 84 cm angenommen). Aufbau geschätzt nach den IKEA-Produktbildern: Beine ca. 8 cm (dunkle, nach unten verjüngte Blöcke), Korpus ca. 24 cm, Polsterdeckel ca. 13 cm, Deckel-Unterseite hell, zwei Klappenarme (Scherenarme) mit Dämpfer.
 // Auswahl: Entweder Tisch / Oder Hocker / Und beide (Tisch vorne + Hocker hinter dem Sofa oder umgekehrt). Vorne: 18 cm vor dem Sofa (sonst stößt der Deckel beim Öffnen ans Sofa), mittig vor den zwei Sitzen ohne Récamiere. Hinten: dicht am Sofa und an der Wand (91,5 cm frei, Fußleiste 2,5 cm, Hocker 84 cm: passt mit 5 cm Luft), Deckel dort nicht öffenbar. Bei ausgeklapptem Bett ist der Hocker weggestellt.
@@ -1320,7 +1360,7 @@ var LC={'Schreibtisch 2,40 m':'tisch','Höhe 72 cm':'tisch','Tiefe 80 cm':'tisch
  'Fernseher 75" · Panel 166,8 × 95,8 × 7,7 cm · 22 kg (BESTÅ trägt 30 kg)':'tv','Bilddiagonale ≈ 189 cm (75 Zoll)':'tv','100,8 cm (mit Füßen)':'tv','138,8 cm gesamt':'tv',
  'Sofa SÖRVALLEN 284 × 193 × 88 cm':'sofa','284 cm':'sofa','91,5 cm Platz hinter dem Sofa (Schräge dort 62–143 cm hoch)':'sofa','Tiefe 102 cm':'sofa','193 cm':'sofa','Decke 143 cm: 55 cm Luft über Rücken (88 cm)':'sofa','15 cm bis Heizkörper':'sofa','Schlaffläche 239 × 147 cm':'bett','239 cm':'bett','147 cm':'bett','Bettkante bis Sideboard 82,5 cm':'bett','Couchtisch LACK 90 × 55 × 45 cm':'ctn','Breite 90 cm':'ctn','Tiefe 55 cm':'ctn','bis Sofa 33,5 cm':'ctn','bis Récamiere 36 cm':'ctn','bis Sideboard 85 cm':'ctn','Höhe 45 cm':'ctn','Couchtisch LACK 90 × 55 × 45 cm (hinter dem Sofa)':'ctb','Breite 90 cm (hinter dem Sofa)':'ctb','Tiefe 55 cm (hinter dem Sofa)':'ctb','bis Sofa 10 cm':'ctb','bis Schrägenwand 26,5 cm':'ctb','Tischhöhe 45 cm':'ctb',
  'Unterlage 120 cm':'stuhl','49,5 cm unter Tischplatte':'stuhl','Unterlage 100 cm':'stuhl','Unterlage endet am Sofa':'stuhl','Bürostuhl (geschätzt)':'stuhl',
- 'Tisch bis Sofa 70,5 cm':'abstand','Stuhl–Sofa 27 cm':'abstand'};Object.assign(LC,RUGLC);Object.assign(LC,HKLC);Object.assign(LC,NKLC);Object.assign(LC,KLC);Object.assign(LC,SNLC);LEDLB.forEach(function(l){LC[l[0]]='led';});TVLB.forEach(function(l){LC[l[0]]='tvled';});TVLB65.forEach(function(l){LC[l[0]]='tvled65';});TVLBL65.forEach(function(l){LC[l[0]]='tv65';});TVLB85.forEach(function(l){LC[l[0]]='tvled85';});TVLBL85.forEach(function(l){LC[l[0]]='tv85';});TVLBHS.forEach(function(l){LC[l[0]]='tvledhs';});TVLBLHS.forEach(function(l){LC[l[0]]='tvhs';});TVLBSE.forEach(function(l){LC[l[0]]='tvledse';});TVLBLSE.forEach(function(l){LC[l[0]]='tvse';});SFLB.forEach(function(l){LC[l[0]]='sofaled';});
+ 'Tisch bis Sofa 70,5 cm':'abstand','Stuhl–Sofa 27 cm':'abstand'};Object.assign(LC,RUGLC);Object.assign(LC,HKLC);Object.assign(LC,NKLC);Object.assign(LC,KLC);Object.assign(LC,SNLC);Object.assign(LC,DKLC);LEDLB.forEach(function(l){LC[l[0]]='led';});TVLB.forEach(function(l){LC[l[0]]='tvled';});TVLB65.forEach(function(l){LC[l[0]]='tvled65';});TVLBL65.forEach(function(l){LC[l[0]]='tv65';});TVLB85.forEach(function(l){LC[l[0]]='tvled85';});TVLBL85.forEach(function(l){LC[l[0]]='tv85';});TVLBHS.forEach(function(l){LC[l[0]]='tvledhs';});TVLBLHS.forEach(function(l){LC[l[0]]='tvhs';});TVLBSE.forEach(function(l){LC[l[0]]='tvledse';});TVLBLSE.forEach(function(l){LC[l[0]]='tvse';});SFLB.forEach(function(l){LC[l[0]]='sofaled';});
 var labels=[
  ['4,76 m',W/2,-NY-0.25,0],['4,465 m (Fensterwand)',W+0.25,(D-NY)/2,0],['4,09 m',-0.25,D/2,0],['Raumhöhe 2,30 m*',-0.2,-0.2,H/2],
  ['Schräge unten 0,62 m',W+0.2,D,K/2],['Schräge 1,90 m',W+0.15,YS,H],['Tür 0,95 m',0.6,-0.1,2.12],
@@ -1338,7 +1378,7 @@ var labels=[
  
  ['Tisch bis Sofa 70,5 cm',(0.915+SX0)/2,2.10,0.03],['Unterlage 120 cm',(MX0+MX1)/2,MY0-0.04,0.03],['49,5 cm unter Tischplatte',MX0+0.07,MY0-0.12,0.03],['Unterlage 100 cm',MX1,(MY0+MY1)/2,0.03],
  ['Stuhl–Sofa 27 cm',(CCX+0.275+SX0)/2,2.95,0.03],['Unterlage endet am Sofa',MX1,MY0-0.12,0.03],['Bürostuhl (geschätzt)',CCX,CCY,1.12],['99,8 cm',PX0+PW/2,0.75,0.02],['Lücke 4 cm (Türen 90°)',(1.733+PX0)/2,0.30,0.02],['180 cm',SB0+SBW/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,09 m',(SB0+SBW+W)/2,0.75,0.02],['178,4 cm',SBT.X0+SBT.W/2,0.75,0.02],['Rest bis Fensterwand ≈ 0,10 m (TONSTAD)',SBT.X0+SBT.W+0.115,0.75,0.02]
-].concat(RUGLB).concat(HKLB).concat(NKLB).concat(KLB).concat(SNLB).concat(LEDLB).concat(TVLB).concat(TVLB65).concat(TVLBL65).concat(TVLB85).concat(TVLBL85).concat(TVLBHS).concat(TVLBLHS).concat(TVLBSE).concat(TVLBLSE).concat(SFLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2]-(({schrank:1,sideboard:1,sideboardT:1,tv:1,tv65:1,tv85:1,tvhs:1,tvledhs:1,tvse:1,tvledse:1,tvled:1,tvled65:1,tvled85:1,beam:1})[LC[l[0]]]?NY:0),l[3]),cat:LC[l[0]]||'raum'};});
+].concat(RUGLB).concat(HKLB).concat(NKLB).concat(KLB).concat(SNLB).concat(DKLB).concat(LEDLB).concat(TVLB).concat(TVLB65).concat(TVLBL65).concat(TVLB85).concat(TVLBL85).concat(TVLBHS).concat(TVLBLHS).concat(TVLBSE).concat(TVLBLSE).concat(SFLB).map(function(l){var d=document.createElement('div');d.className='lbl';d.textContent=l[0];stage.appendChild(d);return {el:d,p:P(l[1],l[2]-(({schrank:1,sideboard:1,sideboardT:1,tv:1,tv65:1,tv85:1,tvhs:1,tvledhs:1,tvse:1,tvledse:1,tvled:1,tvled65:1,tvled85:1,beam:1})[LC[l[0]]]?NY:0),l[3]),cat:LC[l[0]]||'raum'};});
 // Nische: Schrank, Sideboard, Fernseher und TV-LED stehen an der neuen Rückwand (NY weiter hinten)
 // Texturen für Möbel, die bisher nur eine Grundfarbe hatten (Lambert-Farbe wirkt als Tönung auf die helle Textur)
 (function(){try{
@@ -1444,7 +1484,7 @@ canvas.addEventListener('wheel',function(e){e.preventDefault();dist=Math.max(0.3
 })();
 ['v1','v2','v3','v4','v5','v6','v7','v8'].forEach(function(k){document.getElementById(k).onclick=function(){setView(k);setSlope(k!=='v5');if(/^v[678]$/.test(k)){try{stage.scrollIntoView({block:'end'});}catch(e){}}};});
 document.getElementById('tz').onclick=function(){zones.visible=!zones.visible;this.classList.toggle('on',zones.visible);document.getElementById('legend').style.display=zones.visible?'block':'none';};
-var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['hocker','Hocker'],['nacken','Nackenpolster'],['konsole','Konsolen'],['beam','Sonos Beam'],['rear','Sonos Era 100'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['sofaled','Sofa-Licht (Hue Play)'],['abstand','Abstände Tisch–Sofa']];
+var CATS=[['raum','Raum'],['tisch','Schreibtisch'],['schrank','Schrank'],['sideboard','Sideboard'],['tv','Fernseher'],['sofa','Sofa'],['bett','Sofa ausgeklappt'],['couchtisch','Couchtisch'],['hocker','Hocker'],['nacken','Nackenpolster'],['konsole','Konsolen'],['beam','Sonos Beam'],['deko','Dekoration'],['korb','Körbe unten'],['rear','Sonos Era 100'],['teppich','Teppich'],['stuhl','Stuhl & Unterlage'],['led','Nanoleaf-Wand'],['tvled','TV-LED (Hue Flux)'],['sofaled','Sofa-Licht (Hue Play)'],['abstand','Abstände Tisch–Sofa']];
 var LINK={sofa:['abstand'],stuhl:['abstand']};
 var pinned={},hoverCat=null,hoverOn=true,catsEl=document.getElementById('cats');
 function sync(){[].forEach.call(catsEl.querySelectorAll('button[data-k]'),function(b){b.classList.toggle('on',!!pinned[b.dataset.k]);});}
@@ -1629,7 +1669,7 @@ function setTvSize(s){tvSize=s;altHide.tv=(s!=='75');altHide.tvled=(s!=='75');al
   var zz0=(s==='S')?(TVSE.Z0+TVSE.H/2):(s==='H')?(TVHS.Z0+TVHS.H/2):(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2);var zz=zz0+sbDz;tvLight.position.copy(P((s==='85')?TVCX85:TVCX,0.12-NY,zz));
   sbRefresh();tv75B.classList.toggle('on',s==='75');tv65B.classList.toggle('on',s==='65');tv85B.classList.toggle('on',s==='85');tvHB.classList.toggle('on',s==='H');tvSB.classList.toggle('on',s==='S');}
 tv75B.onclick=function(){setTvSize('75');};tv65B.onclick=function(){setTvSize('65');};tv85B.onclick=function(){setTvSize('85');};tvHB.onclick=function(){setTvSize('H');};tvSB.onclick=function(){setTvSize('S');};
-soundApply();
+soundApply();decoApply();
 var sbBB=document.getElementById('sbBB'),sbTB=document.getElementById('sbTB'),sbHint=document.getElementById('sbHint');
 var SBTT={'138,8 cm gesamt':'155,7 cm gesamt','126,2 cm gesamt':'143,1 cm gesamt','151,3 cm gesamt':'168,2 cm gesamt','Bettkante bis Sideboard 82,5 cm':'Bettkante bis Sideboard 87,5 cm','bis Sideboard 85 cm':'bis Sideboard 90 cm','IKEA 200 × 300 quer: 8 cm bis Sideboard':'IKEA 200 × 300 quer: 13 cm bis Sideboard','IKEA 200 × 300 längs: 8 cm bis Sideboard':'IKEA 200 × 300 längs: 13 cm bis Sideboard','IKEA 170 × 240 quer: 22 cm bis Sideboard':'IKEA 170 × 240 quer: 27 cm bis Sideboard','Kaufland 250 × 300: 32 cm bis Sideboard':'Kaufland 250 × 300: 37 cm bis Sideboard'};
 function sbRefresh(){if(typeof soundApply==='function')soundApply();var T=(sbV==='T'),dx=(tvSize==='85')?DX85:0,rest=W-(SBT.X0+SBT.W+dx);
