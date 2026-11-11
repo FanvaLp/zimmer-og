@@ -1753,7 +1753,7 @@ function wmApply(){var on=WM&&tvSize==='S',D=-0.194,TD=0.039,th=on?WT*Math.PI/18
   var pyh=TVSE.Z0+TD+TVSE.H/2-0.245+sbDz,pzd=-NY+0.030;
   function tilt(a){if(!(on&&th))return a;var dy=a[0]-pyh,dz=a[1]-pzd;return [pyh+dy*cs-dz*sn,pzd+dy*sn+dz*cs];}
   room.children.forEach(function(o){var u=o.userData,c=u&&u.cat;if(c!=='tvse'&&c!=='tvledse')return;var ty=0,tz=0,mv=false;
-    if(u.wmMount){tz=on?-tvDy:0;mv=!!u.wmTilt;}else if(u.wmFoot){ty=0;tz=0;}else if(c==='tvse'){ty=on?TD:0;tz=on?D-tvDy:0;mv=true;}else{ty=on?TD:0;tz=0;}
+    if(u.wmMount){tz=on?-tvDy:0;mv=!!u.wmTilt;}else if(u.wmFoot){ty=0;tz=0;}else if(c==='tvse'){ty=on?TD:0;tz=on?D-tvDy:0;mv=true;}else{ty=on?TD:0;tz=(on&&!u.noPick)?D-tvDy:0;mv=!u.noPick;}   // LED-Streifen sitzen hinten am Panel und wandern mit; nur das Wandlicht (Halo) bleibt an der Wand
     var bx=o.position.y-(u.wmoy||0),bz=o.position.z-(u.wmoz||0),r=[bx+ty,bz+tz],rot=0;
     if(mv&&on&&th){r=tilt(r);rot=th;}
     o.rotation.x=rot;o.position.y=r[0];o.position.z=r[1];u.wmoy=r[0]-bx;u.wmoz=r[1]-bz;
