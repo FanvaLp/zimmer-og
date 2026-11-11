@@ -347,10 +347,12 @@ box(sWin.u0+0.02,D+0.003,sWin.v1,sWin.u1-0.02,D+0.008,sWin.v1+0.012,0x8d8d85);  
   }
   // Großes Fenster (Fensterwand): links und rechts, Stange 2,12 m
   var gx0=W-0.07,gx1=W-0.02,gz0=0.80;
-  cur(gx0,gx1,eWin.u0-0.40,eWin.u0+0.10,gz0,2.12);
-  cur(gx0,gx1,eWin.u1-0.10,eWin.u1+0.30,gz0,2.12);
+  // beide Gardinen gleich breit (25 cm) und symmetrisch zum Fenster; rechts endet sie vor der Dachschräge (dort nur 2,20 m hoch), Stange endet bei y=2,35 m (Schräge dort 2,15 m)
+  var gm=(eWin.u0+eWin.u1)/2;
+  cur(gx0,gx1,gm-0.84,gm-0.59,gz0,2.12);
+  cur(gx0,gx1,gm+0.59,gm+0.84,gz0,2.12);
   var rm=new THREE.MeshLambertMaterial({color:0x4a4a4a});
-  var r1=new THREE.Mesh(new THREE.CylinderGeometry(0.01,0.01,(eWin.u1+0.36)-(eWin.u0-0.46),10),rm);r1.rotation.x=Math.PI/2;r1.position.copy(P(W-0.085,((eWin.u1+0.36)+(eWin.u0-0.46))/2,2.12));room.add(r1);
+  var r1=new THREE.Mesh(new THREE.CylinderGeometry(0.01,0.01,1.80,10),rm);r1.rotation.x=Math.PI/2;r1.position.copy(P(W-0.085,gm,2.12));room.add(r1);
   // Kleines Fenster (Schrägenwand): Vorhang nur auf der Seite zur Schreibtischwand (laut Foto), Stange 1,97 m
   cur(0.00,0.29,D-0.07,D-0.02,0.82,2.18);
   cur(0.99,1.28,D-0.07,D-0.02,0.82,2.18);   // linke Gardine (auf Wunsch; auf den Fotos nicht zu sehen)
