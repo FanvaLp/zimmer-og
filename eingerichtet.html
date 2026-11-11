@@ -570,7 +570,7 @@ box(TVCX-0.06,TVF-0.04,TVHS.Z0-0.008,TVCX+0.06,TVF-0.012,TVHS.Z0,0x18181a);   //
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));})();
 // Hisense 75U7SE (75 Zoll, Alternative) nach Haendlerdaten (Geizhals, Dateks, Kontrolsat): Panel 166,8 x 96,3 x 5,8 cm, mit Fuss 102,4 cm hoch und 32,5 cm tief, 27,5 kg mit Fuss (26 kg ohne). Fussform (mittig, ca. 44 cm breit) nach Produktbild geschaetzt. Die Amazon-Seite mischt 85-Zoll-Maße ein (189,9 x 108,9) und wird dafuer nicht verwendet.
-var TVSE={W:1.668,H:0.963,D:0.058,FH:0.061,BD:0.325,FW:0.437};TVSE.Z0=SBH+TVSE.FH;
+var TVSE={W:1.668,H:0.963,D:0.058,FH:0.061,BD:0.325,FW:0.425};TVSE.Z0=SBH+TVSE.FH;
 var TVLBLSE=[['Fernseher Hisense 75U7SE · Panel 166,8 × 96,3 × 5,8 cm · 27,5 kg mit Fuß, 26 kg ohne (BESTÅ trägt 30 kg: passt, 2,5 kg Reserve)',TVCX,TVYB+TVSE.BD/2,TVSE.Z0+TVSE.H+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVSE.Z0+TVSE.H/2],['102,4 cm (mit Fuß)',SB0+SBW+0.06,SBD,SBH+TVSE.H/2],['140,4 cm gesamt',SB0+SBW+0.14,SBD,(TVSE.Z0+TVSE.H)/2],['Fuß ca. 43,7 × 32,5 cm (nach Produktfoto; Tiefenaufbau geschätzt)',TVCX,TVYB+TVSE.BD/2,SBH+0.03]];
 cat='tvse';
 box(TVCX-TVSE.W/2,TVF-0.012,TVSE.Z0,TVCX+TVSE.W/2,TVF,TVSE.Z0+TVSE.H,0x161618);
