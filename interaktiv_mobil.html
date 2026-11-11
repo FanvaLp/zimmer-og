@@ -933,8 +933,12 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
    var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=[SPXS[SPN-1],4.315];
    SNE.forEach(function(e,i){var ya=(i===0?-1:1)*Math.min(0.96,Math.atan(Math.abs(SPCX[SPN-1]-xs[i])/0.54));SPYA[i]=ya;var yco=Math.cos(ya),ysi=Math.sin(ya);e.o.forEach(function(o){var px=o.userData.p0.x,pz=o.userData.p0.z;o.position.x=px*yco+pz*ysi+xs[i];o.position.y=o.userData.p0.y+(o.userData.fl?0:0.87);o.position.z=-px*ysi+pz*yco+yc+0.06;o.rotation.order='YXZ';o.rotation.y=ya;});});
-   var bOn=!!BARON&&tvSize!=='S',rOn=!!SPON;hideCats.beam=!bOn;hideCats.rear=!rOn;
+   var bOn=!!BARON&&!(tvSize==='S'&&sbV==='T'),rOn=!!SPON;hideCats.beam=!bOn;hideCats.rear=!rOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='beam')o.visible=bOn;else if(c==='rear')o.visible=rOn;});
+   var sAct=bOn&&tvSize==='S'&&sbV==='B',dT=sAct?-0.119:0,dB=sAct?0.010:0;window.__sbd=[dT,dB];
+   room.children.forEach(function(o){var c=o.userData&&o.userData.cat,d=(c==='tvse'||c==='tvledse')?dT:(c==='beam')?dB:null;if(d===null)return;var p=o.userData.sbk||0;o.position.z+=d-p;o.userData.sbk=d;});
+   labels.forEach(function(l){var d=(l.cat==='tvse'||l.cat==='tvledse')?dT:(l.cat==='beam')?dB:null;if(d===null)return;var p=l.sbk||0;l.p.z+=d-p;l.sbk=d;});
+   [['tvse',dT],['tvledse',dT],['beam',dB]].forEach(function(e){var g=dimG[e[0]];if(!g)return;var p=g.userData.sbk||0;g.position.z+=e[1]-p;g.userData.sbk=e[1];});
    labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=1.12;l.p.z=yc;l.el.textContent=(i===0)?'Bose Surround Speaker (8,4 × 8,1 × 9,4 cm) auf Bose-Ständer UFS-20 II (ca. 96,5 cm hoch), hinter dem Sofa, Seite zur Sofa-Mitte, ca. '+Math.round(Math.abs(SPYA[i])*57.3)+'° direkt auf den Sitzplatz ausgerichtet · Funkempfänger + Steckdose nötig':'Bose Surround Speaker (8,4 × 8,1 × 9,4 cm) auf Bose-Ständer UFS-20 II (ca. 96,5 cm hoch), hinter dem Sofa, Außenwandseite, ca. '+Math.round(Math.abs(SPYA[i])*57.3)+'° direkt auf den Sitzplatz ausgerichtet · Funkempfänger + Steckdose nötig';});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);var a2=document.getElementById('snOff2'),b2=document.getElementById('snOn2');if(a2)a2.classList.toggle('on',!SNON);if(b2)b2.classList.toggle('on',!!SNON);['spOff','spOff2'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.toggle('on',!SPON);});['spOn','spOn2'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.toggle('on',!!SPON);});[1,2,3].forEach(function(n){['spN','spM'].forEach(function(p){var e=document.getElementById(p+n);if(e)e.classList.toggle('on',SPN===n);});});var kon_=!hideCats.konsole;function lock_(id,off,why){var e=document.getElementById(id);if(!e)return;if(e.dataset.t0===undefined)e.dataset.t0=e.title||'';e.disabled=!!off;e.style.opacity=off?'.4':'';e.style.cursor=off?'not-allowed':'';e.title=off?why:e.dataset.t0;}
@@ -950,7 +954,8 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
     if(dimG.ctb)dimG.ctb.position.x=dxC;if(dimG.hockerb)dimG.hockerb.position.x=dxH;
     labels.forEach(function(l){var d=l.cat==='ctb'?dxC:l.cat==='hockerb'?dxH:null;if(d===null)return;if(l.bkx0===undefined)l.bkx0=l.p.x;l.p.x=l.bkx0+d;});}
    if(h){var t='';
-    if(SNON){if(tvSize==='S')t='Die Soundbar passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
+    if(SNON){if(tvSize==='S'&&sbV==='B')t='Soundbar vor dem Hisense SE: Damit sie voll auf dem Sideboard steht (10,4 cm tief, 5 mm von der Vorderkante), steht der Fernseher ganz hinten; der Fuß (32,5 cm tief) ragt dann ca. 1,9 cm über die Sideboard-Rückkante. Das geht nur, wenn das Sideboard mindestens 2 cm Abstand zur Wand hat (Fußleiste), vor dem Kauf nachmessen. Soundbar 5,6 cm hoch, Panel-Unterkante 6,1 cm: Das Bild bleibt frei.';
+     else if(tvSize==='S')t='Mit dem TONSTAD-Sideboard (37,2 cm tief) passt die Soundbar nicht vor den Fuß des Hisense (32,5 + 10,4 cm), deshalb ausgeblendet.';
      else t='Soundbar vor dem Fernseher (5,6 cm hoch, Panel-Unterkante 5 cm): Vom Sofa aus bleibt das Bild frei; nur von ganz unten oder von vorn gesehen ragt sie ca. 0,6 cm hinein (geschätzt).';}
     if(SPON){t+=(t?' ':'')+'Die zwei Bose Surround Speakers stehen montiert auf den Bose-Ständern UFS-20 II hinter dem Sofa, leicht seitlich und ca. '+Math.round(Math.abs(SPYA[0])*57.3)+'° bzw. '+Math.round(Math.abs(SPYA[1])*57.3)+'° direkt auf den Sitzplatz ausgerichtet (Boxen ca. 87–97 cm hoch, Neigung nach unten am Ständer wohl nicht einstellbar; Fußplatte 25,6 × 17,9 cm und Höhe 96,5 cm laut Händlerangaben, Rohrbiegung nach Fotos geschätzt).';
      if(kon)t+='';
@@ -1758,8 +1763,8 @@ function sbRefresh(){if(typeof soundApply==='function')soundApply();var T=(sbV==
 function setSb(v){sbV=v;var T=(v==='T');if(T&&window.sbSet&&sbAng>0){sbSet(0);var sbb=document.getElementById('sbB');if(sbb)sbb.classList.remove('on');}sbDz=T?DZT:0;tvDy=T?-0.05:0;altHide.sideboard=T;altHide.sideboardT=!T;
   var TC={beam:1,tv:1,tv65:1,tv85:1,tvhs:1,tvledhs:1,tvse:1,tvledse:1,tvled:1,tvled65:1,tvled85:1};
   room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='sideboard'||c==='sideboardT')o.visible=!altHide[c]&&!hideCats[c];
-    if(c&&TC[c]){if(o.userData.by0===undefined)o.userData.by0=o.position.y;o.position.y=o.userData.by0+sbDz;if(o.userData.bz0===undefined)o.userData.bz0=o.position.z;o.position.z=o.userData.bz0+tvDy;}});
-  labels.forEach(function(l){if(TC[l.cat]){if(l.by0===undefined)l.by0=l.p.y;l.p.y=l.by0+sbDz;if(l.bz0===undefined)l.bz0=l.p.z;l.p.z=l.bz0+tvDy;}
+    if(c&&TC[c]){if(o.userData.by0===undefined)o.userData.by0=o.position.y;o.position.y=o.userData.by0+sbDz;if(o.userData.bz0===undefined)o.userData.bz0=o.position.z;o.position.z=o.userData.bz0+tvDy+(o.userData.sbk||0);}});
+  labels.forEach(function(l){if(TC[l.cat]){if(l.by0===undefined)l.by0=l.p.y;l.p.y=l.by0+sbDz;if(l.bz0===undefined)l.bz0=l.p.z;l.p.z=l.bz0+tvDy+(l.sbk||0);}
     if(l.t0===undefined)l.t0=l.el.textContent;if(SBTT[l.t0])l.el.textContent=T?SBTT[l.t0]:l.t0;});
   Object.keys(dimB).forEach(function(k){var b=dimB[k][0],top=dimB[k][1];b.position.y=-sbDz;b.scale.y=(top+sbDz)/top;});
   paxM.material.color.setHex(T?0xdcbc88:0xcdb898);paxG.forEach(function(o){o.visible=!T&&!hideCats.schrank;});
