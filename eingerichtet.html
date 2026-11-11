@@ -880,7 +880,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
     bx(0.084,0.081,0.0065,0,0,0.0905,0x08080a,arr);   // glänzende Deckkappe
     bx(0.032,0.0008,0.006,0,-0.0412,0.014,0xd0d0d4,arr);   // BOSE-Schriftzug (Platzhalter)
     var SM_=M(0x1d1d20);function fl_(m){m.userData.fl=true;return m;}
-    fl_(bx(0.27,0.20,0.010,0,0,0.005,0x26262a,arr));fl_(bx(0.25,0.18,0.006,0,0,0.013,0x1b1b1e,arr));   // Bose UFS-20 II: Fußplatte (nach Fotos geschätzt)
+    fl_(bx(0.256,0.179,0.010,0,0,0.005,0x26262a,arr));fl_(bx(0.236,0.159,0.006,0,0,0.013,0x1b1b1e,arr));   // Bose UFS-20 II: Fußplatte 25,6 × 17,9 cm (Crutchfield)
     var pz_=[],N_=14,k_;for(k_=0;k_<=N_;k_++){var zz=0.016+(0.90-0.016)*k_/N_,tt=Math.min(1,Math.max(0,(zz-0.55)/0.35));pz_.push([0.052*tt*tt*(3-2*tt),zz]);}
     for(k_=0;k_<N_;k_++){var a_=pz_[k_],b_=pz_[k_+1],L_=Math.sqrt(Math.pow(b_[0]-a_[0],2)+Math.pow(b_[1]-a_[1],2)),m_=cy(0.0085,0.0085,L_+0.002,1,1,0,(a_[0]+b_[0])/2,(a_[1]+b_[1])/2,SM_,arr);m_.rotation.x=Math.atan2(b_[0]-a_[0],b_[1]-a_[1]);fl_(m_);}   // Rohr mit S-Bogen
     fl_(bx(0.050,0.008,0.100,0,0.0445,0.918,0x141416,arr));   // Halteplatte hinter der Box (Boxunterkante 87 cm, Ständer gesamt ca. 96,5 cm)
@@ -910,7 +910,7 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    if(h){var t='';
     if(SNON){if(tvSize==='S')t='Die Soundbar passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
      else t='Soundbar vor dem Fernseher (5,6 cm hoch, Panel-Unterkante 5 cm): Vom Sofa aus bleibt das Bild frei; nur von ganz unten oder von vorn gesehen ragt sie ca. 0,6 cm hinein (geschätzt).';}
-    if(SPON){t+=(t?' ':'')+'Die zwei Bose Surround Speakers stehen montiert auf den Bose-Ständern UFS-20 II hinter dem Sofa (Boxen ca. 87–97 cm hoch; Maße der Ständer nach Fotos geschätzt).';
+    if(SPON){t+=(t?' ':'')+'Die zwei Bose Surround Speakers stehen montiert auf den Bose-Ständern UFS-20 II hinter dem Sofa (Boxen ca. 87–97 cm hoch; Fußplatte 25,6 × 17,9 cm und Höhe 96,5 cm laut Händlerangaben, Rohrbiegung nach Fotos geschätzt).';
      if(kon)t+='';
      if(KO_WALL)t+=' ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Boxen (ca. 0,87–0,97 m) stoßen an.';}
     h.style.display=t?'block':'none';h.textContent=t;}}
