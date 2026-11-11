@@ -897,7 +897,11 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    cat=c0;
   })();
   function spFoot(n){var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0)+0.06,r=[];[SPXS[n-1],4.315].forEach(function(x){var a=Math.min(0.96,Math.atan(Math.abs(SPCX[n-1]-x)/0.54)),hx=0.128*Math.cos(a)+0.0895*Math.sin(a)+0.02,hy=0.128*Math.sin(a)+0.0895*Math.cos(a)+0.02;r.push([x-hx,yc-hy,x+hx,yc+hy]);});return r;}
-  function spHit(n,R){return spFoot(n).some(function(f){return f[0]<R[2]&&f[2]>R[0]&&f[1]<R[3]&&f[3]>R[1];});}
+  function bkPlace(n,R){var w=R[2]-R[0],fr=spFoot(n).filter(function(f){return f[1]<R[3]&&f[3]>R[1];});
+   function ok(x0){return x0>=SX0-1e-6&&x0+w<=4.46+1e-6&&!fr.some(function(f){return f[0]<x0+w&&f[2]>x0;});}
+   if(ok(R[0]))return 0;var c=[];fr.forEach(function(f){c.push(f[0]-0.02-w);c.push(f[2]+0.02);});
+   c=c.filter(ok).sort(function(a,b){return Math.abs(a-R[0])-Math.abs(b-R[0]);});return c.length?c[0]-R[0]:null;}
+  function spHit(n,R){return bkPlace(n,R)===null;}
   function spConf(n){if(typeof SPXS==='undefined'||!SPXS||typeof CTB==='undefined'||typeof HKB==='undefined'||!CTB||!HKB)return '';var t=tabBack()&&ctOn;if(t)return spHit(n,CTB)?'T':'';if(hkBack())return spHit(n,HKB)?'H':'';return '';}
   function spLockB(){if(typeof SPXS==='undefined'||!SPXS||typeof CTB==='undefined'||typeof HKB==='undefined'||!CTB||!HKB)return;
    function lk(id,off,why){var e=document.getElementById(id);if(!e)return;if(off){if(e.dataset.l1!=='1'){e.dataset.t1=e.title||'';e.dataset.l1='1';}e.disabled=true;e.style.opacity='.4';e.style.cursor='not-allowed';e.title=why;e.dataset.w1=why;}else if(e.dataset.l1==='1'){e.disabled=false;e.style.opacity='';e.style.cursor='';if(e.title===e.dataset.w1)e.title=e.dataset.t1;e.dataset.l1='0';}}
@@ -921,11 +925,19 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    [1,2,3].forEach(function(n){['spN','spM'].forEach(function(p){lock_(p+n,!!SPON&&n!==SPN&&!!spConf(n),'Nicht wählbar: Tisch oder Hocker steht hinter dem Sofa und würde mit dem Ständer kollidieren.');});});spLockB();
    ['spN1','spM1'].forEach(function(id){var e=document.getElementById(id);var g=e&&e.closest('.grp');if(g)g.style.display=SPON?'':'none';});
    ['kVarA','kVarB','kVarC'].forEach(function(id){lock_(id,!!SPON,'Nicht wählbar, solange die Boxen auf den Ständern hinten eingeblendet sind (Konsolen und Ständer stehen am selben Platz). Erst „Boxen hinten“ auf „Aus“ stellen.');});
+   var dxC=0,dxH=0;if(typeof CTB!=='undefined'&&typeof HKB!=='undefined'&&typeof hkBObjs!=='undefined'&&hkBObjs.length&&typeof ctB!=='undefined'){
+    if(SPON){dxC=bkPlace(SPN,CTB)||0;dxH=bkPlace(SPN,HKB)||0;}
+    function sh(arr,k,dx){arr.forEach(function(o){if(o.userData[k]===undefined)o.userData[k]=o.position.x;o.position.x=o.userData[k]+dx;});}
+    sh(ctB,'bkx0',dxC);sh(hkBObjs,'bkx0',dxH);
+    window.__bkd=[dxC,dxH];
+    if(dimG.ctb)dimG.ctb.position.x=dxC;if(dimG.hockerb)dimG.hockerb.position.x=dxH;
+    labels.forEach(function(l){var d=l.cat==='ctb'?dxC:l.cat==='hockerb'?dxH:null;if(d===null)return;if(l.bkx0===undefined)l.bkx0=l.p.x;l.p.x=l.bkx0+d;});}
    if(h){var t='';
     if(SNON){if(tvSize==='S')t='Die Soundbar passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
      else t='Soundbar vor dem Fernseher (5,6 cm hoch, Panel-Unterkante 5 cm): Vom Sofa aus bleibt das Bild frei; nur von ganz unten oder von vorn gesehen ragt sie ca. 0,6 cm hinein (geschätzt).';}
     if(SPON){t+=(t?' ':'')+'Die zwei Bose Surround Speakers stehen montiert auf den Bose-Ständern UFS-20 II hinter dem Sofa, leicht seitlich und ca. '+Math.round(Math.abs(SPYA[0])*57.3)+'° bzw. '+Math.round(Math.abs(SPYA[1])*57.3)+'° direkt auf den Sitzplatz ausgerichtet (Boxen ca. 87–97 cm hoch, Neigung nach unten am Ständer wohl nicht einstellbar; Fußplatte 25,6 × 17,9 cm und Höhe 96,5 cm laut Händlerangaben, Rohrbiegung nach Fotos geschätzt).';
      if(kon)t+='';
+     if(dxH||dxC)t+=' Hocker/Couchtisch hinter dem Sofa steht seitlich versetzt neben dem Ständer.';
      if(SPN>1)t+=' Besuch auf '+(SPN===2?'Platz 2':'Platz 2 und 3')+': Die Box zur Sofa-Mitte steht weiter außen, beide Boxen zielen auf die Mitte der besetzten Plätze. Für dich auf Platz 1 kommt der Raumklang dann etwas mehr von der näheren Box.';if(KO_WALL)t+=' ACHTUNG: An der Schrägenwand ist die Schräge nur ca. 0,83 m hoch, die Boxen (ca. 0,87–0,97 m) stoßen an.';}
     h.style.display=t?'block':'none';h.textContent=t;}}
   var snOffB=document.getElementById('snOff'),snOnB=document.getElementById('snOn');
