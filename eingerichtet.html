@@ -896,6 +896,16 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    SNLB.forEach(function(l,i){SNLC[l[0]]=(i<2)?'beam':'rear';});
    cat=c0;
   })();
+  function spFoot(n){var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0)+0.06,r=[];[SPXS[n-1],4.315].forEach(function(x){var a=Math.min(0.96,Math.atan(Math.abs(SPCX[n-1]-x)/0.54)),hx=0.128*Math.cos(a)+0.0895*Math.sin(a)+0.02,hy=0.128*Math.sin(a)+0.0895*Math.cos(a)+0.02;r.push([x-hx,yc-hy,x+hx,yc+hy]);});return r;}
+  function spHit(n,R){return spFoot(n).some(function(f){return f[0]<R[2]&&f[2]>R[0]&&f[1]<R[3]&&f[3]>R[1];});}
+  function spConf(n){if(typeof SPXS==='undefined'||!SPXS||typeof CTB==='undefined'||typeof HKB==='undefined'||!CTB||!HKB)return '';var t=tabBack()&&ctOn;if(t)return spHit(n,CTB)?'T':'';if(hkBack())return spHit(n,HKB)?'H':'';return '';}
+  function spLockB(){if(typeof SPXS==='undefined'||!SPXS||typeof CTB==='undefined'||typeof HKB==='undefined'||!CTB||!HKB)return;
+   function lk(id,off,why){var e=document.getElementById(id);if(!e)return;if(off){if(e.dataset.l1!=='1'){e.dataset.t1=e.title||'';e.dataset.l1='1';}e.disabled=true;e.style.opacity='.4';e.style.cursor='not-allowed';e.title=why;e.dataset.w1=why;}else if(e.dataset.l1==='1'){e.disabled=false;e.style.opacity='';e.style.cursor='';if(e.title===e.dataset.w1)e.title=e.dataset.t1;e.dataset.l1='0';}}
+   var W1='Nicht wählbar: Der Ständer mit den Boxen steht hinter dem Sofa an derselben Stelle (Fußplatte). Erst „Boxen hinten“ auf „Aus“ stellen oder „+ Platz 2 und 3“ wählen (dann steht der Ständer weiter außen).';
+   var on=!!SPON,hitT=on&&spHit(SPN,CTB),hitH=on&&spHit(SPN,HKB);
+   lk('bed',hitT&&ctOn&&!bedOn,W1);lk('arH',hitT&&hkArr!=='hf',W1);lk('arT',hitH&&hkArr!=='tf',W1);lk('bothB',hitH&&hkArr==='tf'&&!(ctOn&&hkOn),W1);
+  }
+  function spLock(){spLockB();if(typeof soundApply==='function')soundApply();}
   function soundApply(){
    if(typeof SNE==='undefined'||!SNE||!SNE.length)return;
    var kon=!hideCats.konsole,XA=(KV==='A')?SX0:(KV==='C')?XCC:SX0+KARM,T=(KV==='A')?KT:(KV==='C')?KTC:KTB,XE=XA+T[T.length-1][0]+T[T.length-1][1];
@@ -907,7 +917,8 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    labels.forEach(function(l){if(l.cat!=='rear')return;if(l.t0===undefined)l.t0=l.el.textContent;var i=(l.t0.indexOf('L-Stück')>=0)?0:1;l.p.x=xs[i];l.p.y=1.12;l.p.z=yc;l.el.textContent=(i===0)?'Bose Surround Speaker (8,4 × 8,1 × 9,4 cm) auf Bose-Ständer UFS-20 II (ca. 96,5 cm hoch), hinter dem Sofa, Seite zur Sofa-Mitte, ca. '+Math.round(Math.abs(SPYA[i])*57.3)+'° direkt auf den Sitzplatz ausgerichtet · Funkempfänger + Steckdose nötig':'Bose Surround Speaker (8,4 × 8,1 × 9,4 cm) auf Bose-Ständer UFS-20 II (ca. 96,5 cm hoch), hinter dem Sofa, Außenwandseite, ca. '+Math.round(Math.abs(SPYA[i])*57.3)+'° direkt auf den Sitzplatz ausgerichtet · Funkempfänger + Steckdose nötig';});
    var a=document.getElementById('snOff'),b=document.getElementById('snOn'),h=document.getElementById('snHint');
    if(a)a.classList.toggle('on',!SNON);if(b)b.classList.toggle('on',!!SNON);var a2=document.getElementById('snOff2'),b2=document.getElementById('snOn2');if(a2)a2.classList.toggle('on',!SNON);if(b2)b2.classList.toggle('on',!!SNON);['spOff','spOff2'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.toggle('on',!SPON);});['spOn','spOn2'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.toggle('on',!!SPON);});[1,2,3].forEach(function(n){['spN','spM'].forEach(function(p){var e=document.getElementById(p+n);if(e)e.classList.toggle('on',SPN===n);});});var kon_=!hideCats.konsole;function lock_(id,off,why){var e=document.getElementById(id);if(!e)return;if(e.dataset.t0===undefined)e.dataset.t0=e.title||'';e.disabled=!!off;e.style.opacity=off?'.4':'';e.style.cursor=off?'not-allowed':'';e.title=off?why:e.dataset.t0;}
-   ['spOn','spOn2'].forEach(function(id){lock_(id,kon_,'Nicht wählbar, solange die Konsolen eingeblendet sind (Konsolen und Ständer stehen am selben Platz). Erst die Konsolen auf „Aus“ stellen.');});
+   ['spOn','spOn2'].forEach(function(id){var c=spConf(SPN);lock_(id,kon_||!!c,kon_?'Nicht wählbar, solange die Konsolen eingeblendet sind (Konsolen und Ständer stehen am selben Platz). Erst die Konsolen auf „Aus“ stellen.':'Nicht wählbar: '+(c==='T'?'Der Couchtisch':'Der Hocker')+' steht hinter dem Sofa und würde mit dem Ständer kollidieren. Wähle zuerst „+ Platz 2 und 3“ (Ständer weiter außen) oder stelle '+(c==='T'?'den Couchtisch':'den Hocker')+' nach vorn.');});
+   [1,2,3].forEach(function(n){['spN','spM'].forEach(function(p){lock_(p+n,!!SPON&&n!==SPN&&!!spConf(n),'Nicht wählbar: Tisch oder Hocker steht hinter dem Sofa und würde mit dem Ständer kollidieren.');});});spLockB();
    ['kVarA','kVarB','kVarC'].forEach(function(id){lock_(id,!!SPON,'Nicht wählbar, solange die Boxen auf den Ständern hinten eingeblendet sind (Konsolen und Ständer stehen am selben Platz). Erst „Boxen hinten“ auf „Aus“ stellen.');});
    if(h){var t='';
     if(SNON){if(tvSize==='S')t='Die Soundbar passt vor dem Hisense SE nicht (Fußrahmen reicht bis vorn ans Sideboard), deshalb ausgeblendet.';
@@ -1062,7 +1073,7 @@ function hkVis(){var f=hkOn&&!bedOn&&!hkBack()&&!hideCats.hocker,b=hkOn&&!bedOn&
  if(!f&&hkAng>0){tws.hk=(tws.hk||0)+1;hkSet(0);var bb=document.getElementById('hkB');if(bb)bb.classList.remove('on');}
  if(window.hotHk)hotHk.visible=f&&hkAng>0.5;
  hkStruts(hkAng);}
-function hkBtns(){konsArT();var ids={ctOnB:ctOn&&!hkOn,hkOnB:hkOn&&!ctOn,bothB:ctOn&&hkOn,ctOffB:!ctOn&&!hkOn,arT:hkArr==='tf',arH:hkArr==='hf',hHock:hkOn};
+function hkBtns(){konsArT();if(typeof spLock==='function')spLock();var ids={ctOnB:ctOn&&!hkOn,hkOnB:hkOn&&!ctOn,bothB:ctOn&&hkOn,ctOffB:!ctOn&&!hkOn,arT:hkArr==='tf',arH:hkArr==='hf',hHock:hkOn};
  Object.keys(ids).forEach(function(k){var e=document.getElementById(k);if(e)e.classList.toggle('on',!!ids[k]);});
  var ag=document.getElementById('arGrp');if(ag)ag.style.display=(ctOn&&hkOn)?'':'none';
  var hb=document.getElementById('hkB');if(hb){var no=bedOn||(hkOn&&hkBack());hb.style.opacity=no?'0.45':'';hb.title=no?(bedOn?'Hocker-Deckel: bei ausgeklapptem Bett ist der Hocker weggestellt':'Hocker-Deckel: hinter dem Sofa (Wand, Schräge, Sofa) nicht öffenbar – wähle „Hocker vorne“'):'Hocker-Deckel öffnen / schließen (schaltet bei Bedarf auf „Hocker“)';}}
