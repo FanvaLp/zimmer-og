@@ -118,7 +118,7 @@ footer{grid-column:1/-1;grid-row:2}
 <div class="subh" style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin:12px 0 4px;border-bottom:1px solid rgba(128,128,128,.25);padding-bottom:2px">Wohnbereich</div>
 <div class="grp lrow" style="flex-wrap:wrap;gap:6px 8px"><span class="lab" style="flex:0 0 auto">Sofa</span><div class="seg" style="display:inline-flex;vertical-align:top"><button id="hSofa" class="on" title="Sofa (auch ausgeklappt) ein- oder ausblenden">Ein/Aus</button></div><div class="seg" style="display:inline-flex;flex-wrap:wrap;vertical-align:top;max-width:100%"><button id="bedoff" class="on">Eingeklappt</button><button id="bed">Ausgeklappt (Bett)</button></div></div>
 <div class="subh" style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin:12px 0 4px;border-bottom:1px solid rgba(128,128,128,.25);padding-bottom:2px">TV-Wand</div>
-<div class="grp lrow" style="flex-wrap:wrap;gap:6px 8px"><span class="lab" style="flex:0 0 auto">Fernseher</span><div class="seg" style="display:inline-flex;vertical-align:top"><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Ein/Aus</button></div><div class="seg" style="display:inline-flex;flex-wrap:wrap;vertical-align:top;max-width:100%"><button id="tv85B" title="Samsung M70H 85 Zoll: Panel 189,0 × 108,4 cm, mit Füßen 113,3 cm hoch; das Sideboard rückt mittig in die Nische">85 Zoll Samsung</button><button id="tv75B" title="Samsung M70H 75 Zoll (Alternative; laut Samsung-Support kein Dolby Atmos): Panel 166,8 × 95,8 cm, mit Füßen 100,8 cm hoch">75 Zoll Samsung</button><button id="tvHB" style="display:none" aria-hidden="true">75 Zoll Hisense Pro</button><button id="tvSB" class="on" title="Hauptmodell: Hisense 75U7SE (Mini-LED, 144 Hz, Dolby Atmos, Dolby Vision): Panel 166,8 × 96,3 cm, mit Fuß 102,4 cm hoch, Fuß mit zwei Standbeinen, 27,5 kg (26 kg ohne Fuß), unter dem BESTÅ-Limit von 30 kg">75 Zoll Hisense SE</button><button id="tv65B" title="Samsung M70H 65 Zoll: Panel 144,4 × 83,1 cm, mit Füßen 88,2 cm hoch">65 Zoll Samsung</button></div></div>
+<div class="grp lrow" style="flex-wrap:wrap;gap:6px 8px"><span class="lab" style="flex:0 0 auto">Fernseher</span><div class="seg" style="display:inline-flex;vertical-align:top"><button id="hTv" class="on" title="Fernseher samt TV-LED ein- oder ausblenden">Ein/Aus</button></div><div class="seg" style="display:inline-flex;flex-wrap:wrap;vertical-align:top;max-width:100%"><button id="tv85B" title="Samsung M70H 85 Zoll: Panel 189,0 × 108,4 cm, mit Füßen 113,3 cm hoch; das Sideboard rückt mittig in die Nische">85 Zoll Samsung</button><button id="tv75B" title="Samsung M70H 75 Zoll (Alternative; laut Samsung-Support kein Dolby Atmos): Panel 166,8 × 95,8 cm, mit Füßen 100,8 cm hoch">75 Zoll Samsung</button><button id="tvHB" style="display:none" aria-hidden="true">75 Zoll Hisense Pro</button><button id="tvSB" class="on" title="Hauptmodell: TCL 75T8D (QD-Mini-LED, 144 Hz, Dolby Atmos, Dolby Vision): Panel 166,6 × 95,8 cm, mit Fuß 102,8 cm hoch, zwei Außenfüße (135 cm auseinander, 7 cm hoch), 24 kg (23,4 kg ohne Fuß), unter dem BESTÅ-Limit von 30 kg">75 Zoll TCL T8D</button><button id="tv65B" title="Samsung M70H 65 Zoll: Panel 144,4 × 83,1 cm, mit Füßen 88,2 cm hoch">65 Zoll Samsung</button></div></div>
 <div class="grp lrow" id="wmRow" style="gap:6px 8px;display:none"><span class="lab" style="flex:0 0 auto">Halterung</span><div class="seg"><button id="wmOff" class="on" title="Der Fernseher steht mit seinem Fuß auf dem Sideboard">Auf Fuß</button><button id="wmOn" title="Der Fernseher hängt ohne Fuß an einer Wandhalterung (Mounting Dream MD2268, neigbar, VESA 500 × 400): Panel-Unterkante 10 cm über dem Sideboard, damit die Soundbar davor Platz hat. Wandabstand der Halterung 3,8 cm laut Hersteller (Profil 38 mm), nur 8° Neigung nach unten, hier gerade dargestellt.">An der Wand</button></div></div>
 <div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Soundsystem</span><div class="seg"><button id="snOff2" class="on">Aus</button><button id="snOn2" title="Bose Smart Soundbar 600 vor dem Fernseher ein- oder ausblenden. Die zwei Bose Surround Speakers stehen dann auf den Bose-Ständern hinter dem Sofa.">Bose Soundbar 600</button></div></div>
 <div class="grp lrow" style="gap:6px 8px"><span class="lab" style="flex:0 0 auto">Boxen hinten</span><div class="seg"><button id="spOff2" class="on">Aus</button><button id="spOn2" title="Die zwei Bose Surround Speakers montiert auf den Bose-Ständern UFS-20 II hinter dem Sofa ein- oder ausblenden (Ständer ca. 96,5 cm hoch)">Auf Ständern</button></div></div>
@@ -587,33 +587,30 @@ box(TVCX-0.06,TVF-0.04,TVHS.Z0-0.008,TVCX+0.06,TVF-0.012,TVHS.Z0,0x18181a);   //
   v.push.apply(v,P(TVCX+TVHS.W/2-0.006,yy,TVHS.Z0+TVHS.H-0.006).toArray());
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));})();
-// Hisense 75U7SE (75 Zoll, Alternative) nach Haendlerdaten (Geizhals, Dateks, Kontrolsat): Panel 166,8 x 96,3 x 5,8 cm, mit Fuss 102,4 cm hoch und 32,5 cm tief, 27,5 kg mit Fuss (26 kg ohne). Fussform (mittig, ca. 44 cm breit) nach Produktbild geschaetzt. Die Amazon-Seite mischt 85-Zoll-Maße ein (189,9 x 108,9) und wird dafuer nicht verwendet.
-var TVSE={W:1.668,H:0.963,D:0.058,FH:0.061,BD:0.325,FW:0.425};TVSE.Z0=SBH+TVSE.FH;
-var TVLBLSE=[['Fernseher Hisense 75U7SE · Panel 166,8 × 96,3 × 5,8 cm · 27,5 kg mit Fuß, 26 kg ohne (BESTÅ trägt 30 kg: passt, 2,5 kg Reserve)',TVCX,TVYB+TVSE.BD/2,TVSE.Z0+TVSE.H+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVSE.Z0+TVSE.H/2],['102,4 cm (mit Fuß)',SB0+SBW+0.06,SBD,SBH+TVSE.H/2],['140,4 cm gesamt',SB0+SBW+0.14,SBD,(TVSE.Z0+TVSE.H)/2],['Fuß ca. 42,5 × 32,5 cm (nach Produktfoto; Tiefenaufbau geschätzt)',TVCX,TVYB+TVSE.BD/2,SBH+0.03]];
+// TCL 75T8D (75 Zoll, Hauptmodell) nach Herstellergrafik (Amazon) und Coolblue: Panel 166,6 x 95,8 x 7,0 cm, mit Fuss 102,8 cm hoch und 34,3 cm tief, Fusshoehe 7,0 cm, zwei Aussenfuesse 135 cm aussen auseinander, 24 kg mit Fuss (23,4 kg ohne), VESA 400 x 400.
+var TVSE={W:1.666,H:0.958,D:0.0695,FH:0.070,BD:0.3435,FW:1.35};TVSE.Z0=SBH+TVSE.FH;
+var TVLBLSE=[['Fernseher TCL 75T8D · Panel 166,6 × 95,8 × 7,0 cm · 24 kg mit Fuß, 23,4 kg ohne (BESTÅ trägt 30 kg: passt, 6 kg Reserve)',TVCX,TVYB+TVSE.BD/2,TVSE.Z0+TVSE.H+0.12],['Bilddiagonale ≈ 189 cm (75 Zoll)',TVCX,TVF+0.004,TVSE.Z0+TVSE.H/2],['102,8 cm (mit Fuß)',SB0+SBW+0.06,SBD,SBH+TVSE.H/2],['140,8 cm gesamt',SB0+SBW+0.14,SBD,(TVSE.Z0+TVSE.H)/2],['Zwei Füße, außen 135 cm auseinander, je 34,3 cm tief, 7 cm hoch (nach Herstellerbild, Fußform vereinfacht)',TVCX,TVYB+TVSE.BD/2,SBH+0.03]];
 cat='tvse';
 box(TVCX-TVSE.W/2,TVF-0.012,TVSE.Z0,TVCX+TVSE.W/2,TVF,TVSE.Z0+TVSE.H,0x161618);
 box(TVCX-TVSE.W/2+0.006,TVF,TVSE.Z0+0.010,TVCX+TVSE.W/2-0.006,TVF+0.0012,TVSE.Z0+TVSE.H-0.006,0x07080c);scrM.push({mesh:room.children[room.children.length-2]});
 box(TVCX-TVSE.W*0.325,TVF-TVSE.D,TVSE.Z0,TVCX+TVSE.W*0.325,TVF-0.012,TVSE.Z0+TVSE.H*0.46,0x1b1b1e);
 var _wmF0=room.children.length;
-// Fuss nach Amazon-Produktfoto (Frontansicht, Massstab aus der Panelbreite): untere Leiste ca. 43,7 cm breit, zwei Standbeine/Aufnahmen (4,2 cm breit) bei +-20 cm, kleines Mittelmodul unter dem Panel (ca. 15,5 cm breit). Aufbau von oben/hinten unbekannt: als Rahmen (4 Leisten, 4 cm breit) mit 32,5 cm Tiefe angenommen.
-[[TVYB,TVYB+0.04],[TVYB+TVSE.BD-0.04,TVYB+TVSE.BD]].forEach(function(r){box(TVCX-TVSE.FW/2,r[0],SBH,TVCX+TVSE.FW/2,r[1],SBH+0.021,0x1c1c1e);});
-[[TVCX-TVSE.FW/2,TVCX-TVSE.FW/2+0.04],[TVCX+TVSE.FW/2-0.04,TVCX+TVSE.FW/2]].forEach(function(r){box(r[0],TVYB,SBH,r[1],TVYB+TVSE.BD,SBH+0.021,0x1c1c1e);});
-[-0.20,0.20].forEach(function(dx){box(TVCX+dx-0.021,TVF-0.075,SBH+0.021,TVCX+dx+0.021,TVF-0.012,TVSE.Z0,0x1c1c1e);});
-box(TVCX-0.0775,TVF-0.04,TVSE.Z0-0.012,TVCX+0.0775,TVF-0.012,TVSE.Z0,0x18181a);   // Mittelmodul unter dem Panel
+// Fuss nach Herstellerbild (TCL 75T8D): zwei Aussenfuesse, 135 cm aussen auseinander, 34,3 cm tief; das Panel sitzt ca. 12 cm hinter der Fuss-Vorderkante und 15,4 cm vor der Fuss-Rueckkante. Fussform (Platte + Stuetze) vereinfacht.
+(function(){var fy0=TVF-TVSE.D-0.154,fy1=TVF+0.12;[-1,1].forEach(function(sg){var xc=TVCX+sg*(TVSE.FW/2-0.04);box(xc-0.04,fy0,SBH,xc+0.04,fy1,SBH+0.012,0x1c1c1e);box(xc-0.015,TVF-0.045,SBH+0.012,xc+0.015,TVF-0.005,TVSE.Z0+0.002,0x1c1c1e);});})();
 for(var _j=_wmF0;_j<room.children.length;_j++)room.children[_j].userData.wmFoot=true;
 (function(){var yy=TVF+0.004,v=[];
   v.push.apply(v,P(TVCX-TVSE.W/2+0.006,yy,TVSE.Z0+0.010).toArray());
   v.push.apply(v,P(TVCX+TVSE.W/2-0.006,yy,TVSE.Z0+TVSE.H-0.006).toArray());
   var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
   room.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xd2691e})));})();
-var _wm0=room.children.length;   // Wandhalterung Mounting Dream MD2268 nach Amazon-Produktbild: Wandrahmen (2 Querschienen + Mittelplatte, ca. 62 x 28 cm) mit Drehpunkt-Armen, dahinter 2 senkrechte TV-Schienen (ca. 49 cm) auf VESA 500 x 400 plus Rueckgehaeuse; Wandabstand 3,8 cm laut Hersteller, Masse geschaetzt
-(function(){var zc=TVSE.Z0+0.039+TVSE.H/2,mc=0x2b2b2e;
+var _wm0=room.children.length;   // Wandhalterung Mounting Dream MD2268 nach Amazon-Produktbild: Wandrahmen (2 Querschienen + Mittelplatte, ca. 62 x 28 cm) mit Drehpunkt-Armen, dahinter 2 senkrechte TV-Schienen (ca. 49 cm) auf VESA 400 x 400 plus Rueckgehaeuse; Wandabstand 3,8 cm laut Hersteller, Masse geschaetzt
+(function(){var zc=TVSE.Z0+0.030+TVSE.H/2,mc=0x2b2b2e;
   [-0.14,0.14].forEach(function(dz){box(TVCX-0.31,0,zc+dz-0.02,TVCX+0.31,0.018,zc+dz+0.02,mc);});
   box(TVCX-0.05,0,zc-0.14,TVCX+0.05,0.022,zc+0.14,mc);
-  [-0.25,0.25].forEach(function(dx){[-0.14,0.14].forEach(function(dz){box(TVCX+dx-0.02,0.018,zc+dz-0.02,TVCX+dx+0.02,0.030,zc+dz+0.02,mc);});});
+  [-0.20,0.20].forEach(function(dx){[-0.14,0.14].forEach(function(dz){box(TVCX+dx-0.02,0.018,zc+dz-0.02,TVCX+dx+0.02,0.030,zc+dz+0.02,mc);});});
   window.__wmT0=room.children.length;
-  [-0.25,0.25].forEach(function(dx){box(TVCX+dx-0.0175,0.030,zc-0.245,TVCX+dx+0.0175,0.038,zc+0.245,mc);});
-  box(TVCX-0.30,0.038,zc-0.25,TVCX+0.30,0.084,zc+0.25,0x1b1b1e);   // Rueckgehaeuse hinter dem VESA-Feld (Annahme)
+  [-0.20,0.20].forEach(function(dx){box(TVCX+dx-0.0175,0.030,zc-0.22,TVCX+dx+0.0175,0.038,zc+0.22,mc);});
+  box(TVCX-0.26,0.038,zc-0.22,TVCX+0.26,0.070,zc+0.22,0x1b1b1e);   // Rueckgehaeuse hinter dem VESA-Feld (Annahme)
   for(var _t=window.__wmT0;_t<room.children.length;_t++)room.children[_t].userData.wmTilt=true;})();
 for(var _i=_wm0;_i<room.children.length;_i++)room.children[_i].userData.wmMount=true;
 cat='tv';
@@ -946,9 +943,9 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    function hz(x){var r=T[T.length-1][2];T.forEach(function(t){if(x>=XA+t[0]&&x<XA+t[0]+t[1])r=t[2];});return r;}
    var yc=D-SGAP+0.003+0.10+(KO_WALL?KO_DY:0),xs=[SPXS[SPN-1],4.315];
    SNE.forEach(function(e,i){var ya=(i===0?-1:1)*Math.min(0.96,Math.atan(Math.abs(SPCX[SPN-1]-xs[i])/0.54));SPYA[i]=ya;var yco=Math.cos(ya),ysi=Math.sin(ya);e.o.forEach(function(o){var px=o.userData.p0.x,pz=o.userData.p0.z;o.position.x=px*yco+pz*ysi+xs[i];o.position.y=o.userData.p0.y+(o.userData.fl?0:0.87);o.position.z=-px*ysi+pz*yco+yc+0.06;o.rotation.order='YXZ';o.rotation.y=ya;});});
-   var bOn=!!BARON&&!(tvSize==='S'&&sbV==='T'&&!window.__wm),rOn=!!SPON;hideCats.beam=!bOn;hideCats.rear=!rOn;
+   var bOn=!!BARON,rOn=!!SPON;hideCats.beam=!bOn;hideCats.rear=!rOn;
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='beam')o.visible=bOn;else if(c==='rear')o.visible=rOn;});
-   var sAct=bOn&&tvSize==='S'&&sbV==='B'&&!window.__wm,dT=sAct?-0.119:0,dB=sAct?0.010:0;window.__sbd=[dT,dB];
+   var sAct=false,dT=0,dB=0;window.__sbd=[dT,dB];
    room.children.forEach(function(o){var c=o.userData&&o.userData.cat,d=(c==='tvse'||c==='tvledse')?dT:(c==='beam')?dB:null;if(d===null)return;var p=o.userData.sbk||0;o.position.z+=d-p;o.userData.sbk=d;});
    labels.forEach(function(l){var d=(l.cat==='tvse'||l.cat==='tvledse')?dT:(l.cat==='beam')?dB:null;if(d===null)return;var p=l.sbk||0;l.p.z+=d-p;l.sbk=d;});
    [['tvse',dT],['tvledse',dT],['beam',dB]].forEach(function(e){var g=dimG[e[0]];if(!g)return;var p=g.userData.sbk||0;g.position.z+=e[1]-p;g.userData.sbk=e[1];});
@@ -967,10 +964,10 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
     if(dimG.ctb)dimG.ctb.position.x=dxC;if(dimG.hockerb)dimG.hockerb.position.x=dxH;
     labels.forEach(function(l){var d=l.cat==='ctb'?dxC:l.cat==='hockerb'?dxH:null;if(d===null)return;if(l.bkx0===undefined)l.bkx0=l.p.x;l.p.x=l.bkx0+d;});}
    if(h){var t='';
-    if(SNON){if(tvSize==='S'&&window.__wm)t='Soundbar vor dem Hisense SE: Der Fernseher hängt an der Wand, die Soundbar steht frei davor auf dem Sideboard (10,4 cm tief, 5,6 cm hoch); Panel-Unterkante 10 cm über dem Sideboard, das Bild bleibt frei.';else if(tvSize==='S'&&sbV==='B')t='Soundbar vor dem Hisense SE: Damit sie voll auf dem Sideboard steht (10,4 cm tief, 5 mm von der Vorderkante), steht der Fernseher ganz hinten; der Fuß (32,5 cm tief) ragt dann ca. 1,9 cm über die Sideboard-Rückkante. Das geht nur, wenn das Sideboard mindestens 2 cm Abstand zur Wand hat (Fußleiste), vor dem Kauf nachmessen. Soundbar 5,6 cm hoch, Panel-Unterkante 6,1 cm: Das Bild bleibt frei.';
-     else if(tvSize==='S')t='Mit dem TONSTAD-Sideboard (37,2 cm tief) passt die Soundbar nicht vor den Fuß des Hisense (32,5 + 10,4 cm), deshalb ausgeblendet.';
+    if(SNON){if(tvSize==='S'&&window.__wm)t='Soundbar vor dem TCL: Der Fernseher hängt an der Wand, die Soundbar steht frei davor auf dem Sideboard (10,4 cm tief, 5,6 cm hoch); Panel-Unterkante 10 cm über dem Sideboard, das Bild bleibt frei.';else if(tvSize==='S'&&sbV==='B')t='Soundbar beim TCL: Der Fernseher steht auf zwei Außenfüßen (135 cm auseinander, 7 cm hoch). Die Soundbar (69,4 cm breit, 10,4 cm tief, 5,6 cm hoch) steht dazwischen, knapp 1 cm vor dem Panel, frei auf dem Sideboard; Panel-Unterkante 7 cm, das Bild bleibt frei, der Fernseher muss nicht nach hinten.';
+     else if(tvSize==='S')t='Mit dem TONSTAD-Sideboard (37,2 cm tief): Die Füße des TCL (34,3 cm tief) stehen darauf, die Soundbar steht zwischen den Füßen vor dem Panel; der Fernseher rückt dafür 5 cm nach hinten.';
      else t='Soundbar vor dem Fernseher (5,6 cm hoch, Panel-Unterkante 5 cm): Vom Sofa aus bleibt das Bild frei; nur von ganz unten oder von vorn gesehen ragt sie ca. 0,6 cm hinein (geschätzt).';}
-    if(tvSize==='S'){var _T=(sbV==='T'),_x0=_T?SBT.X0:SB0,_sw=_T?SBT.W:SBW,_sh=_T?SBT.H:SBH,_e=(_sw-1.668)/2,_l=Math.round((_x0-(PX0+PW)+_e)*100),_r=Math.round((W-(_x0+_sw)+_e)*100),_o=Math.round((H-_sh-(window.__wm?1.063:1.024))*100);t+=(t?' ':'')+'Abstände laut Hisense-Anleitung (Seiten mind. 10 cm, oben mind. 20 cm Luft): links zum Schrank '+_l+' cm, rechts zur Wand '+_r+' cm, nach oben '+_o+' cm bis zur Decke: eingehalten. '+(window.__wm?'Wandhalterung: Panel-Unterkante 10 cm über dem Sideboard, Bildmitte ca. '+Math.round((_sh+0.10+0.4815)*100)+' cm über dem Boden; Wandabstand der Halterung 3,8 cm (Herstellerangabe), die Rückseite bleibt frei, das Sideboard trägt nur die Soundbar.'+(window.__wmt?' Neigung '+window.__wmt+'° nach unten (Test): Oberkante steht ca. '+Math.round(0.7265*Math.sin(window.__wmt*Math.PI/180)*100)+' cm von der Wand ab, Unterkante rückt ca. '+Math.round(0.2365*Math.sin(window.__wmt*Math.PI/180)*100)+' cm zur Wand; für deine Sitzposition (Augen ca. 6° über der Bildmitte) ist gerade besser, weil der Fernseher dann noch mehr von dir wegschaut.':' Gerade eingestellt (empfohlen: du sitzt etwas über der Bildmitte, die Halterung neigt nur nach unten).'):'Nach hinten nennt die Anleitung keinen Wert; Rückseite nicht zustellen, mind. 2 cm zur Wand lassen.');}
+    if(tvSize==='S'){var _T=(sbV==='T'),_x0=_T?SBT.X0:SB0,_sw=_T?SBT.W:SBW,_sh=_T?SBT.H:SBH,_e=(_sw-1.666)/2,_l=Math.round((_x0-(PX0+PW)+_e)*100),_r=Math.round((W-(_x0+_sw)+_e)*100),_o=Math.round((H-_sh-(window.__wm?1.058:1.028))*100);t+=(t?' ':'')+'Abstände im Modell: links zum Schrank '+_l+' cm, rechts zur Wand '+_r+' cm, nach oben '+_o+' cm bis zur Decke (Herstellerangaben zu Mindestabständen für den TCL liegen mir nicht vor). '+(window.__wm?'Wandhalterung: Panel-Unterkante 10 cm über dem Sideboard, Bildmitte ca. '+Math.round((_sh+0.10+0.479)*100)+' cm über dem Boden; Wandabstand der Halterung 3,8 cm (Herstellerangabe), die Rückseite bleibt frei, das Sideboard trägt nur die Soundbar.'+(window.__wmt?' Neigung '+window.__wmt+'° nach unten (Test): Oberkante steht ca. '+Math.round(0.7265*Math.sin(window.__wmt*Math.PI/180)*100)+' cm von der Wand ab, Unterkante rückt ca. '+Math.round(0.2365*Math.sin(window.__wmt*Math.PI/180)*100)+' cm zur Wand; für deine Sitzposition (Augen ca. 6° über der Bildmitte) ist gerade besser, weil der Fernseher dann noch mehr von dir wegschaut.':' Gerade eingestellt (empfohlen: du sitzt etwas über der Bildmitte, die Halterung neigt nur nach unten).'):'Rückseite nicht zustellen, mind. 2 cm zur Wand lassen (Herstellerwert nicht bekannt).');}
     if(SPON){t+=(t?' ':'')+'Die zwei Bose Surround Speakers stehen montiert auf den Bose-Ständern UFS-20 II hinter dem Sofa, leicht seitlich und ca. '+Math.round(Math.abs(SPYA[0])*57.3)+'° bzw. '+Math.round(Math.abs(SPYA[1])*57.3)+'° direkt auf den Sitzplatz ausgerichtet (Boxen ca. 87–97 cm hoch, Neigung nach unten am Ständer wohl nicht einstellbar; Fußplatte 25,6 × 17,9 cm und Höhe 96,5 cm laut Händlerangaben, Rohrbiegung nach Fotos geschätzt).';
      if(kon)t+='';
      if(dxH||dxC)t+=' Hocker/Couchtisch hinter dem Sofa steht seitlich versetzt neben dem Ständer.';
@@ -1417,18 +1414,19 @@ cat='tvledhs';
   TVLBHS.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,98 m (3,5 cm vom Rand)',TVCX,TVF-0.02,TVHS.Z0+TVHS.H+0.30]);
 })();
 cat='tvledse';
-// LED-Streifen am Hisense 75U7SE: Hue Flux 5 m (Umfang ca. 4,98 m, 3,5 cm vom Rand)
+// LED-Streifen am TCL 75T8D: Hue Flux 5 m (Umfang ca. 4,98 m, 3,5 cm vom Rand)
 (function(){
   var ins=0.035,x0=TVCX-TVSE.W/2+ins,x1=TVCX+TVSE.W/2-ins,z0=TVSE.Z0+ins,z1=TVSE.Z0+TVSE.H-ins,yb=TVF-0.012-0.006,tk=0.012;
   var mat=new THREE.MeshBasicMaterial({color:0xff4fa8});
-  function strip(a0,b0,a1,b1){var m=new THREE.Mesh(new THREE.BoxGeometry(a1-a0,b1-b0,0.006),mat);m.position.copy(P((a0+a1)/2,yb+0.003,(b0+b1)/2));room.add(m);tvLedObjs.push(m);}
-  strip(x0,z1-tk,x1,z1);strip(x0,z0,x1,z0+tk);strip(x0,z0,x0+tk,z1);strip(x1-tk,z0,x1,z1);
+  function strip(a0,b0,a1,b1,yy){var m=new THREE.Mesh(new THREE.BoxGeometry(a1-a0,b1-b0,0.006),mat);m.position.copy(P((a0+a1)/2,(yy===undefined?yb:yy)+0.003,(b0+b1)/2));room.add(m);tvLedObjs.push(m);}
+  var xb=TVSE.W*0.325;
+  strip(x0,z1-tk,x1,z1);strip(x0,z0,TVCX-xb,z0+tk);strip(TVCX+xb,z0,x1,z0+tk);strip(TVCX-xb,z0,TVCX+xb,z0+tk,TVF-TVSE.D-0.006);strip(x0,z0,x0+tk,z1);strip(x1-tk,z0,x1,z1);
   var cvw=document.createElement('canvas');cvw.width=256;cvw.height=160;var g=cvw.getContext('2d');
   g.fillStyle='#000';g.fillRect(0,0,256,160);g.fillStyle='#ff4fa8';g.shadowColor='#ff4fa8';
   g.shadowBlur=34;g.fillRect(31,29,194,102);g.shadowBlur=18;g.fillRect(31,29,194,102);
   var hm=new THREE.Mesh(new THREE.PlaneGeometry(2.2,1.5),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cvw),transparent:true,opacity:0.5,blending:THREE.CustomBlending,blendEquation:THREE.AddEquation,blendSrc:THREE.SrcAlphaFactor,blendDst:THREE.OneFactor,blendSrcAlpha:THREE.ZeroFactor,blendDstAlpha:THREE.OneFactor,depthWrite:false}));
   hm.userData.noPick=true;hm.position.copy(P(TVCX,0.006,TVSE.Z0+TVSE.H/2));room.add(hm);tvLedObjs.push(hm);tvHaloSE=hm;
-  TVLBSE.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,98 m (3,5 cm vom Rand)',TVCX,TVF-0.02,TVSE.Z0+TVSE.H+0.30]);
+  TVLBSE.push(['LED-Streifen Philips Hue Flux 5 m · Umfang ≈ 4,97 m (3,5 cm vom Rand)',TVCX,TVF-0.02,TVSE.Z0+TVSE.H+0.30]);
 })();
 cat='sofaled';
 // Philips Hue Play Lightbar 2er Pack (Amazon B07FYDGD7R) auf dem Boden dicht hinter dem Sofa, leuchten nach oben und beleuchten die Schraege indirekt (Laenge ca. 25 cm, Querschnitt 44 x 36 mm)
@@ -1769,7 +1767,7 @@ function setTvSize(s){tvSize=s;altHide.tv=(s!=='75');altHide.tvled=(s!=='75');al
   var zz0=(s==='S')?(TVSE.Z0+TVSE.H/2):(s==='H')?(TVHS.Z0+TVHS.H/2):(s==='65')?(TV65.Z0+TV65.H/2):(s==='85')?(TV85.Z0+TV85.H/2):(TVZ0+TVH/2);var zz=zz0+sbDz+(window.__wmz||0);tvLight.position.copy(P((s==='85')?TVCX85:TVCX,0.12-NY,zz));
   var _wr=document.getElementById('wmRow');if(_wr)_wr.style.display=(s==='S')?'':'none';sbRefresh();tv75B.classList.toggle('on',s==='75');tv65B.classList.toggle('on',s==='65');tv85B.classList.toggle('on',s==='85');tvHB.classList.toggle('on',s==='H');tvSB.classList.toggle('on',s==='S');}
 var WM=false,WT=0;window.__wm=false;window.__wmz=0;
-function wmApply(){var on=WM&&tvSize==='S',D=-0.194,TD=0.039,th=on?WT*Math.PI/180:0,sn=Math.sin(th),cs=Math.cos(th);window.__wm=on;window.__wmz=on?TD:0;window.__wmt=on?WT:0;
+function wmApply(){var on=WM&&tvSize==='S',D=-0.1825,TD=0.030,th=on?WT*Math.PI/180:0,sn=Math.sin(th),cs=Math.cos(th);window.__wm=on;window.__wmz=on?TD:0;window.__wmt=on?WT:0;
   var pyh=TVSE.Z0+TD+TVSE.H/2-0.245+sbDz,pzd=-NY+0.030;
   function tilt(a){if(!(on&&th))return a;var dy=a[0]-pyh,dz=a[1]-pzd;return [pyh+dy*cs-dz*sn,pzd+dy*sn+dz*cs];}
   room.children.forEach(function(o){var u=o.userData,c=u&&u.cat;if(c!=='tvse'&&c!=='tvledse')return;var ty=0,tz=0,mv=false;
@@ -1779,11 +1777,11 @@ function wmApply(){var on=WM&&tvSize==='S',D=-0.194,TD=0.039,th=on?WT*Math.PI/18
     o.rotation.x=rot;o.position.y=r[0];o.position.z=r[1];u.wmoy=r[0]-bx;u.wmoz=r[1]-bz;
     if(u.wmFoot&&on)o.visible=false;if(u.wmMount&&!on)o.visible=false;});
   labels.forEach(function(l){if(l.cat!=='tvse')return;if(l.t0===undefined)l.t0=l.el.textContent;var t0=l.t0,ty=0,tz=0,txt=null,zb=SBH+sbDz,mv=false;
-    if(t0.indexOf('102,4 cm (mit Fuß)')===0){ty=on?0.10:0;txt='Bildmitte ca. '+((zb+0.10+TVSE.H/2)*100).toFixed(0)+' cm über Boden';}
-    else if(t0.indexOf('140,4 cm gesamt')===0){ty=on?0.0195:0;txt='Oberkante '+((zb+0.10+TVSE.H)*100).toFixed(1).replace('.',',')+' cm über Boden';}
+    if(t0.indexOf('102,8 cm (mit Fuß)')===0){ty=on?0.10:0;txt='Bildmitte ca. '+((zb+0.10+TVSE.H/2)*100).toFixed(0)+' cm über Boden';}
+    else if(t0.indexOf('140,8 cm gesamt')===0){ty=on?0.015:0;txt='Oberkante '+((zb+0.10+TVSE.H)*100).toFixed(1).replace('.',',')+' cm über Boden';}
     else{ty=on?TD:0;tz=on?D-tvDy:0;mv=true;
-      if(t0.indexOf('Fernseher Hisense')===0)txt='Fernseher Hisense 75U7SE an der Wand · Panel 166,8 × 96,3 × 5,8 cm · 26 kg ohne Fuß · das BESTÅ trägt nur noch die Soundbar';
-      else if(t0.indexOf('Fuß ca.')===0)txt='Wandhalterung (Mounting Dream, VESA 500 × 400): Wandabstand 3,8 cm laut Hersteller, Panel-Unterkante 10 cm über dem Sideboard';}
+      if(t0.indexOf('Fernseher TCL')===0)txt='Fernseher TCL 75T8D an der Wand · Panel 166,6 × 95,8 × 7,0 cm · 23,4 kg ohne Fuß · das BESTÅ trägt nur noch die Soundbar';
+      else if(t0.indexOf('Zwei Füße')===0)txt='Wandhalterung (Mounting Dream, VESA 400 × 400): Wandabstand 3,8 cm laut Hersteller, Panel-Unterkante 10 cm über dem Sideboard';}
     var bx=l.p.y-(l.wmoy||0),bz=l.p.z-(l.wmoz||0),r=[bx+ty,bz+tz];if(mv&&on&&th)r=tilt(r);
     l.p.y=r[0];l.p.z=r[1];l.wmoy=r[0]-bx;l.wmoz=r[1]-bz;
     if(on&&txt!==null)l.el.textContent=txt;else l.el.textContent=(sbV==='T'&&typeof SBTT!=='undefined'&&SBTT[t0])?SBTT[t0]:t0;});
@@ -1799,7 +1797,7 @@ if(wmOffB)wmOffB.onclick=function(){setWM(false);};if(wmOnB)wmOnB.onclick=functi
 tv75B.onclick=function(){setTvSize('75');};tv65B.onclick=function(){setTvSize('65');};tv85B.onclick=function(){setTvSize('85');};tvHB.onclick=function(){setTvSize('H');};tvSB.onclick=function(){setTvSize('S');};
 soundApply();decoApply();accApply();setNk(false);
 var sbBB=document.getElementById('sbBB'),sbTB=document.getElementById('sbTB'),sbHint=document.getElementById('sbHint');
-var SBTT={'138,8 cm gesamt':'155,7 cm gesamt','140,4 cm gesamt':'157,3 cm gesamt','126,2 cm gesamt':'143,1 cm gesamt','151,3 cm gesamt':'168,2 cm gesamt','Bettkante bis Sideboard 82,5 cm':'Bettkante bis Sideboard 87,5 cm','bis Sideboard 85 cm':'bis Sideboard 90 cm','IKEA 200 × 300 quer: 8 cm bis Sideboard':'IKEA 200 × 300 quer: 13 cm bis Sideboard','IKEA 200 × 300 längs: 8 cm bis Sideboard':'IKEA 200 × 300 längs: 13 cm bis Sideboard','IKEA 170 × 240 quer: 22 cm bis Sideboard':'IKEA 170 × 240 quer: 27 cm bis Sideboard','Kaufland 250 × 300: 32 cm bis Sideboard':'Kaufland 250 × 300: 37 cm bis Sideboard'};
+var SBTT={'138,8 cm gesamt':'155,7 cm gesamt','140,4 cm gesamt':'157,3 cm gesamt','140,8 cm gesamt':'157,7 cm gesamt','126,2 cm gesamt':'143,1 cm gesamt','151,3 cm gesamt':'168,2 cm gesamt','Bettkante bis Sideboard 82,5 cm':'Bettkante bis Sideboard 87,5 cm','bis Sideboard 85 cm':'bis Sideboard 90 cm','IKEA 200 × 300 quer: 8 cm bis Sideboard':'IKEA 200 × 300 quer: 13 cm bis Sideboard','IKEA 200 × 300 längs: 8 cm bis Sideboard':'IKEA 200 × 300 längs: 13 cm bis Sideboard','IKEA 170 × 240 quer: 22 cm bis Sideboard':'IKEA 170 × 240 quer: 27 cm bis Sideboard','Kaufland 250 × 300: 32 cm bis Sideboard':'Kaufland 250 × 300: 37 cm bis Sideboard'};
 function sbRefresh(){if(typeof soundApply==='function')soundApply();var T=(sbV==='T'),dx=(tvSize==='85')?DX85:0,rest=W-(SBT.X0+SBT.W+dx);
   labels.forEach(function(l){if(l.cat==='sideboardT'&&l.el.textContent.indexOf('Rest bis Fensterwand')===0)l.el.textContent='Rest bis Fensterwand ≈ '+rest.toFixed(2).replace('.',',')+' m';});
   if(sbHint){sbHint.style.display=T?'block':'none';sbHint.textContent='Hinweis: Mit TONSTAD bekommt der Schrank die passenden TONSTAD-Türen (Eichenfurnier, 2 × 95 € + Scharniere); Farbton geschätzt, im Laden prüfen. Nicht an die Wand hängen, gegen Kippen sichern.'+((T&&tvSize==='85')?' Der 85-Zoll-Fernseher (189 cm) ist breiter als das Sideboard (178 cm).':'');}}
