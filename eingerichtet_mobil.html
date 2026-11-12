@@ -1663,7 +1663,7 @@ var labels=[
    for(var j=n0;j<k2;j++){var u=room.children[j].userData;u.cabSize=v.s;u.cabWall=wall;if(v.b)u.br=v.b;if(wall)u.wmMount=true;else u.wmFoot=true;}
    for(var j=n0;j<k1;j++)window.ksCabs.push(room.children[j]);
    for(var j=k1;j<k2;j++){room.children[j].userData.cat='beam';window.sbCabs.push(room.children[j]);}
-   var n1=room.children.length,xi=TVCX+0.45,zi=zb+0.12,xp=TVCX+0.88,zp=0.30,zl=0.12,zt=SBH+0.004;   // Netzkabel: immer da, wenn der Fernseher da ist
+   var n1=room.children.length,xi=TVCX+0.45,zi=zb+0.12,xp=TVCX+0.88,zp=0.10,zl=0.065,zt=SBH+0.004;   // Netzkabel: immer da, wenn der Fernseher da ist
    seg([xp,0.004,zp],[xp,0.004,zl]);seg([xp,0.004,zl],[xi,0.004,zl]);seg([xi,0.004,zl],[xi,0.004,zt]);   // Steckdose hinter dem Sideboard, Kabel kommt von unten
    if(!wall){seg([xi,0.004,zt],[xi,ry-0.016,zt]);seg([xi,ry-0.016,zt],[xi,ry-0.016,zi]);seg([xi,ry-0.016,zi],[xi,ry,zi]);}
    else{seg([xi,0.004,zt],[xi,0.022,zt]);seg([xi,0.022,zt],[xi,0.022,zi]);seg([xi,0.022,zi],[xi,ry,zi]);}
