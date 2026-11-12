@@ -506,12 +506,12 @@ cat='sideboard';
 var SB0=PX0+PW+(W-(PX0+PW)-1.80)/2,SBW=1.80,SBD=0.42,SBH=0.38;
 var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2;   // Alternative: IKEA TONSTAD TV-Bank 178,4 x 37,2 x 54,9 cm (Eichenfurnier)
 (function(){   // BESTÅ TV-Bank mit 3 Türen (je 60 x 38 cm, LAPPVIKEN), offener Korpus mit je 1 Boden pro Fach
-  var KT=0.018,DD=SBD-0.02,KC2=0xd8c4a2;
+  var KT=0.02,KZ=0.03,DD=SBD-0.02,KC2=0xd8c4a2;
   box(SB0,0,0,SB0+KT,DD,SBH,KC2);box(SB0+SBW-KT,0,0,SB0+SBW,DD,SBH,KC2);        // Seiten
-  box(SB0,0,SBH-KT,SB0+SBW,DD,SBH,KC2);box(SB0,0,0,SB0+SBW,DD,KT,KC2);            // Deckel, Boden
+  box(SB0,0,SBH-KZ,SB0+SBW,DD,SBH,KC2);box(SB0,0,0,SB0+SBW,DD,KZ,KC2);            // Deckel, Boden
   box(SB0,0,0,SB0+SBW,0.01,SBH,0xbfab8a);                                         // Rückwand
-  [1,2].forEach(function(i){box(SB0+SBW*i/3-KT/2,0.01,KT,SB0+SBW*i/3+KT/2,DD,SBH-KT,KC2);});   // Trennwände
-  [0,1,2].forEach(function(i){var n0=room.children.length;box(SB0+SBW*i/3+KT/2,0.01,0.19-0.009,SB0+SBW*(i+1)/3-KT/2,DD-0.01,0.19+0.009,KC2);if(i===1)window.ksShelf=room.children.slice(n0);});   // Böden
+  [1,2].forEach(function(i){box(SB0+SBW*i/3-KT,0.01,KZ,SB0+SBW*i/3+KT,DD,SBH-KZ,KC2);});   // Trennwände
+  [0,1,2].forEach(function(i){var n0=room.children.length;box(SB0+SBW*i/3+KT,0.01,0.19-0.009,SB0+SBW*(i+1)/3-KT,DD-0.01,0.19+0.009,KC2);if(i===1)window.ksShelf=room.children.slice(n0);});   // Böden
   var cx=function(i){return SB0+SBW*i/3;};
   box(cx(2)+0.05,0.10,0.2,cx(2)+0.27,0.34,0.30,0x4a4a50);box(cx(2)+0.31,0.10,0.2,cx(2)+0.53,0.34,0.30,0x4a4a50);box(cx(2)+0.08,0.10,0.02,cx(2)+0.50,0.34,0.17,0x55555b);   // Boxen (Beispiel-Inhalt)
   var nb0=room.children.length;box(cx(1)+0.06,0.10,0.2,cx(1)+0.52,0.32,0.235,0x6a5a4a);box(cx(1)+0.08,0.10,0.235,cx(1)+0.45,0.30,0.265,0x3a5a7a);window.ksBooks=room.children.slice(nb0);   // Bücher/Zeitschriften (Beispiel-Inhalt)
@@ -532,12 +532,15 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
 
   // ---- Konsolen-Fach (mittleres Fach): PS5 Pro (liegend) + Controller auf Ständer + Switch 2 im Dock, eingeschaltet; Maße PS5 laut Amazon, Dock nach Foto geschätzt ----
   (function(){
-    var n0=room.children.length,xa=SB0+SBW/3+0.009;
-    var kb=function(x0,y0,z0,x1,y1,z1,col,bas){box(x0,y0,z0,x1,y1,z1,col);if(bas)room.children[room.children.length-2].material=new THREE.MeshBasicMaterial({color:col});};
-    var rb=function(cx,cy,cz,w,d,h,col,ang,bas){var g=new THREE.BoxGeometry(w,h,d),m=new THREE.Mesh(g,bas?new THREE.MeshBasicMaterial({color:col}):new THREE.MeshLambertMaterial({color:col}));m.position.copy(P(cx,cy,cz));m.rotation.y=ang||0;room.add(m);var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);var l=new THREE.LineSegments(new THREE.EdgesGeometry(g),em);l.position.copy(m.position);l.rotation.y=m.rotation.y;room.add(l);};
-    var cy=function(cx,cyy,cz,r,h,col,front,bas){var m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,18),bas?new THREE.MeshBasicMaterial({color:col}):new THREE.MeshLambertMaterial({color:col}));m.position.copy(P(cx,cyy,cz));if(front)m.rotation.x=Math.PI/2;room.add(m);};
+    var xslot=SB0+SBW/2;   // Kabeldurchführung (IKEA BESTÅ): Aussparung in der Deckplatte hinten über dem mittleren Fach, mit beiger Abdeckung (nach IKEA-Fotos, Maße geschätzt)
+    box(xslot-0.08,0.010,SBH,xslot+0.08,0.060,SBH+0.003,0xd8c6a4);box(xslot-0.065,0.018,SBH+0.003,xslot+0.065,0.052,SBH+0.0036,0x241a12);
+    var n0=room.children.length,xa=SB0+SBW/3+0.02,ZO=0.012;   // Fach innen laut IKEA: 56 cm breit, 36 cm tief, 32 cm hoch (Boden bei 3 cm)
+    var ka=function(x0,y0,z0,x1,y1,z1,col,bas){box(x0,y0,z0,x1,y1,z1,col);if(bas)room.children[room.children.length-2].material=new THREE.MeshBasicMaterial({color:col});};
+    var kb=function(x0,y0,z0,x1,y1,z1,col,bas){ka(x0,y0,z0+ZO,x1,y1,z1+ZO,col,bas);};
+    var rb=function(cx,cy,cz,w,d,h,col,ang,bas){cz+=ZO;var g=new THREE.BoxGeometry(w,h,d),m=new THREE.Mesh(g,bas?new THREE.MeshBasicMaterial({color:col}):new THREE.MeshLambertMaterial({color:col}));m.position.copy(P(cx,cy,cz));m.rotation.y=ang||0;room.add(m);var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);var l=new THREE.LineSegments(new THREE.EdgesGeometry(g),em);l.position.copy(m.position);l.rotation.y=m.rotation.y;room.add(l);};
+    var cy=function(cx,cyy,cz,r,h,col,front,bas){var m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,18),bas?new THREE.MeshBasicMaterial({color:col}):new THREE.MeshLambertMaterial({color:col}));m.position.copy(P(cx,cyy,cz+ZO));if(front)m.rotation.x=Math.PI/2;room.add(m);};
     // PS5 Pro (Digital-Optik laut Amazon-Fotos): liegend, 38,8 cm breit, 21,6 cm tief, 8,9 cm hoch; weiße Schalen oben und unten, schwarze Mitte mit blauen LED-Linien, schräge schwarze Lüftungsrippen
-    var x0=xa+0.012,x1=x0+0.388;
+    var x0=xa+0.004,x1=x0+0.388;
     kb(x0+0.04,0.05,0.018,x0+0.07,0.20,0.022,0x9a9aa2);kb(x1-0.07,0.05,0.018,x1-0.04,0.20,0.022,0x9a9aa2);   // zwei Standfüße (liegend)
     kb(x0,0.03,0.022,x1,0.246,0.034,0xf4f4f8);kb(x0+0.006,0.034,0.034,x1-0.006,0.242,0.046,0xe9e9ef);       // untere Schale (gewölbt, in zwei Stufen)
     kb(x0,0.03,0.099,x1,0.246,0.111,0xf4f4f8);kb(x0+0.006,0.034,0.087,x1-0.006,0.242,0.099,0xe9e9ef);       // obere Schale
@@ -547,9 +550,8 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     kb(x0+0.02,0.03,0.052,x1-0.02,0.038,0.082,0x0c0c0e);                                                      // schwarze Rückseite (Lüftung)
     [-1.5,-0.5,0.5,1.5].forEach(function(k){rb(x0+0.215+k*0.012,0.138,0.1115,0.004,0.20,0.0015,0x0a0a0c,0.27);});   // schräge Rippen auf der Oberseite
     rb(x0+0.04,0.07,0.1115,0.012,0.012,0.0015,0x9aa0b8,0);                                                    // PS-Logo (klein)
-    kb(x0+0.04,0.012,0.046,x0+0.046,0.03,0.052,0x111111);kb(x0+0.22,0.012,0.046,x0+0.226,0.03,0.052,0x111111);   // Strom- und HDMI-Kabel
     // DualSense: liegt flach rechts neben der PS5 Pro, Tasten nach oben, Touchpad zur Wand
-    var cxm=xa+0.492,cym=0.14,Z=0.018,ZT=0.058;
+    var cxm=xa+0.478,cym=0.14,Z=0.018,ZT=0.058;
     rb(cxm,cym-0.018,(Z+ZT)/2,0.10,0.07,ZT-Z,0xf2f2f6,0);rb(cxm-0.05,cym-0.03,(Z+ZT)/2,0.06,0.05,ZT-Z,0xf2f2f6,0);rb(cxm+0.05,cym-0.03,(Z+ZT)/2,0.06,0.05,ZT-Z,0xf2f2f6,0);
     rb(cxm-0.052,cym+0.03,(Z+ZT)/2,0.036,0.085,ZT-Z,0xf2f2f6,-0.2);rb(cxm+0.052,cym+0.03,(Z+ZT)/2,0.036,0.085,ZT-Z,0xf2f2f6,0.2);   // Griffe
     rb(cxm,cym+0.005,ZT+0.002,0.052,0.085,0.004,0x15151a,0);rb(cxm,cym-0.030,ZT+0.005,0.046,0.028,0.002,0x2c2c32,0);              // schwarze Mitte, Touchpad
@@ -559,10 +561,9 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     rb(cxm-0.061,cym-0.005,ZT+0.001,0.020,0.007,0.002,0xc9c9d2,0);rb(cxm-0.061,cym-0.005,ZT+0.001,0.007,0.020,0.002,0xc9c9d2,0);   // Steuerkreuz
     [[0,-0.012],[0,0.012],[-0.012,0],[0.012,0]].forEach(function(o){cy(cxm+0.061+o[0],cym-0.005+o[1],ZT+0.0015,0.0055,0.002,0xc9c9d2,false);});   // Aktionstasten
     // Nintendo Switch 2: Dock (Foto: Vorderplatte mit Logo, Rückwand), Konsole mit grauen Joy-Con 2 dahinter; Maße geschätzt
-    var xs=xa+0.436;
+    var xs=xa+0.422;
     kb(xs-0.095,0.28,0.018,xs+0.095,0.334,0.034,0x2b2b2f);kb(xs-0.095,0.28,0.034,xs+0.095,0.292,0.140,0x2b2b2f);kb(xs-0.095,0.322,0.034,xs+0.095,0.334,0.125,0x333338);
     kb(xs-0.03,0.334,0.060,xs+0.03,0.3345,0.100,0x1c1c20);kb(xs-0.035,0.334,0.046,xs+0.035,0.3345,0.053,0x1c1c20);   // Logo
-    kb(xs-0.003,0.012,0.018,xs+0.003,0.28,0.024,0x111111);                                                           // Kabel
     kb(xs-0.087,0.300,0.040,xs+0.087,0.314,0.156,0x18181c);kb(xs-0.080,0.314,0.047,xs+0.080,0.3145,0.150,0x40307a,true);   // Konsole, Bildschirm an
     kb(xs-0.136,0.298,0.040,xs-0.087,0.316,0.156,0x3d3d42);kb(xs+0.087,0.298,0.040,xs+0.136,0.316,0.156,0x3d3d42);   // Joy-Con 2 grau
     kb(xs+0.087,0.296,0.040,xs+0.091,0.318,0.156,0xe2553c);                                                          // roter Innenrand rechts
@@ -570,6 +571,10 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     cy(xs+0.1115,0.3165,0.085,0.0135,0.002,0xe2553c,true);cy(xs+0.1115,0.3175,0.085,0.0095,0.003,0x0d0d0f,true);   // rechter Stick mit rotem Ring
     [[0,-0.011],[0,0.011],[-0.011,0],[0.011,0]].forEach(function(o){cy(xs-0.1115+o[0],0.3165,0.085+o[1],0.0048,0.002,0x222226,true);cy(xs+0.1115+o[0],0.3165,0.135+o[1],0.0048,0.002,0x222226,true);});   // Steuerkreuz, A/B/X/Y
     kb(xs-0.126,0.316,0.150,xs-0.112,0.3165,0.1515,0x111114);kb(xs+0.1045,0.316,0.150,xs+0.1185,0.3165,0.1515,0x111114);   // Minus, Plus
+    // HDMI-Kabel im Fach, durch die Kabeldurchführung nach oben (Fortsetzung zum Fernseher hinter dem Panel)
+    var seg=function(a,b,c){var t=0.0035,m=function(i){return a[i]===b[i]?[a[i]-t,a[i]+t]:[Math.min(a[i],b[i])-t,Math.max(a[i],b[i])+t];},X=m(0),Y=m(1),Z=m(2);box(X[0],Y[0],Z[0],X[1],Y[1],Z[1],c||0x15151a);};
+    seg([xa+0.224,0.026,0.078],[xa+0.224,0.026,SBH+0.002]);                                                    // PS5 Pro: HDMI hinten, senkrecht nach oben
+    seg([xs,0.292,0.145],[xs,0.292,0.165]);seg([xs,0.292,0.165],[xs,0.042,0.165]);seg([xs,0.042,0.165],[xa+0.31,0.042,0.165]);seg([xa+0.31,0.042,0.165],[xa+0.31,0.042,SBH+0.002]);   // Switch-Dock: HDMI über die PS5 Pro hinweg zur Durchführung
     var ko=room.children.slice(n0);window.ksObjs=ko;window.ksAng=0;
     window.ksVis=function(){var hc=(typeof hideCats!=='undefined'&&hideCats)||{},ah=(typeof altHide!=='undefined'&&altHide)||{},sv=!hc.sideboard&&!ah.sideboard,o=window.ksAng>0.05;ko.forEach(function(m){m.visible=sv&&o;});(window.ksShelf||[]).concat(window.ksBooks||[]).forEach(function(m){m.visible=sv&&!o;});};
     window.ksSet=function(a){window.ksAng=a;sbDoors[1].rotation.y=Math.max(a,sbAng);ksVis();};
@@ -691,6 +696,15 @@ var _wm0=room.children.length;   // Wandhalterung Mounting Dream MD2268 am LG: V
   [-0.15,0.15].forEach(function(dx){box(TVCX+dx-0.0175,0.030,zc-0.22,TVCX+dx+0.0175,0.038,zc+0.22,mc);});
   for(var _t=window.__wmT0;_t<room.children.length;_t++)room.children[_t].userData.wmTilt=true;})();
 for(var _i=_wm0;_i<room.children.length;_i++)room.children[_i].userData.wmMount=true;
+var seg2=function(a,b,c){var t=0.0035,m=function(i){return a[i]===b[i]?[a[i]-t,a[i]+t]:[Math.min(a[i],b[i])-t,Math.max(a[i],b[i])+t];},X=m(0),Y=m(1),Z=m(2);box(X[0],Y[0],Z[0],X[1],Y[1],Z[1],c||0x15151a);};
+// HDMI-Kabel vom Sideboard zum Fernseher: aus der Kabeldurchführung hinter dem Panel nach oben und zu den Anschlüssen auf der Rückseite (Rückseite links, Lage der LG-Anschlüsse geschätzt); nur beim Stehen auf dem Sideboard
+var _tcb0=room.children.length;cat='tvse';
+(function(){var yb=TVF-TVSE.D,pl=function(x,z){box(x-0.008,yb-0.016,z-0.006,x+0.008,yb,z+0.006,0x222226);};
+  var c1=TVCX-0.50,c2=TVCX-0.52;
+  seg2([TVCX-0.056,0.026,SBH+0.002],[TVCX-0.056,0.026,0.60]);seg2([TVCX-0.056,0.026,0.60],[c1,0.026,0.60]);seg2([c1,0.026,0.60],[c1,yb-0.016,0.60]);pl(c1,0.60);   // PS5 Pro
+  seg2([TVCX+0.03,0.042,SBH+0.002],[TVCX+0.03,0.042,0.616]);seg2([TVCX+0.03,0.042,0.616],[c2,0.042,0.616]);seg2([c2,0.042,0.616],[c2,yb-0.016,0.616]);pl(c2,0.616);   // Switch 2
+})();
+for(var _tc=_tcb0;_tc<room.children.length;_tc++)room.children[_tc].userData.wmFoot=true;
 for(var _bi=_brL0;_bi<room.children.length;_bi++)room.children[_bi].userData.br='L';
 // TCL 75T8D (75 Zoll, Hauptmodell) nach Herstellergrafik (Amazon) und Coolblue: Panel 166,6 x 95,8 x 7,0 cm, mit Fuss 102,8 cm hoch und 34,3 cm tief, Fusshoehe 7,0 cm, zwei Aussenfuesse 135 cm aussen auseinander, 24 kg mit Fuss (23,4 kg ohne), VESA 400 x 400.
 var TVSE={W:1.666,H:0.958,D:0.0695,FH:0.070,BD:0.3435,FW:1.35};TVSE.Z0=SBH+TVSE.FH;var TVSET=TVSE;
@@ -1002,6 +1016,13 @@ var KLB=[],KLC={},KO_SH=0.18,KO_WALL=false,KO_DY=0.445,KT=[[0,1.00,0.809],[1.00,
    bx(BL*0.52,BD*0.50,0.0008,BX+0.02,BY+0.004,BZ+BH+0.0004,0x131315);   // Gitterfeld oben (Atmos)
    bx(0.006,0.006,0.0006,BX-0.255,BY-0.012,BZ+BH+0.0003,0x55555a);bx(0.004,0.004,0.0006,BX-0.215,BY-0.012,BZ+BH+0.0003,0x55555a);   // Touch-Tasten
    bx(0.040,0.0008,0.007,BX,BY-BD/2-0.0006,BZ+BH*0.52,0x9a9aa0);   // BOSE-Schriftzug (Platzhalter)
+var seg3=function(a,b,c){var t=0.0035,m=function(i){return a[i]===b[i]?[a[i]-t,a[i]+t]:[Math.min(a[i],b[i])-t,Math.max(a[i],b[i])+t];},X=m(0),Y=m(1),Z=m(2);box(X[0],Y[0],Z[0],X[1],Y[1],Z[1],c||0x15151a);};
+   // HDMI-/eARC-Kabel der Soundbar: hinten zur Sideboard-Oberseite, dahinter nach oben zu den Anschlüssen des Fernsehers (Lage geschätzt); nur beim Stehen auf dem Sideboard
+   var _scb0=room.children.length;
+   (function(){var xb=TVCX+0.25,yb=TVF-0.051,c3=TVCX-0.54;
+     seg3([xb,0.301,0.40],[xb,0.296,0.40]);seg3([xb,0.296,0.40],[xb,0.296,SBH+0.004]);seg3([xb,0.296,SBH+0.004],[xb,0.07,SBH+0.004]);seg3([xb,0.07,SBH+0.004],[xb,0.07,0.632]);seg3([xb,0.07,0.632],[c3,0.07,0.632]);seg3([c3,0.07,0.632],[c3,yb-0.016,0.632]);
+     box(c3-0.008,yb-0.016,0.626,c3+0.008,yb,0.638,0x222226);})();
+   for(var _sc=_scb0;_sc<room.children.length;_sc++){room.children[_sc].userData.br='L';room.children[_sc].userData.wmFoot=true;}
    room.children.slice(s0).forEach(function(o){o.visible=false;});
    var s1=room.children.length;
    // ---- Bose Surround Speakers: je 8,4 x 8,1 x 9,4 cm (B x T x H); Front mit Lochgitter (zum Sofa), glänzende Deckkappe mit Metallrand, schwarzer Sockelrand, BOSE-Schriftzug unten vorn (nach Amazon-Fotos)
