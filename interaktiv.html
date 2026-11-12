@@ -1650,14 +1650,14 @@ var labels=[
    seg([xp,0.004,zp],[xp,0.004,zl]);seg([xp,0.004,zl],[xi,0.004,zl]);seg([xi,0.004,zl],[xi,0.004,zt]);   // Steckdose hinter dem Sideboard, Kabel kommt von unten
    if(!wall){seg([xi,0.004,zt],[xi,ry-0.016,zt]);seg([xi,ry-0.016,zt],[xi,ry-0.016,zi]);seg([xi,ry-0.016,zi],[xi,ry,zi]);}
    else{seg([xi,0.004,zt],[xi,0.022,zt]);seg([xi,0.022,zt],[xi,0.022,zi]);seg([xi,0.022,zi],[xi,ry,zi]);}
-   box(xp-0.025,0.002,zp-0.025,xp+0.025,0.014,zp+0.025,0xe8e6e0);
+   box(xp-0.025,-0.025,zp-0.025,xp+0.025,-0.005,zp+0.025,0xe8e6e0);
    for(var j=n1;j<room.children.length;j++){var u=room.children[j].userData;u.cabSize=v.s;u.cabWall=wall;if(v.b)u.br=v.b;if(wall)u.wmMount=true;else u.wmFoot=true;window.pwCabs.push(room.children[j]);}
   });
  });
  cat=_c0;if(window.ksVis)ksVis();
 })();
-room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='schrank'||c==='sideboard'||c==='sideboardT'||c==='tv'||c==='tv65'||c==='tv85'||c==='tvhs'||c==='tvledhs'||c==='tvse'||c==='tvledse'||c==='tvled'||c==='tvled65'||c==='tvled85'||c==='beam')o.position.z-=NY;});
-['schrank','sideboard','sideboardT','tv','tv65','tv85','tvhs','tvse'].forEach(function(k){if(dimG[k])dimG[k].position.z-=NY;});
+room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='schrank'||c==='sideboard'||c==='sideboardT'||c==='tv'||c==='tv65'||c==='tv85'||c==='tvhs'||c==='tvledhs'||c==='tvse'||c==='tvledse'||c==='tvled'||c==='tvled65'||c==='tvled85'||c==='beam')o.position.z-=(NY-0.025);});
+['schrank','sideboard','sideboardT','tv','tv65','tv85','tvhs','tvse'].forEach(function(k){if(dimG[k])dimG[k].position.z-=(NY-0.025);});
 // Maßlinien (eingezeichnet)
 (function(){
   var v=[];
