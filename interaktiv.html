@@ -517,23 +517,42 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
   (function(){
     var n0=room.children.length,xa=SB0+SBW/3+0.009;
     var kb=function(x0,y0,z0,x1,y1,z1,col,bas){box(x0,y0,z0,x1,y1,z1,col);if(bas)room.children[room.children.length-2].material=new THREE.MeshBasicMaterial({color:col});};
-    var x0=xa+0.012,x1=x0+0.388;                                   // PS5 Pro: 38,8 cm breit (liegend), 21,6 cm tief, 8,9 cm hoch (Amazon), auf zwei kleinen Standfüßen
-    kb(x0+0.04,0.05,0.018,x0+0.07,0.20,0.022,0x2a2a2e);kb(x1-0.07,0.05,0.018,x1-0.04,0.20,0.022,0x2a2a2e);
-    kb(x0,0.03,0.022,x1,0.246,0.044,0xf2f2f6);kb(x0,0.03,0.089,x1,0.246,0.111,0xf2f2f6);kb(x0+0.002,0.032,0.044,x1-0.002,0.244,0.089,0x16161a);
-    kb(x0+0.02,0.246,0.0585,x1-0.02,0.2475,0.0625,0x4a6bff,true);kb(x0+0.02,0.246,0.0705,x1-0.02,0.2475,0.0745,0x4a6bff,true);   // blaue LED-Linien
-    kb(x0+0.04,0.012,0.044,x0+0.046,0.03,0.050,0x111111);kb(x0+0.22,0.012,0.044,x0+0.226,0.03,0.050,0x111111);   // Strom- und HDMI-Kabel
-    var cx0=xa+0.412,cy0=0.07;                                     // DualSense liegt flach (Tasten nach oben, Touchpad zur Wand) rechts neben der PS5 Pro: 16 × 10,6 cm
-    kb(cx0,cy0,0.018,cx0+0.16,cy0+0.106,0.058,0xf0f0f4);kb(cx0+0.045,cy0+0.012,0.058,cx0+0.115,cy0+0.094,0.062,0x1a1a1f);
-    kb(cx0+0.060,cy0+0.013,0.062,cx0+0.100,cy0+0.045,0.0635,0x2c2c32);kb(cx0+0.048,cy0+0.012,0.0615,cx0+0.112,cy0+0.0145,0.0645,0x3a7bff,true);   // Touchpad, Lightbar
-    kb(cx0+0.052,cy0+0.060,0.062,cx0+0.074,cy0+0.082,0.070,0x111114);kb(cx0+0.086,cy0+0.060,0.062,cx0+0.108,cy0+0.082,0.070,0x111114);   // Sticks
-    kb(cx0+0.014,cy0+0.030,0.058,cx0+0.036,cy0+0.036,0.060,0x2a2a2e);kb(cx0+0.021,cy0+0.023,0.058,cx0+0.029,cy0+0.043,0.060,0x2a2a2e);   // Steuerkreuz
-    kb(cx0+0.124,cy0+0.026,0.058,cx0+0.146,cy0+0.048,0.059,0xd9d9e0);   // Aktionstasten
-    var xs=xa+0.436;                                               // Switch 2: Konsole mit Joy-Con 27,2 × 11,6 cm im Dock (Dock ca. 22 × 8 × 10,7 cm, nach Foto geschätzt)
-    kb(xs-0.11,0.28,0.018,xs+0.11,0.36,0.125,0x2b2b2f);kb(xs-0.003,0.012,0.018,xs+0.003,0.28,0.024,0x111111);
-    kb(xs-0.087,0.362,0.045,xs+0.087,0.376,0.161,0x2a2a2e);kb(xs-0.136,0.362,0.045,xs-0.087,0.376,0.161,0x3b3b40);kb(xs+0.087,0.362,0.045,xs+0.136,0.376,0.161,0x3b3b40);
-    kb(xs-0.087,0.376,0.054,xs+0.087,0.3765,0.152,0x3a2f6b,true);kb(xs-0.030,0.3765,0.092,xs+0.030,0.3770,0.114,0xf4f4fa,true);   // Bildschirm mit Startlogo
-    kb(xs-0.126,0.376,0.118,xs-0.100,0.3775,0.144,0x2f9bd8);kb(xs-0.122,0.3775,0.122,xs-0.104,0.379,0.140,0x0d0d0f);    // linker Stick, blauer Ring
-    kb(xs+0.100,0.376,0.062,xs+0.126,0.3775,0.088,0xe2553c);kb(xs+0.104,0.3775,0.066,xs+0.122,0.379,0.084,0x0d0d0f);    // rechter Stick, roter Ring
+    var rb=function(cx,cy,cz,w,d,h,col,ang,bas){var g=new THREE.BoxGeometry(w,h,d),m=new THREE.Mesh(g,bas?new THREE.MeshBasicMaterial({color:col}):new THREE.MeshLambertMaterial({color:col}));m.position.copy(P(cx,cy,cz));m.rotation.y=ang||0;room.add(m);var em=new THREE.LineBasicMaterial({color:edgeColor()});edgeMats.push(em);var l=new THREE.LineSegments(new THREE.EdgesGeometry(g),em);l.position.copy(m.position);l.rotation.y=m.rotation.y;room.add(l);};
+    var cy=function(cx,cyy,cz,r,h,col,front,bas){var m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,18),bas?new THREE.MeshBasicMaterial({color:col}):new THREE.MeshLambertMaterial({color:col}));m.position.copy(P(cx,cyy,cz));if(front)m.rotation.x=Math.PI/2;room.add(m);};
+    // PS5 Pro (Digital-Optik laut Amazon-Fotos): liegend, 38,8 cm breit, 21,6 cm tief, 8,9 cm hoch; weiße Schalen oben und unten, schwarze Mitte mit blauen LED-Linien, schräge schwarze Lüftungsrippen
+    var x0=xa+0.012,x1=x0+0.388;
+    kb(x0+0.04,0.05,0.018,x0+0.07,0.20,0.022,0x9a9aa2);kb(x1-0.07,0.05,0.018,x1-0.04,0.20,0.022,0x9a9aa2);   // zwei Standfüße (liegend)
+    kb(x0,0.03,0.022,x1,0.246,0.034,0xf4f4f8);kb(x0+0.006,0.034,0.034,x1-0.006,0.242,0.046,0xe9e9ef);       // untere Schale (gewölbt, in zwei Stufen)
+    kb(x0,0.03,0.099,x1,0.246,0.111,0xf4f4f8);kb(x0+0.006,0.034,0.087,x1-0.006,0.242,0.099,0xe9e9ef);       // obere Schale
+    kb(x0+0.002,0.032,0.046,x1-0.002,0.244,0.087,0x14141a);                                                  // schwarze Mitte
+    kb(x0+0.01,0.246,0.0455,x1-0.01,0.2475,0.0485,0x4a6bff,true);kb(x0+0.01,0.246,0.0845,x1-0.01,0.2475,0.0875,0x4a6bff,true);   // blaue LED-Linien vorn
+    kb(x1-0.075,0.246,0.060,x1-0.062,0.2475,0.064,0x050507);kb(x1-0.058,0.246,0.060,x1-0.045,0.2475,0.064,0x050507);kb(x1-0.040,0.246,0.0695,x1-0.012,0.2475,0.0715,0x050507);   // USB-C, USB-A, Powertaste
+    kb(x0+0.02,0.03,0.052,x1-0.02,0.038,0.082,0x0c0c0e);                                                      // schwarze Rückseite (Lüftung)
+    [-1.5,-0.5,0.5,1.5].forEach(function(k){rb(x0+0.215+k*0.012,0.138,0.1115,0.004,0.20,0.0015,0x0a0a0c,0.27);});   // schräge Rippen auf der Oberseite
+    rb(x0+0.04,0.07,0.1115,0.012,0.012,0.0015,0x9aa0b8,0);                                                    // PS-Logo (klein)
+    kb(x0+0.04,0.012,0.046,x0+0.046,0.03,0.052,0x111111);kb(x0+0.22,0.012,0.046,x0+0.226,0.03,0.052,0x111111);   // Strom- und HDMI-Kabel
+    // DualSense: liegt flach rechts neben der PS5 Pro, Tasten nach oben, Touchpad zur Wand
+    var cxm=xa+0.492,cym=0.14,Z=0.018,ZT=0.058;
+    rb(cxm,cym-0.018,(Z+ZT)/2,0.10,0.07,ZT-Z,0xf2f2f6,0);rb(cxm-0.05,cym-0.03,(Z+ZT)/2,0.06,0.05,ZT-Z,0xf2f2f6,0);rb(cxm+0.05,cym-0.03,(Z+ZT)/2,0.06,0.05,ZT-Z,0xf2f2f6,0);
+    rb(cxm-0.052,cym+0.03,(Z+ZT)/2,0.036,0.085,ZT-Z,0xf2f2f6,-0.2);rb(cxm+0.052,cym+0.03,(Z+ZT)/2,0.036,0.085,ZT-Z,0xf2f2f6,0.2);   // Griffe
+    rb(cxm,cym+0.005,ZT+0.002,0.052,0.085,0.004,0x15151a,0);rb(cxm,cym-0.030,ZT+0.005,0.046,0.028,0.002,0x2c2c32,0);              // schwarze Mitte, Touchpad
+    rb(cxm-0.026,cym-0.030,ZT+0.0045,0.003,0.028,0.002,0x3a7bff,0,true);rb(cxm+0.026,cym-0.030,ZT+0.0045,0.003,0.028,0.002,0x3a7bff,0,true);   // Lightbar
+    cy(cxm-0.0215,cym+0.014,ZT+0.008,0.0125,0.012,0x0e0e12,false);cy(cxm+0.0215,cym+0.014,ZT+0.008,0.0125,0.012,0x0e0e12,false);   // Sticks
+    cy(cxm,cym-0.002,ZT+0.0045,0.0045,0.002,0xdfe3ff,false,true);                                                                   // PS-Taste
+    rb(cxm-0.061,cym-0.005,ZT+0.001,0.020,0.007,0.002,0xc9c9d2,0);rb(cxm-0.061,cym-0.005,ZT+0.001,0.007,0.020,0.002,0xc9c9d2,0);   // Steuerkreuz
+    [[0,-0.012],[0,0.012],[-0.012,0],[0.012,0]].forEach(function(o){cy(cxm+0.061+o[0],cym-0.005+o[1],ZT+0.0015,0.0055,0.002,0xc9c9d2,false);});   // Aktionstasten
+    // Nintendo Switch 2: Dock (Foto: Vorderplatte mit Logo, Rückwand), Konsole mit grauen Joy-Con 2 dahinter; Maße geschätzt
+    var xs=xa+0.436;
+    kb(xs-0.095,0.28,0.018,xs+0.095,0.334,0.034,0x2b2b2f);kb(xs-0.095,0.28,0.034,xs+0.095,0.292,0.140,0x2b2b2f);kb(xs-0.095,0.322,0.034,xs+0.095,0.334,0.125,0x333338);
+    kb(xs-0.03,0.334,0.060,xs+0.03,0.3345,0.100,0x1c1c20);kb(xs-0.035,0.334,0.046,xs+0.035,0.3345,0.053,0x1c1c20);   // Logo
+    kb(xs-0.003,0.012,0.018,xs+0.003,0.28,0.024,0x111111);                                                           // Kabel
+    kb(xs-0.087,0.300,0.040,xs+0.087,0.314,0.156,0x18181c);kb(xs-0.080,0.314,0.047,xs+0.080,0.3145,0.150,0x40307a,true);   // Konsole, Bildschirm an
+    kb(xs-0.136,0.298,0.040,xs-0.087,0.316,0.156,0x3d3d42);kb(xs+0.087,0.298,0.040,xs+0.136,0.316,0.156,0x3d3d42);   // Joy-Con 2 grau
+    kb(xs+0.087,0.296,0.040,xs+0.091,0.318,0.156,0xe2553c);                                                          // roter Innenrand rechts
+    cy(xs-0.1115,0.3165,0.135,0.0135,0.002,0x2f9bd8,true);cy(xs-0.1115,0.3175,0.135,0.0095,0.003,0x0d0d0f,true);   // linker Stick mit blauem Ring
+    cy(xs+0.1115,0.3165,0.085,0.0135,0.002,0xe2553c,true);cy(xs+0.1115,0.3175,0.085,0.0095,0.003,0x0d0d0f,true);   // rechter Stick mit rotem Ring
+    [[0,-0.011],[0,0.011],[-0.011,0],[0.011,0]].forEach(function(o){cy(xs-0.1115+o[0],0.3165,0.085+o[1],0.0048,0.002,0x222226,true);cy(xs+0.1115+o[0],0.3165,0.135+o[1],0.0048,0.002,0x222226,true);});   // Steuerkreuz, A/B/X/Y
+    kb(xs-0.126,0.316,0.150,xs-0.112,0.3165,0.1515,0x111114);kb(xs+0.1045,0.316,0.150,xs+0.1185,0.3165,0.1515,0x111114);   // Minus, Plus
     var ko=room.children.slice(n0);window.ksObjs=ko;window.ksAng=0;
     window.ksVis=function(){var hc=(typeof hideCats!=='undefined'&&hideCats)||{},ah=(typeof altHide!=='undefined'&&altHide)||{},sv=!hc.sideboard&&!ah.sideboard,o=window.ksAng>0.05;ko.forEach(function(m){m.visible=sv&&o;});(window.ksShelf||[]).concat(window.ksBooks||[]).forEach(function(m){m.visible=sv&&!o;});};
     window.ksSet=function(a){window.ksAng=a;sbDoors[1].rotation.y=Math.max(a,sbAng);ksVis();};
