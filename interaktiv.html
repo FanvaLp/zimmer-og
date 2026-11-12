@@ -559,7 +559,7 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     seg([xa+0.224,0.026,0.078],[xa+0.224,0.026,SBH+0.002]);                                                    // PS5 Pro: HDMI hinten, senkrecht nach oben
     seg([xs,0.292,0.145],[xs,0.292,0.165]);seg([xs,0.292,0.165],[xs,0.042,0.165]);seg([xs,0.042,0.165],[xa+0.31,0.042,0.165]);seg([xa+0.31,0.042,0.165],[xa+0.31,0.042,SBH+0.002]);   // Switch-Dock: HDMI über die PS5 Pro hinweg zur Durchführung
     var ko=room.children.slice(n0);window.ksObjs=ko;window.ksAng=0;
-    window.ksVis=function(){var hc=(typeof hideCats!=='undefined'&&hideCats)||{},ah=(typeof altHide!=='undefined'&&altHide)||{},sv=!hc.sideboard&&!ah.sideboard,o=window.ksAng>0.05;ko.forEach(function(m){m.visible=sv&&o;});(window.ksShelf||[]).concat(window.ksBooks||[]).forEach(function(m){m.visible=sv&&!o;});};
+    window.ksVis=function(){var hc=(typeof hideCats!=='undefined'&&hideCats)||{},ah=(typeof altHide!=='undefined'&&altHide)||{},sv=!hc.sideboard&&!ah.sideboard,o=window.ksAng>0.05;ko.forEach(function(m){m.visible=sv&&o;});(window.ksShelf||[]).concat(window.ksBooks||[]).forEach(function(m){m.visible=sv&&!o;});var tvok=o&&sv&&typeof tvSize!=='undefined'&&tvSize==='S'&&typeof seBr!=='undefined'&&seBr==='L'&&!window.__wm&&!hc.tvse&&!ah.tvse;(window.ksCabs||[]).forEach(function(m){m.visible=!!tvok;});};
     window.ksSet=function(a){window.ksAng=a;sbDoors[1].rotation.y=Math.max(a,sbAng);ksVis();};
     window.ksBtn=function(on){['ksB','ksOn'].forEach(function(i){var e=document.getElementById(i);if(e)e.classList.toggle('on',on);});var o=document.getElementById('ksOff');if(o)o.classList.toggle('on',!on);};
     window.ksTo=function(on){if(typeof sbV!=='undefined'&&sbV==='T')return;tw('ks',function(){return ksAng;},ksSet,on?1.75:0,700);ksBtn(on);};
@@ -688,6 +688,7 @@ var _tcb0=room.children.length;cat='tvse';
   seg2([TVCX+0.03,0.042,SBH+0.002],[TVCX+0.03,0.042,0.616]);seg2([TVCX+0.03,0.042,0.616],[c2,0.042,0.616]);seg2([c2,0.042,0.616],[c2,yb-0.016,0.616]);pl(c2,0.616);   // Switch 2
 })();
 for(var _tc=_tcb0;_tc<room.children.length;_tc++)room.children[_tc].userData.wmFoot=true;
+window.ksCabs=room.children.slice(_tcb0);
 for(var _bi=_brL0;_bi<room.children.length;_bi++)room.children[_bi].userData.br='L';
 // TCL 75T8D (75 Zoll, Hauptmodell) nach Herstellergrafik (Amazon) und Coolblue: Panel 166,6 x 95,8 x 7,0 cm, mit Fuss 102,8 cm hoch und 34,3 cm tief, Fusshoehe 7,0 cm, zwei Aussenfuesse 135 cm aussen auseinander, 24 kg mit Fuss (23,4 kg ohne), VESA 400 x 400.
 var TVSE={W:1.666,H:0.958,D:0.0695,FH:0.070,BD:0.3435,FW:1.35};TVSE.Z0=SBH+TVSE.FH;var TVSET=TVSE;
@@ -1901,6 +1902,7 @@ function setSofaLed(on){sofaLedOn=on;sofaLedObjs.forEach(function(o){o.visible=o
 function setTvSize(s){tvSize=s;altHide.tv=(s!=='75');altHide.tvled=(s!=='75');altHide.tv65=(s!=='65');altHide.tvled65=(s!=='65');altHide.tv85=(s!=='85');altHide.tvled85=(s!=='85');altHide.tvhs=(s!=='H');altHide.tvledhs=(s!=='H');altHide.tvse=(s!=='S');altHide.tvledse=(s!=='S');
   room.children.forEach(function(o){var c=o.userData&&o.userData.cat;if(c==='tv'||c==='tv65'||c==='tv85'||c==='tvhs'||c==='tvse'||c==='tvled'||c==='tvled65'||c==='tvled85'||c==='tvledhs'||c==='tvledse'){o.visible=(!o.userData.br||o.userData.br===seBr)&&!altHide[c]&&!hideCats[c]&&((c==='tvled'||c==='tvled65'||c==='tvled85'||c==='tvledhs'||c==='tvledse')?tvLedOn:true);}});
   if(typeof wmApply==='function')wmApply();
+  if(window.ksVis)ksVis();
   var dx=(s==='85')?DX85:0;   // bei 85 Zoll rückt das Sideboard mittig in die Nische
   room.children.forEach(function(o){if(o.userData&&(o.userData.cat==='sideboard'||o.userData.cat==='sideboardT'||o.userData.cat==='beam')){if(o.userData.bx0===undefined)o.userData.bx0=o.position.x;o.position.x=o.userData.bx0+dx;}});
   if(dimG.sideboard)dimG.sideboard.position.x=dx;if(dimG.sideboardT)dimG.sideboardT.position.x=dx;
