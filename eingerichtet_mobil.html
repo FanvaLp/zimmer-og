@@ -576,7 +576,7 @@ var SBT={W:1.784,D:0.372,H:0.549,X0:0},DZT=0.549-0.38;SBT.X0=SB0+(SBW-SBT.W)/2; 
     seg([xa+0.224,0.026,0.078],[xa+0.224,0.026,SBH+0.002]);                                                    // PS5 Pro: HDMI hinten, senkrecht nach oben
     seg([xs,0.292,0.145],[xs,0.292,0.165]);seg([xs,0.292,0.165],[xs,0.042,0.165]);seg([xs,0.042,0.165],[xa+0.31,0.042,0.165]);seg([xa+0.31,0.042,0.165],[xa+0.31,0.042,SBH+0.002]);   // Switch-Dock: HDMI über die PS5 Pro hinweg zur Durchführung
     var ko=room.children.slice(n0);window.ksObjs=ko;window.ksAng=0;
-    window.ksVis=function(){var hc=(typeof hideCats!=='undefined'&&hideCats)||{},ah=(typeof altHide!=='undefined'&&altHide)||{},sv=!hc.sideboard&&!ah.sideboard,o=window.ksAng>0.05;ko.forEach(function(m){m.visible=sv&&o;});(window.ksShelf||[]).concat(window.ksBooks||[]).forEach(function(m){m.visible=sv&&!o;});var tS=(typeof tvSize!=='undefined')?tvSize:'S',sb=(typeof seBr!=='undefined')?seBr:'L',wm=!!window.__wm,hv=(typeof hideCats!=='undefined');(window.ksCabs||[]).forEach(function(m){var u=m.userData;m.visible=!!(o&&sv&&u.cabSize===tS&&(u.cabSize!=='S'||u.br===sb)&&(!!u.cabWall===wm)&&!hc[u.cat]&&!ah[u.cat]);});(window.sbCabs||[]).forEach(function(m){var u=m.userData;m.visible=!!(hv&&!hc.beam&&!ah.beam&&u.cabSize===tS&&(u.cabSize!=='S'||u.br===sb)&&(!!u.cabWall===wm));});};
+    window.ksVis=function(){var hc=(typeof hideCats!=='undefined'&&hideCats)||{},ah=(typeof altHide!=='undefined'&&altHide)||{},sv=!hc.sideboard&&!ah.sideboard,o=window.ksAng>0.05;ko.forEach(function(m){m.visible=sv&&o;});(window.ksShelf||[]).concat(window.ksBooks||[]).forEach(function(m){m.visible=sv&&!o;});var tS=(typeof tvSize!=='undefined')?tvSize:'S',sb=(typeof seBr!=='undefined')?seBr:'L',wm=!!window.__wm,hv=(typeof hideCats!=='undefined'),sv0=true;(window.ksCabs||[]).forEach(function(m){var u=m.userData;m.visible=!!(o&&sv&&u.cabSize===tS&&(u.cabSize!=='S'||u.br===sb)&&(!!u.cabWall===wm)&&!hc[u.cat]&&!ah[u.cat]);});(window.pwCabs||[]).forEach(function(m){var u=m.userData;m.visible=!!(sv0&&u.cabSize===tS&&(u.cabSize!=='S'||u.br===sb)&&(!!u.cabWall===wm)&&!hc[u.cat]&&!ah[u.cat]);});(window.sbCabs||[]).forEach(function(m){var u=m.userData;m.visible=!!(hv&&!hc.beam&&!ah.beam&&u.cabSize===tS&&(u.cabSize!=='S'||u.br===sb)&&(!!u.cabWall===wm));});};
     window.ksSet=function(a){window.ksAng=a;sbDoors[1].rotation.y=Math.max(a,sbAng);ksVis();};
     window.ksBtn=function(on){['ksB','ksOn'].forEach(function(i){var e=document.getElementById(i);if(e)e.classList.toggle('on',on);});var o=document.getElementById('ksOff');if(o)o.classList.toggle('on',!on);};
     window.ksTo=function(on){if(typeof sbV!=='undefined'&&sbV==='T')return;tw('ks',function(){return ksAng;},ksSet,on?1.75:0,700);ksBtn(on);};
@@ -1644,7 +1644,7 @@ var labels=[
 (function(){
  var _c0=cat,seg=function(a,b){var t=0.0035,m=function(i){return a[i]===b[i]?[a[i]-t,a[i]+t]:[Math.min(a[i],b[i])-t,Math.max(a[i],b[i])+t];},X=m(0),Y=m(1),Z=m(2);box(X[0],Y[0],Z[0],X[1],Y[1],Z[1],0x15151a);},
  plug=function(x,y1,z){box(x-0.008,y1-0.016,z-0.006,x+0.008,y1,z+0.006,0x222226);};
- window.ksCabs=[];window.sbCabs=[];
+ window.ksCabs=[];window.sbCabs=[];window.pwCabs=[];
  var V=[{s:'75',c:'tv',D:TVD,z:TVZ0},{s:'65',c:'tv65',D:TV65.D,z:TV65.Z0},{s:'85',c:'tv85',D:TV85.D,z:TV85.Z0},{s:'H',c:'tvhs',D:TVHS.D,z:TVHS.Z0},
   {s:'S',c:'tvse',b:'T',D:TVSET.D,z:TVSET.Z0,td:0.030},{s:'S',c:'tvse',b:'H',D:TVSEH.D,z:TVSEH.Z0,td:0.039},{s:'S',c:'tvse',b:'L',D:TVSEL.D,z:TVSEL.Z0,td:0.032}];
  V.forEach(function(v){
@@ -1663,6 +1663,11 @@ var labels=[
    for(var j=n0;j<k2;j++){var u=room.children[j].userData;u.cabSize=v.s;u.cabWall=wall;if(v.b)u.br=v.b;if(wall)u.wmMount=true;else u.wmFoot=true;}
    for(var j=n0;j<k1;j++)window.ksCabs.push(room.children[j]);
    for(var j=k1;j<k2;j++){room.children[j].userData.cat='beam';window.sbCabs.push(room.children[j]);}
+   var n1=room.children.length,xi=TVCX+0.45,zi=zb+0.12,xp=TVCX+0.88,zp=SBH+0.05;   // Netzkabel: immer da, wenn der Fernseher da ist
+   if(!wall){seg([xi,ry,zi],[xi,ry-0.016,zi]);seg([xi,ry-0.016,zi],[xi,ry-0.016,SBH+0.004]);seg([xi,ry-0.016,SBH+0.004],[xi,0.016,SBH+0.004]);seg([xi,0.016,SBH+0.004],[xp,0.016,SBH+0.004]);seg([xp,0.016,SBH+0.004],[xp,0.004,zp]);}
+   else{seg([xi,ry,zi],[xi,0.022,zi]);seg([xi,0.022,zi],[xi,0.022,zp]);seg([xi,0.022,zp],[xp,0.022,zp]);seg([xp,0.022,zp],[xp,0.004,zp]);}
+   box(xp-0.025,0.002,zp-0.025,xp+0.025,0.014,zp+0.025,0xe8e6e0);
+   for(var j=n1;j<room.children.length;j++){var u=room.children[j].userData;u.cabSize=v.s;u.cabWall=wall;if(v.b)u.br=v.b;if(wall)u.wmMount=true;else u.wmFoot=true;window.pwCabs.push(room.children[j]);}
   });
  });
  cat=_c0;if(window.ksVis)ksVis();
